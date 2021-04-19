@@ -1,12 +1,15 @@
-//#if GEANTVERSION>=10
-#include <G4SystemOfUnits.hh>
-//#endif
-
-#include "globals.hh"
-
 #include "GeMSE_DetectorConstruction.hh"
 #include "GeMSE_SensitiveDetector.hh"
 
+#include "globals.hh"
+#include <math.h>
+#include <string.h>
+#include <stdio.h>
+#include <TMath.h>
+
+//#if GEANTVERSION>=10
+#include <G4SystemOfUnits.hh>
+//#endif
 #include "G4Material.hh"
 #include "G4NistManager.hh"
 #include "G4Box.hh"
@@ -15,7 +18,6 @@
 #include "G4Sphere.hh"
 #include "G4EllipticalTube.hh"
 #include "G4Polycone.hh"
-
 #include "G4LogicalVolume.hh"
 #include "G4ThreeVector.hh"
 #include "G4PVPlacement.hh"
@@ -28,14 +30,7 @@
 #include "G4OpBoundaryProcess.hh"
 #include "G4SDManager.hh"
 #include "G4Transform3D.hh"
-
 #include "G4NistManager.hh"
-
-#include <math.h>
-#include <string.h>
-#include <stdio.h>
-#include <TMath.h>
-
 
 G4LogicalVolume* GeMSE_DetectorConstruction::ConstructPmtR11410(){  
 
@@ -50,8 +45,6 @@ G4LogicalVolume* GeMSE_DetectorConstruction::ConstructPmtR11410(){
   G4double a;  // atomic mass
   G4double z;  // atomic number
   G4double density;
-  G4double temperature;
-  G4double pressure;
   G4double fractionmass;
   G4int    ncomponents;
   G4String name, symbol;
@@ -67,39 +60,39 @@ G4LogicalVolume* GeMSE_DetectorConstruction::ConstructPmtR11410(){
   G4Element* Cr     = new G4Element(name="Chromium", symbol="Cr", z=24., a=51.9961*g/mole);
   G4Element* Ni     = new G4Element(name="Nickel", symbol="Ni", z=28., a=58.6934*g/mole);
   G4Element* Mn     = new G4Element(name="Manganese", symbol="Mn", z=25., a=54.93805*g/mole);
-  G4Element* Mo     = new G4Element(name="Molybdenum", symbol="Mo", z=42., a=95.94*g/mole);
-  G4Element* Ti     = new G4Element(name="Titanium", symbol="Ti", z=22., a=47.867*g/mole);
+  //G4Element* Mo     = new G4Element(name="Molybdenum", symbol="Mo", z=42., a=95.94*g/mole);
+  //G4Element* Ti     = new G4Element(name="Titanium", symbol="Ti", z=22., a=47.867*g/mole);
   G4Element* Si     = new G4Element(name="Silicon", symbol="Si", z=14., a=28.0855*g/mole);
   G4Element* P      = new G4Element(name="Phosphorus", symbol="P", z=15., a=30.973762*g/mole);
   G4Element* S      = new G4Element(name="Sulfur", symbol="S", z=16., a=32.066*g/mole);
-  G4Element* Na     = new G4Element(name="Sodium", symbol="Na", z=11., a=22.989769	*g/mole);
-  G4Element* Mg     = new G4Element(name="Magnesium", symbol="Mg", z=12., a=24.3050*g/mole);
-  G4Element* Ca     = new G4Element(name="Calcium", symbol="Ca", z=20., a=40.078*g/mole);
-  G4Element* K      = new G4Element(name="Potassium", symbol="K", z=19., a=39.0983*g/mole);
-  G4Element* Zn     = new G4Element(name="Zinc", symbol="Zn", z=30., a=65.38*g/mole);
-  G4Element* Th     = new G4Element(name="Thorium", symbol="Th", z=90., a=232.0381*g/mole);
-  G4Element* Au     = new G4Element(name="Gold", symbol="Au", z=79., a=196.9666*g/mole);
-  G4Element* Pb_el  = new G4Element(name="Lead", symbol="Pb", z=82., a=207.2*g/mole);
-  G4Element* Cu_el  = new G4Element(name="Copper", symbol="Cu", z=29., a=63.546*g/mole);
+  //G4Element* Na     = new G4Element(name="Sodium", symbol="Na", z=11., a=22.989769	*g/mole);
+  //G4Element* Mg     = new G4Element(name="Magnesium", symbol="Mg", z=12., a=24.3050*g/mole);
+  //G4Element* Ca     = new G4Element(name="Calcium", symbol="Ca", z=20., a=40.078*g/mole);
+  //G4Element* K      = new G4Element(name="Potassium", symbol="K", z=19., a=39.0983*g/mole);
+  //G4Element* Zn     = new G4Element(name="Zinc", symbol="Zn", z=30., a=65.38*g/mole);
+  //G4Element* Th     = new G4Element(name="Thorium", symbol="Th", z=90., a=232.0381*g/mole);
+  //G4Element* Au     = new G4Element(name="Gold", symbol="Au", z=79., a=196.9666*g/mole);
+  //G4Element* Pb_el  = new G4Element(name="Lead", symbol="Pb", z=82., a=207.2*g/mole);
+  //G4Element* Cu_el  = new G4Element(name="Copper", symbol="Cu", z=29., a=63.546*g/mole);
   // G4Element* W  = new G4Element(name="Tungsten", symbol="W", z=74., a=183.84*g/mole);
 
-  G4Material* Pb = new G4Material("Lead", z=82., a=207.19*g/mole, density=11.34*g/cm3);
+  //G4Material* Pb = new G4Material("Lead", z=82., a=207.19*g/mole, density=11.34*g/cm3);
   // G4Material* Pb2 = new G4Material("Lead3", z=82., a=207.19*g/mole, density=11.34*g/cm3);
   // G4Material* Pb4 = new G4Material("Lead4", z=82., a=207.19*g/mole, density=11.34*g/cm3);
-  G4Material* PoPb = new G4Material("PoPb", z=82., a=207.19*g/mole, density=11.34*g/cm3);
+  //G4Material* PoPb = new G4Material("PoPb", z=82., a=207.19*g/mole, density=11.34*g/cm3);
   //  G4Material* CDMSPb = new G4Material("CDMSPb", z=82., a=207.19*g/mole, density=11.34*g/cm3);
-  G4Material* Cu = new G4Material("Copper", z=29., a=63.546*g/mole, density=8.920*g/cm3);
+  //G4Material* Cu = new G4Material("Copper", z=29., a=63.546*g/mole, density=8.920*g/cm3);
   //  G4Material* Cu2 = new G4Material("Copper2", z=29., a=63.546*g/mole, density=8.920*g/cm3);
-  G4Material* Silver = new G4Material("Silver", z=13., a=107.868*g/mole, density=10.49*g/cm3);
+  //G4Material* Silver = new G4Material("Silver", z=13., a=107.868*g/mole, density=10.49*g/cm3);
   G4Material* Aluminum = new G4Material("Aluminum",density=2.7*g/cm3,ncomponents=1);
     Aluminum->AddElement(Al,fractionmass=1.0);
-  G4Material* Ge = new G4Material("Germanium", z=32., a=72.64*g/mole, density=5.332*g/cm3);
-  G4Material* activeGe = new G4Material("activeGe", z=32., a=72.64*g/mole, density=5.332*g/cm3);
+  //G4Material* Ge = new G4Material("Germanium", z=32., a=72.64*g/mole, density=5.332*g/cm3);
+  //G4Material* activeGe = new G4Material("activeGe", z=32., a=72.64*g/mole, density=5.332*g/cm3);
   //This is just a trick to change the name of the same Germanium for the active part
   G4Material* Air = new G4Material(name="Air" , density=1.290*mg/cm3, ncomponents=2);
     Air->AddElement(N, fractionmass=0.7);
     Air->AddElement(O, fractionmass=0.3);
-  G4Material* Vacuum = new G4Material(name="Vacuum", z=1., a=1.*g/mole, density=1.e-20*g/cm3, kStateGas, temperature=0.1*kelvin, pressure=1.e-20*bar);
+  //G4Material* Vacuum = new G4Material(name="Vacuum", z=1., a=1.*g/mole, density=1.e-20*g/cm3, kStateGas, temperature=0.1*kelvin, pressure=1.e-20*bar);
   G4Material* Teflon = new G4Material(name="Teflon", density=2.20*g/cm3, ncomponents=2);
     Teflon->AddElement(C,2);
     Teflon->AddElement(F,4);
@@ -233,7 +226,7 @@ G4LogicalVolume* GeMSE_DetectorConstruction::ConstructPmtR11410(){
   //Placement of the vacuum logical volume inside the PMT envelope volume
   G4ThreeVector PTM_vacuum_pos(0.,0.,0.);
   
-  G4VPhysicalVolume* PMT_vacuum_phys = new G4PVPlacement(0,PTM_vacuum_pos,PMT_vacuum_log,"vacuum_PMT_phys", PMT_envel_log, false, 0);
+  new G4PVPlacement(0,PTM_vacuum_pos,PMT_vacuum_log,"vacuum_PMT_phys", PMT_envel_log, false, 0);
     
   
   /******************************** Definition of the ceramic stem to put in PMTs *************************************/
@@ -262,7 +255,7 @@ G4LogicalVolume* GeMSE_DetectorConstruction::ConstructPmtR11410(){
   // Put the ceramic stem in the PMT_envelop logical volume
   G4ThreeVector PMT_ceram_shift(0.,0.,(PMT_h1+PMT_h2+PMT_h3)-(PMTceram_H/2.));
   
-  G4VPhysicalVolume* PMT_ceram_phys = new G4PVPlacement(0,PMT_ceram_shift,PMT_ceram_log,"PMT_ceram_phys",PMT_vacuum_log,false,0);
+  new G4PVPlacement(0,PMT_ceram_shift,PMT_ceram_log,"PMT_ceram_phys",PMT_vacuum_log,false,0);
     
   
   /********************* Definition of the quartz window as a flat thin cilinder inside the PMTs vacuum ********************/
@@ -291,7 +284,7 @@ G4LogicalVolume* GeMSE_DetectorConstruction::ConstructPmtR11410(){
   // Put the ceramic stem in the PMT_envelop logical volume
   G4ThreeVector PMT_window_shift(0.,0.,PMTwindow_H/2.);
   
-  G4VPhysicalVolume* PMT_window_phys = new G4PVPlacement(0,PMT_window_shift,PMT_window_log,"PMT_window_phys",PMT_vacuum_log,false,0);
+  new G4PVPlacement(0,PMT_window_shift,PMT_window_log,"PMT_window_phys",PMT_vacuum_log,false,0);
   
    
   /********************* Definition of the stuff inside a cilinder inside the PMTs vacuum ********************/
@@ -299,9 +292,9 @@ G4LogicalVolume* GeMSE_DetectorConstruction::ConstructPmtR11410(){
   G4double PMTinternal_ID = 0.*mm;
   G4double PMTinternal_OD = 35.0*mm;
   G4double PMTinternal_H = 35.0*mm;
-  G4double PMTinternal_mass = 33.8*g;
+  //G4double PMTinternal_mass = 33.8*g;
   
-  G4double PMTinternal_dens = PMTinternal_mass/(TMath::Pi()*pow(PMTinternal_OD/2,2)*PMTinternal_H);
+  //G4double PMTinternal_dens = PMTinternal_mass/(TMath::Pi()*pow(PMTinternal_OD/2,2)*PMTinternal_H);
   
   //Material definition as a mesh respecting the mass model
   G4double mfrac_SiO2 = 0.426; //This is for quartz
@@ -331,7 +324,7 @@ G4LogicalVolume* GeMSE_DetectorConstruction::ConstructPmtR11410(){
   // Put the ceramic stem in the PMT_envelop logical volume
   G4ThreeVector PMT_internal_shift(0.,0.,(PMT_h1+PMT_h2+PMT_h3)-(PMTinternal_H/2.)-(PMTceram_H+1.*cm));
   
-  G4VPhysicalVolume* PMT_internal_phys = new G4PVPlacement(0,PMT_internal_shift,PMT_internal_log,"PMT_internal_phys",PMT_vacuum_log,false,0);
+  new G4PVPlacement(0,PMT_internal_shift,PMT_internal_log,"PMT_internal_phys",PMT_vacuum_log,false,0);
    
   
   /********************* Definition of the kovar front flange the PMTs ********************/
@@ -357,7 +350,7 @@ G4LogicalVolume* GeMSE_DetectorConstruction::ConstructPmtR11410(){
   //consider that the mother volume (the envelope) has z=0 at the surface level of the quartz window
   G4ThreeVector PMT_frontflange_shift(0., 0., PMT_frontflange_H/2.);  
   
-  G4VPhysicalVolume* PMT_frontflange_phys = new G4PVPlacement(0,PMT_frontflange_shift,PMT_frontflange_log,"PMT_frontflange_phys",PMT_envel_log,false,0);
+  new G4PVPlacement(0,PMT_frontflange_shift,PMT_frontflange_log,"PMT_frontflange_phys",PMT_envel_log,false,0);
     
   
   /********************* Definition of the kovar back flange of the PMTs ********************/
@@ -382,7 +375,7 @@ G4LogicalVolume* GeMSE_DetectorConstruction::ConstructPmtR11410(){
   //Consider that the mother volume (the envelope) has z=0 at the surface level of the quartz window
   G4ThreeVector PMT_backflange_shift(0., 0., (PMT_h1+PMT_h2+PMT_h3)-PMT_backflange_H/2.);  
   
-  G4VPhysicalVolume* PMT_backflange_phys = new G4PVPlacement(0,PMT_backflange_shift,PMT_backflange_log,"PMT_backflange_phys",PMT_envel_log,false,0);
+  new G4PVPlacement(0,PMT_backflange_shift,PMT_backflange_log,"PMT_backflange_phys",PMT_envel_log,false,0);
   
   return PMT_envel_log;
 

@@ -1,12 +1,15 @@
-//#if GEANTVERSION>=10
-#include <G4SystemOfUnits.hh>
-//#endif
-
-#include "globals.hh"
-
 #include "GeMSE_DetectorConstruction.hh"
 #include "GeMSE_SensitiveDetector.hh"
 
+#include "globals.hh"
+#include <math.h>
+#include <string.h>
+#include <stdio.h>
+#include <TMath.h>
+
+//#if GEANTVERSION>=10
+#include <G4SystemOfUnits.hh>
+//#endif
 #include "G4Material.hh"
 #include "G4NistManager.hh"
 #include "G4Box.hh"
@@ -15,7 +18,6 @@
 #include "G4Sphere.hh"
 #include "G4EllipticalTube.hh"
 #include "G4Polycone.hh"
-
 #include "G4LogicalVolume.hh"
 #include "G4ThreeVector.hh"
 #include "G4PVPlacement.hh"
@@ -28,11 +30,6 @@
 #include "G4OpBoundaryProcess.hh"
 #include "G4SDManager.hh"
 #include "G4Transform3D.hh"
-
-#include <math.h>
-#include <string.h>
-#include <stdio.h>
-#include <TMath.h>
 
 G4LogicalVolume* GeMSE_DetectorConstruction::ConstructPMTholder_long(){
   
@@ -89,7 +86,7 @@ G4LogicalVolume* GeMSE_DetectorConstruction::ConstructPMTholder_long(){
   G4SubtractionSolid* BackMask = new G4SubtractionSolid("BackMask",BackMaskWithGroove2,BackGroove,0,0.5*(ThirdHoleOffset+FourthHoleOffset));
     
   //Lateral Frames 
-  G4double FramesX_max		= FrontX;
+  //G4double FramesX_max		= FrontX;
   G4double FramesX_min		= 55*mm; //Max and min width
   G4double FramesY		= 78*mm; //The distance beween the two plates (a bit shorter than PMTs)
   //G4double FramesZ		= 10*mm; //Their thickness

@@ -2,9 +2,13 @@
 #include "GeMSE_PhysicsList.hh"
 //#include "GeMSE_PhysicsMessenger.hh"
 
+#include "TFile.h"
+#include "TH1.h"
+#include "TParameter.h"
+#include "TNamed.h"
+
 #include "G4SystemOfUnits.hh"
 #include "G4UnitsTable.hh"
-
 #include <G4OpticalPhysics.hh>
 #include <G4EmStandardPhysics.hh>
 #include <G4EmPenelopePhysics.hh>
@@ -33,10 +37,6 @@
 #include "G4RadioactiveDecayPhysics.hh"
 #include "G4EmLivermorePhysics.hh"	
 
-#include "TFile.h"
-#include "TH1.h"
-#include "TParameter.h"
-#include "TNamed.h"
 
 //__________________________________________________________________________________________________________
 //GeMSE_PhysicsList::GeMSE_PhysicsList(G4String fName):G4VModularPhysicsList()

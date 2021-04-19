@@ -1,7 +1,18 @@
+#include "GeMSE_ParticleSource.hh"
+
+#include <Randomize.hh>
+#include <TH1.h>
+#include <sstream>
+#include <cmath>
+#include <vector>
+#include <math.h>
+using std::stringstream;
+using std::vector;
+using std::ifstream;
+
 //#if GEANTVERSION>=10
 #include <G4SystemOfUnits.hh>
 //#endif
-
 #include <G4PrimaryParticle.hh>
 #include <G4Event.hh>
 #include <G4TransportationManager.hh>
@@ -13,19 +24,6 @@
 #include <G4Ions.hh>
 #include <G4TrackingManager.hh>
 #include <G4Track.hh>
-#include <Randomize.hh>
-#include "TH1.h" 
-
-#include <sstream>
-#include <cmath>
-#include <vector>
-#include <math.h>
-
-using std::stringstream;
-using std::vector;
-using std::ifstream;
-
-#include "GeMSE_ParticleSource.hh"
 
 GeMSE_ParticleSource::GeMSE_ParticleSource()
 {
@@ -290,7 +288,7 @@ void GeMSE_ParticleSource::GeneratePointsInVolume()
 void GeMSE_ParticleSource::SetRandomSpherePos()
 {
 	m_hAngDistType = "direction";
-	G4double rad= 3000;
+	G4double a_rad= 3000;
 	int i;
 
 	G4double theta, phi, rnd1, rnd2, pos_x, pos_y, pos_z;
@@ -304,9 +302,9 @@ void GeMSE_ParticleSource::SetRandomSpherePos()
 	rnd1 = G4UniformRand();
 	rnd2 = G4UniformRand();
 
-	pos_x = sin(theta) * cos(phi) * rad ;
-	pos_y = sin(theta) * sin(phi) * rad ;
-	pos_z = cos(theta) * rad;
+	pos_x = sin(theta) * cos(phi) * a_rad ;
+	pos_y = sin(theta) * sin(phi) * a_rad ;
+	pos_z = cos(theta) * a_rad;
 
 	r[0]= sin( (rnd1+1) * pi/2 ) * cos( rnd2 * twopi );
 	r[1]= sin( (rnd1+1) * pi/2 ) * sin( rnd2 * twopi );

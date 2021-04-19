@@ -1,18 +1,18 @@
 #ifndef __GeMSE_ParticleSource_H__
 #define __GeMSE_ParticleSource_H__
 
+#include "GeMSE_ParticleSourceMessenger.hh"
+
+#include "TH1.h"
+#include <set>
+
 #include <G4VPrimaryGenerator.hh>
 #include <G4Navigator.hh>
 #include <G4ParticleMomentum.hh>
 #include <G4ParticleDefinition.hh>
 #include <G4Track.hh>
-#include "TH1.h"
-
-#include <set>
 
 using std::set;
-
-#include "GeMSE_ParticleSourceMessenger.hh"
 
 class GeMSE_ParticleSource: public G4VPrimaryGenerator
 {
@@ -43,7 +43,7 @@ public:
 	void SetVerbosity(G4int iVerbosityLevel) { m_iVerbosityLevel = iVerbosityLevel; }
 
 	const G4String &GetParticleType() { return m_pParticleDefinition->GetParticleName(); }
-	const G4double GetParticleEnergy() { return m_dParticleEnergy; }
+	G4double GetParticleEnergy() { return m_dParticleEnergy; }
 	const G4ThreeVector &GetParticlePosition() { return m_hParticlePosition; }
 
 	G4bool ReadEnergySpectrum();

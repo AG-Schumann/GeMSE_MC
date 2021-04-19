@@ -1,10 +1,10 @@
+#include "GeMSE_ParticleSource.hh"
+#include "GeMSE_PrimaryGeneratorAction.hh"
+
 #include <globals.hh>
 #include <G4RunManagerKernel.hh>
 #include <G4Event.hh>
 #include <Randomize.hh>
-
-#include "GeMSE_ParticleSource.hh"
-#include "GeMSE_PrimaryGeneratorAction.hh"
 
 GeMSE_PrimaryGeneratorAction::GeMSE_PrimaryGeneratorAction()
 {

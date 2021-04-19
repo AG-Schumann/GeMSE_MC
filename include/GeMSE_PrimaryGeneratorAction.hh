@@ -1,9 +1,10 @@
 #ifndef __GeMSE_PrimaryGeneratorAction_H__
 #define __GeMSE_PrimaryGeneratorAction_H__
 
+#include <globals.hh>
+
 #include <G4VUserPrimaryGeneratorAction.hh>
 #include <G4ThreeVector.hh>
-#include <globals.hh>
 
 class GeMSE_ParticleSource;
 

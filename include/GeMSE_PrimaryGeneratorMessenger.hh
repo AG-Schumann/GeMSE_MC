@@ -1,8 +1,9 @@
 #ifndef __GeMSE_PRIMARYGENERATORMESSENGER_H__
 #define __GeMSE_PRIMARYGENERATORMESSENGER_H__
 
-#include <G4UImessenger.hh>
 #include <globals.hh>
+
+#include <G4UImessenger.hh>
 
 class GeMSE_PrimaryGeneratorAction;
 

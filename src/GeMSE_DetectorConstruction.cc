@@ -19,7 +19,7 @@
 #include "G4ThreeVector.hh"
 #include "G4Transform3D.hh"
 #include "G4PVPlacement.hh"
-#include "G4OpBoundaryProcess.hh"
+//#include "G4OpBoundaryProcess.hh"
 #include "G4EllipticalTube.hh"
 #include "G4SDManager.hh"
 #include "G4Colour.hh"
@@ -30,7 +30,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 #include "G4NistManager.hh"
-#include "G4RunManager.hh"
+//#include "G4RunManager.hh"
 #include "G4Para.hh"
 //#include "G4tgrMessenger.hh"
 #include "G4tgbVolumeMgr.hh"
@@ -52,7 +52,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct()
 
   //======= define materials ==============================================
 
-  G4double density, fractionmass, temperature, pressure, a, z;
+  G4double density, fractionmass, a, z;
   G4int ncomponents;
 
   // define materials from NIST manager
@@ -62,10 +62,10 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct()
   G4Material* copper_mat   	= nist->FindOrBuildMaterial("G4_Cu");
   G4Material* lead_mat     	= nist->FindOrBuildMaterial("G4_Pb");
   G4Material* germanium_mat   	= nist->FindOrBuildMaterial("G4_Ge");
-  G4Material* pvt_mat   	= nist->FindOrBuildMaterial("G4_PLASTIC_SC_VINYLTOLUENE");
+  //G4Material* pvt_mat   	= nist->FindOrBuildMaterial("G4_PLASTIC_SC_VINYLTOLUENE");
   G4Material* teflon_mat   	= nist->FindOrBuildMaterial("G4_TEFLON");
-  G4Material* pmma_mat   	= nist->FindOrBuildMaterial("G4_PLEXIGLASS");
-  G4Material* ps_mat   		= nist->FindOrBuildMaterial("G4_POLYSTYRENE");
+  //G4Material* pmma_mat   	= nist->FindOrBuildMaterial("G4_PLEXIGLASS");
+  //G4Material* ps_mat   		= nist->FindOrBuildMaterial("G4_POLYSTYRENE");
 
   //======= define elements ==============================================
   G4Element* C  = nist->FindOrBuildElement("C");
@@ -81,7 +81,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct()
   G4Element* Ni = nist->FindOrBuildElement("Ni");
   G4Element* F  = nist->FindOrBuildElement("F");
   G4Element* Cr = nist->FindOrBuildElement("Cr");
-  G4Element* N  = nist->FindOrBuildElement("N");
+  //G4Element* N  = nist->FindOrBuildElement("N");
   G4Element* Mn  = nist->FindOrBuildElement("Mn");
 
   G4Material* matrix_mat = new G4Material("matrix", density=0.98*g/cm3, ncomponents=4);
@@ -90,7 +90,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct()
     matrix_mat->AddElement (O, fractionmass= 21.6*perCent);
     matrix_mat->AddElement (Si, fractionmass= 37.9*perCent);
 
-  G4Material* standardrock_mat = new G4Material("Standard_Rock", z=11., a=22.*g/mole, density=2.65*g/cm3);
+  //G4Material* standardrock_mat = new G4Material("Standard_Rock", z=11., a=22.*g/mole, density=2.65*g/cm3);
 
   G4Material* vacuum_mat = new G4Material("Vacuum", z=7., a=14.007*g/mole, density=1.e-12*g/cm3);
 
@@ -107,15 +107,15 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct()
   SS304LSteel->AddElement(Si, 0.01);
 
   //======= define colors ==============================================
-  G4VisAttributes* red		= new G4VisAttributes(G4Colour(1.0,0.0,0.0));
-  G4VisAttributes* violet	= new G4VisAttributes(G4Colour(0.5,0.0,1.0));
-  G4VisAttributes* pink		= new G4VisAttributes(G4Colour(1.0,0.0,1.0));
-  G4VisAttributes* black	= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
-  G4VisAttributes* lightblue  	= new G4VisAttributes(G4Colour(0.0,0.5,1.0));
-  G4VisAttributes* yellow     	= new G4VisAttributes(G4Colour(1.0,1.0,0.0));
+  //G4VisAttributes* red		= new G4VisAttributes(G4Colour(1.0,0.0,0.0));
+  //G4VisAttributes* violet	= new G4VisAttributes(G4Colour(0.5,0.0,1.0));
+  //G4VisAttributes* pink		= new G4VisAttributes(G4Colour(1.0,0.0,1.0));
+  //G4VisAttributes* black	= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
+  //G4VisAttributes* lightblue  	= new G4VisAttributes(G4Colour(0.0,0.5,1.0));
+  //G4VisAttributes* yellow     	= new G4VisAttributes(G4Colour(1.0,1.0,0.0));
   G4VisAttributes* orange	= new G4VisAttributes(G4Colour(1.0,0.4,0.2));
-  G4VisAttributes* purple     	= new G4VisAttributes(G4Colour(0.7,0.0,0.7));
-  G4VisAttributes* green	= new G4VisAttributes(G4Colour(0.0,1.0,0.0));
+  //G4VisAttributes* purple     	= new G4VisAttributes(G4Colour(0.7,0.0,0.7));
+  //G4VisAttributes* green	= new G4VisAttributes(G4Colour(0.0,1.0,0.0));
   G4VisAttributes* blue		= new G4VisAttributes(G4Colour(0.0,0.0,1.0));
   G4VisAttributes* cyan		= new G4VisAttributes(G4Colour(0.0,1.0,1.0));
   G4VisAttributes* grey		= new G4VisAttributes(G4Colour(0.5,0.5,0.5));
@@ -135,7 +135,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct()
     G4double heightGe		= 6.5 *cm;
     G4double startAngle		= 0. *deg;
     G4double spanningAngle	= 360. *deg;
-    G4double edgeRadius		= 0.1 *cm;
+    //G4double edgeRadius		= 0.1 *cm;
 
     // cylindrical hole
     G4double outerRadiusHole	= 0.5 *cm;
@@ -144,7 +144,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct()
     // outer contact
     G4double d_LiContact	= 0.067 *cm;
 
-    G4double edgeInRadius	= edgeRadius-d_LiContact;
+    //G4double edgeInRadius	= edgeRadius-d_LiContact;
 
   // +++++++ parts of Ge detector holder ++++++++++++++++++++++++++++++++++
 
@@ -319,9 +319,9 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct()
     G4double xSizeCuShieldingGap    = 2.*cm;
     G4double ySizeCuShieldingGap    = 60.*cm;
     G4double zSizeCuShieldingGap    = 2.*cm;
-    G4double xPosCuShieldingGap     = xSizeOuterPbShielding/2.+xSizeCuShieldingGap/2.+0.5*cm;
-    G4double yPosCuShieldingGap     = -ySizeCuShielding/2.+ySizeCuShieldingGap/2.;
-    G4double zPosCuShieldingGap     = zPosCuPlateThin_mov-zSizeCuPlateThin_mov/2.-zSizeCuShieldingGap/2.;
+    //G4double xPosCuShieldingGap     = xSizeOuterPbShielding/2.+xSizeCuShieldingGap/2.+0.5*cm;
+    //G4double yPosCuShieldingGap     = -ySizeCuShielding/2.+ySizeCuShieldingGap/2.;
+    //G4double zPosCuShieldingGap     = zPosCuPlateThin_mov-zSizeCuPlateThin_mov/2.-zSizeCuShieldingGap/2.;
 
 
   // +++++++ CBSS2 calibration source ++++++++++++++++++++++++++++++++++

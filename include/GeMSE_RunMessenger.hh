@@ -1,10 +1,12 @@
 #ifndef GeMSE_RunMessenger_h
 #define GeMSE_RunMessenger_h 1
 
-#include "G4UIdirectory.hh" // DR 20170926 - For Geant493
-#include "G4UImessenger.hh"
 #include "GeMSE_Analysis.hh"
+
 #include "globals.hh"
+
+#include "G4UIdirectory.hh" 
+#include "G4UImessenger.hh"
 
 class GeMSE_RunAction;
 class G4UIcmdWithADouble;

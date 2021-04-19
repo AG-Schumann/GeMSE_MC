@@ -1,8 +1,13 @@
+#include "GeMSE_ParticleSource.hh"
+#include "GeMSE_ParticleSourceMessenger.hh"
+
+#include <fstream>
+#include <iomanip>
+
 //#if GEANTVERSION>=10
 #include <G4SystemOfUnits.hh>
 #include <G4IonTable.hh>
 //#endif
-
 #include <G4Geantino.hh>
 #include <G4ThreeVector.hh>
 #include <G4ParticleTable.hh>
@@ -17,11 +22,6 @@
 #include <G4UIcmdWithABool.hh>
 #include <G4Tokenizer.hh>
 #include <G4ios.hh>
-#include <fstream>
-#include <iomanip>
-
-#include "GeMSE_ParticleSource.hh"
-#include "GeMSE_ParticleSourceMessenger.hh"
 
 GeMSE_ParticleSourceMessenger::GeMSE_ParticleSourceMessenger(GeMSE_ParticleSource *pParticleSource):
 	m_pParticleSource(pParticleSource), m_bShootIon(false)

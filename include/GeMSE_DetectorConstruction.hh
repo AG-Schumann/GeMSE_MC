@@ -2,12 +2,10 @@
 #define GeMSE_DetectorConstruction_h 1
 
 #include "globals.hh"
+
 #include "G4VUserDetectorConstruction.hh"
 #include "G4LogicalVolume.hh"
-
-
 #include "PMTholders.ihh"
-
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

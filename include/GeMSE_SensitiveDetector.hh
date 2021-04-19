@@ -1,11 +1,11 @@
 #ifndef GeMSE_SensitiveDetector_h
 #define GeMSE_SensitiveDetector_h 1
 
-#include "G4VSensitiveDetector.hh"
 #include "GeMSE_Hit.hh"
 
 #include <TH1D.h>
 
+#include "G4VSensitiveDetector.hh"
 
 class G4Step;
 class G4HCofThisEvent;

@@ -1,19 +1,11 @@
-#include "G4RunManager.hh"
-#include "G4UImanager.hh"
-#include "G4UIterminal.hh"
-#include "G4UItcsh.hh"
-
-#include "G4ios.hh"
-
 #include "GeMSE_DetectorConstruction.hh"
 #include "GeMSE_PhysicsList.hh"
 #include "GeMSE_PrimaryGeneratorAction.hh"
 #include "GeMSE_RunAction.hh"
 
-#include "Randomize.hh"
+//#include <Randomize.hh>
 #include <time.h>
 #include <getopt.h>
-
 #include <TFile.h>
 #include <TTree.h>
 #include <TCanvas.h>
@@ -21,7 +13,11 @@
 #include <TString.h>
 
 #include "G4VisExecutive.hh"
-
+#include "G4RunManager.hh"
+#include "G4UImanager.hh"
+#include "G4UIterminal.hh"
+#include "G4UItcsh.hh"
+#include "G4ios.hh"
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
