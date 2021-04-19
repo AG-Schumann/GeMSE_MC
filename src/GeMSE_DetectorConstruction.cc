@@ -37,7 +37,7 @@
 #include "G4PhysicalVolumeStore.hh"
 #include "G4Polycone.hh"
 
-#include <CADMesh.hh>
+//#include <CADMesh.hh>
 
 GeMSE_DetectorConstruction::GeMSE_DetectorConstruction(G4String GeometryFile)
 {

@@ -1,6 +1,6 @@
 # --------------------------------
 # GNUmakefile - Diego Ramírez
-# Last updated: Mon Feb 11 2018
+# Last updated: Apr 2021
 # --------------------------------
 
 name := GeMSE_efficiency
@@ -23,10 +23,8 @@ ROOTCFLAGS      = $(shell root-config --cflags)
 ROOTGLIBS       = $(shell root-config --glibs)
 
 EXTRALIBS +=$(ROOTGLIBS) $(GEANTLIBS)
-
-#DR 20180208
-EXTRALIBS +=/scratch/dr1036/Software/assimp/lib/libassimp.so
-EXTRALIBS +=/scratch/dr1036/Software/tetgen/tetlib.so
+#EXTRALIBS +=/scratch/dr1036/Software/assimp/lib/libassimp.so
+#EXTRALIBS +=/scratch/dr1036/Software/tetgen/tetlib.so
 
 CPPFLAGS += $(ROOTCFLAGS)
 
