@@ -1043,28 +1043,6 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   new G4PVPlacement(0, G4ThreeVector(0., 0., zPosVacuumDet), VacuumDet_log,
                     "VacuumDet", expHall_log, false, 0);
 
-  //____Copper filling the entire cavity (for sensitivity studies)______________
-
-  // //G4Box* SampleCavity_box = new G4Box("SampleCavity_box",
-  // xSizeSampleChamber/2., ySizeSampleChamber/2.,
-  // zSizeSampleChamber/2.+0.001*cm); G4double heightCuHsg_tube_filled =
-  // zSizeSampleChamber-zPosCuShielding-zSizeCuShielding/2.+zPosEndcap+heightEndcap/2.-0.001*cm;
-  // G4Tubs*	CuHsg_tube_filled  = new G4Tubs ("CuHsg_tube_filled", 0.*cm,
-  // outerRadiusEndcap, heightCuHsg_tube_filled, startAngle, spanningAngle);
-  // G4SubtractionSolid* CuFilling = new G4SubtractionSolid("CuFilling",
-  // SampleCavity_box, CuHsg_tube_filled, 0,
-  // G4ThreeVector(0.,0.,-zSizeSampleChamber/2.));
-  // // define logical volumes
-  // G4LogicalVolume* CuFilling_log = new G4LogicalVolume(CuFilling, copper_mat,
-  // "CuFilling_log", 0, 0, 0);
-
-  // // place volumes
-  // new
-  // G4PVPlacement(0,G4ThreeVector(0.,0.,zPosCuShielding+zSizeCuShielding/2.-zSizeSampleChamber/2.+0.001*cm),CuFilling_log,"CuFilling",expHall_log,false,0);
-  // CuFilling_log->SetVisAttributes(green);
-  // G4cout << "height of the copper tower: " << heightCuHsg_tube_filled/2./cm
-  // << " cm" << G4endl;
-
   //____Place CAD sample _____________________________________________
   G4RotationMatrix rmr;
   rmr.rotateX(0);
@@ -1083,34 +1061,34 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   chondrite_EH->AddElement(Na, fractionmass = 0.0072);
   chondrite_EH->AddElement(Cr, fractionmass = 0.0033);
 
-// G4VSolid * sample_solid;
-// G4LogicalVolume * sample_logical;
-// G4VPhysicalVolume * sample_physical;
+  // G4VSolid * sample_solid;
+  // G4LogicalVolume * sample_logical;
+  // G4VPhysicalVolume * sample_physical;
 
-// G4ThreeVector sample_pos = G4ThreeVector(-25,20,-2.*mm);
-// CADMesh *mesh_top = new
-// CADMesh("../sample_geometries/apdRingOben_ohneLoch_fein_ascii.STL", mm,
-// sample_pos, false); CADMesh *mesh_top = new
-// CADMesh("sample_geometries/test_basalt5.stl", mm, sample_pos, false); banana
-// G4ThreeVector sample_pos = G4ThreeVector(-25,20,-3.*mm);
-// CADMesh *mesh_top = new CADMesh("sample_geometries/banana.stl", mm,
-// sample_pos, false);
-//
-// sample_solid = mesh_top->TessellatedMesh();
-// sample_logical = new G4LogicalVolume(sample_solid, chondrite_EH,
-// "sample_logical", 0, 0, 0); sample_physical = new
-// G4PVPlacement(G4Transform3D(rmr, sample_pos) , sample_logical,
-// "sample",expHall_log, false, 0); const G4double sample_mass =
-// sample_logical->GetMass(false, false)/g; G4cout <<
-// "\n\n############################" << G4endl; G4cout << "Sample mass: " <<
-// sample_mass << " g" << G4endl; G4cout << "############################\n" <<
-// G4endl;
+  // G4ThreeVector sample_pos = G4ThreeVector(-25,20,-2.*mm);
+  // CADMesh *mesh_top = new
+  // CADMesh("../sample_geometries/apdRingOben_ohneLoch_fein_ascii.STL", mm,
+  // sample_pos, false); CADMesh *mesh_top = new
+  // CADMesh("sample_geometries/test_basalt5.stl", mm, sample_pos, false); banana
+  // G4ThreeVector sample_pos = G4ThreeVector(-25,20,-3.*mm);
+  // CADMesh *mesh_top = new CADMesh("sample_geometries/banana.stl", mm,
+  // sample_pos, false);
 
-//____Place sample from *icc file_____________________________________________
-//#include "../sample_geometries/xenonnt_materials/nT_HVconnectors.c"
-//#include "../sample_geometries/xenonnt_materials/nT_Cu_wires_FSRs.c"
-//#include "../sample_geometries/xenonnt_materials/nT_PMTbases.c"
-#include "../sample_geometries/xenonnt_materials/nT_PMTs_holders_10.c"
+  // sample_solid = mesh_top->TessellatedMesh();
+  // sample_logical = new G4LogicalVolume(sample_solid, chondrite_EH,
+  // "sample_logical", 0, 0, 0); sample_physical = new
+  // G4PVPlacement(G4Transform3D(rmr, sample_pos) , sample_logical,
+  // "sample",expHall_log, false, 0); const G4double sample_mass =
+  // sample_logical->GetMass(false, false)/g; G4cout <<
+  // "\n\n############################" << G4endl; G4cout << "Sample mass: " <<
+  // sample_mass << " g" << G4endl; G4cout << "############################\n" <<
+  // G4endl;
+
+  //____Place sample from *icc file_____________________________________________
+  //#include "../sample_geometries/xenonnt_materials/nT_HVconnectors.c"
+  //#include "../sample_geometries/xenonnt_materials/nT_Cu_wires_FSRs.c"
+  //#include "../sample_geometries/xenonnt_materials/nT_PMTbases.c"
+  #include "../sample_geometries/xenonnt_materials/nT_PMTs_holders_10.c"
   //#include "../sample_geometries/nT_PTFE_trilobed_holders.c"
 
   //____PCBs_parallelepiped_____________________________________________
