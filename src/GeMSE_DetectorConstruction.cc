@@ -362,25 +362,6 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   // G4double zPosCuShieldingGap     =
   // zPosCuPlateThin_mov-zSizeCuPlateThin_mov/2.-zSizeCuShieldingGap/2.;
 
-  // +++++++ CBSS2 calibration source ++++++++++++++++++++++++++++++++++
-  /*
-  // PS container (Semadeni)
-  G4double outerRadiusPS = 3.83*cm;
-  G4double innerRadiusPS = 3.68*cm;
-  G4double heightPS = 3.9*cm;
-  G4double heightPS_top = 0.12*cm;
-  G4double heightPS_bottom = 0.15*cm;
-  G4double dPS_bottom = 0.1*cm;
-
-  G4double zPosPS = zPosEndcap+heightEndcap/2.+heightPS/2.+overlap;
-
-  // source
-  G4double heightCBSS2 = 2.82*cm;
-
-  G4double zPosCBSS2 =
-  zPosEndcap+heightEndcap/2.+heightCBSS2/2.+dPS_bottom+heightPS_bottom+2.*overlap;
-  */
-
   // ======== Important dimensions ========
   G4cout << "############################" << G4endl;
   G4cout << "z-position of endcap: " << (zPosEndcap + heightEndcap / 2.) / cm
@@ -392,7 +373,6 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
          << " cm" << G4endl;
   // G4cout << "z-position of gap center: " <<
   // (zPosOuterPbShielding+zSizeOuterPbShielding/2.+d_lid/2.)/cm << " cm" <<
-  // G4endl; G4cout << "z-position of source: " << zPosCBSS2/cm << " cm" <<
   // G4endl;
   G4cout << "############################" << G4endl;
   // ======================================
@@ -438,41 +418,6 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   G4LogicalVolume* source_log = new
   G4LogicalVolume(source_sub,pmma_mat,"source_log",0,0,0); new
   G4PVPlacement(0,G4ThreeVector(0,0,4.75*cm),source_log,"source",expHall_log,false,0);
-  */
-
-  // +++++++ CBSS2 calibration source ++++++++++++++++++++++++++++++++++
-  /*
-  // PS container (Semadeni)
-  G4Tubs*	PSwall_tube	= new G4Tubs	("PSwall_tube", innerRadiusPS,
-  outerRadiusPS, heightPS/2., startAngle, spanningAngle); G4Tubs*
-  PSbottom_tube	= new G4Tubs	("PSbottom_tube", 0.*cm, innerRadiusPS+0.001*cm,
-  heightPS_bottom/2., startAngle, spanningAngle);
-  G4Tubs*	PStop_tube      = new G4Tubs	("PStop_tube", 0.*cm,
-  innerRadiusPS+0.001*cm, heightPS_top/2., startAngle, spanningAngle);
-
-  G4UnionSolid* PS_uni1       = new
-  G4UnionSolid("PS_uni1",PSwall_tube,PStop_tube,0,G4ThreeVector(0.,0.,heightPS/2.-heightPS_top/2.-0.001*cm));
-  G4UnionSolid* PS_uni2       = new
-  G4UnionSolid("PS_uni2",PS_uni1,PSbottom_tube,0,G4ThreeVector(0.,0.,-heightPS/2.+heightPS_bottom/2.+dPS_bottom));
-
-  // source
-  G4Tubs*	CBSS2_tube	= new G4Tubs	("CBSS2_tube", 0.*cm,
-  innerRadiusPS-overlap, heightCBSS2/2., startAngle, spanningAngle);
-
-  // define logical volumes
-  G4LogicalVolume* 	PS_log		= new G4LogicalVolume
-  (PS_uni2,ps_mat,"PS_log",0,0,0); G4LogicalVolume* 	CBSS2_log	= new
-  G4LogicalVolume  (CBSS2_tube,matrix_mat,"CBSS2_log",0,0,0);
-
-  // place volumes
-  new G4PVPlacement
-  (0,G4ThreeVector(0.,0.,zPosPS),PS_log,"PS",expHall_log,false,0); new
-  G4PVPlacement
-  (0,G4ThreeVector(0.,0.,zPosCBSS2),CBSS2_log,"CBSS2",expHall_log,false,0);
-
-  // set colors
-  PS_log->SetVisAttributes(lightblue);
-  CBSS2_log->SetVisAttributes(violet);
   */
 
   // +++++++ parts of the shielding ++++++++++++++++++++++++++++++++++
