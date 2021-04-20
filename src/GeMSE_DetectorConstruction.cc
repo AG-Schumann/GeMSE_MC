@@ -1164,13 +1164,11 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   // G4endl;
 
   //____Place sample from *icc file_____________________________________________
-  //#include "PMTholders_10PMTs.icc"
-  //#include "PMTholders_9PMTs.icc"
-  //#include "../sample_geometries/xenonnt_materials/nT_HVconnectors.icc"
-  //#include "../sample_geometries/xenonnt_materials/nT_Cu_wires_FSRs.icc"
-  //#include "../sample_geometries/xenonnt_materials/nT_PMTbases.icc"
-  #include "../sample_geometries/xenonnt_materials/nT_PMTs_holders_10.icc"
-  //#include "../sample_geometries/nT_PTFE_trilobed_holders.icc"
+  //#include "../sample_geometries/xenonnt_materials/nT_HVconnectors.c"
+  //#include "../sample_geometries/xenonnt_materials/nT_Cu_wires_FSRs.c"
+  //#include "../sample_geometries/xenonnt_materials/nT_PMTbases.c"
+  #include "../sample_geometries/xenonnt_materials/nT_PMTs_holders_10.c"
+  //#include "../sample_geometries/nT_PTFE_trilobed_holders.c"
 
   //____PCBs_parallelepiped_____________________________________________
   // G4Material *Cirlex = new G4Material("Cirlex", 1.43 * g / cm3, 4,
