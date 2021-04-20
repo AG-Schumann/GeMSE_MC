@@ -1172,7 +1172,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
 //#include "PMTholders_10PMTs.icc"
 //#include "PMTholders_9PMTs.icc"
 //#include "../sample_geometries/nT_HVconnectors.icc"
-#include "../sample_geometries/nT_Cu_wires_FSRs.icc"
+#include "../sample_geometries/xenonnt_materials/nT_Cu_wires_FSRs.icc"
   //#include "../sample_geometries/nT_PMTbases.icc"
   //#include "../sample_geometries/nT_PTFE_trilobed_holders.icc"
 

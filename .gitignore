@@ -16,3 +16,5 @@ build
 *_ACLiC_*
 *.root
 
+# Visualization
+*.wrl
