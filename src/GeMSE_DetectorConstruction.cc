@@ -420,7 +420,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
 
   // +++++++ parts of the shielding ++++++++++++++++++++++++++++++++++
 
-  // +++ BOTTOM PART +++
+  //_______BOTTOM SHIELDING_______
 
   // Sample cavity
   G4Box* SampleCavity_box =
@@ -506,7 +506,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
                     outerPbShielding_log, "outerPbShielding", expHall_log,
                     false, 0);
 
-  // +++ FIXED TOP PART +++
+  //_______FIXED TOP SHIELDING_______
 
   // Cu plate
   G4Box* CuPlateFixed_box =
@@ -525,10 +525,8 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
       new G4LogicalVolume(innerPbShieldingFixed_box, lead_mat,
                           "innerPbShieldingFixed_log", 0, 0, 0);
   new G4PVPlacement(
-      0,
-      G4ThreeVector(0., yPosInnerPbShielding_fixed, zPosInnerPbShielding_fixed),
-      innerPbShieldingFixed_log, "innerPbShieldingFixed", expHall_log, false,
-      0);
+      0, G4ThreeVector(0., yPosInnerPbShielding_fixed, zPosInnerPbShielding_fixed),
+      innerPbShieldingFixed_log, "innerPbShieldingFixed", expHall_log, false, 0);
 
   // Outer Pb layer
   G4Box* outerPbShieldingFixed_box = new G4Box(
@@ -553,12 +551,10 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
       new G4LogicalVolume(outerPbShieldingFixed_sub, lead_mat,
                           "outerPbShieldingFixed_log", 0, 0, 0);
   new G4PVPlacement(
-      0,
-      G4ThreeVector(0., yPosOuterPbShielding_fixed, zPosOuterPbShielding_fixed),
-      outerPbShieldingFixed_log, "outerPbShieldingFixed", expHall_log, false,
-      0);
+      0, G4ThreeVector(0., yPosOuterPbShielding_fixed, zPosOuterPbShielding_fixed),
+      outerPbShieldingFixed_log, "outerPbShieldingFixed", expHall_log, false, 0);
 
-  // +++ MOVABLE TOP PART +++
+  //_______MOVABLE TOP SHIELDING_______
 
   // Cu plate
   G4Box* CuPlateThinMov_box =
@@ -590,9 +586,6 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   G4Box* innerPbShieldingTopMov_box = new G4Box(
       "innerPbShieldingTopMov_box", xSizeInnerPbShieldingTop_mov / 2.,
       ySizeInnerPbShieldingTop_mov / 2., zSizeInnerPbShieldingTop_mov / 2.);
-  // G4Box* innerPbShieldingTopMov_box = new G4Box("innerPbShieldingTopMov_box",
-  // xSizeInnerPbShieldingTop_mov/2.+0.001*cm,
-  // ySizeInnerPbShieldingTop_mov/2.+0.001*cm,zSizeInnerPbShieldingTop_mov/2.);
 
   G4UnionSolid* innerPbShieldingMov_uni1 = new G4UnionSolid(
       "innerPbShieldingMov_uni1", innerPbShieldingTopMov_box,
@@ -647,12 +640,6 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
       (zSizeInnerPbShieldingTop_mov + zSizeCuPlateThick_mov -
        zSizeCuPlateThin_mov) /
           2);
-  // G4Box* outerPbShieldingHoleSideMov_box = new
-  // G4Box("outerPbShieldingHoleSideMov",xSizeInnerPbShieldingSide_mov/2.+0.005*cm,ySizeInnerPbShieldingSide_mov/2.+0.005*cm,zSizeInnerPbShieldingSide_mov/2.+0.005*cm);
-  // G4Box* outerPbShieldingHoleBackMov_box = new
-  // G4Box("outerPbShieldingHoleSideMov_box",xSizeInnerPbShieldingBack_mov/2.+0.005*cm,ySizeInnerPbShieldingBack_mov/2.+0.005*cm,zSizeInnerPbShieldingBack_mov/2.+0.005*cm);
-  // G4Box* outerPbShieldingHoleTopMov_box = new
-  // G4Box("outerPbShieldingHoleTopMov_box",xSizeInnerPbShieldingTop_mov/2.+0.005*cm,ySizeInnerPbShieldingTop_mov/2.+0.005*cm,(zSizeInnerPbShieldingTop_mov+zSizeCuPlateThick_mov-zSizeCuPlateThin_mov)/2.+0.005*cm);
 
   G4SubtractionSolid* outerPbShieldingMov_sub1 = new G4SubtractionSolid(
       "outerPbShieldingMov_sub1", outerPbShieldingMov_box,
@@ -703,7 +690,8 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   G4LogicalVolume* CuShieldingGap_log = new G4LogicalVolume(
       CuShieldingGap_box, copper_mat, "CuShieldingGap_log", 0, 0, 0);
   // new G4PVPlacement
-  // (0,G4ThreeVector(xPosCuShieldingGap,yPosCuShieldingGap,zPosCuShieldingGap),CuShieldingGap_log,"CuShieldingGap",expHall_log,false,0);
+  // (0,G4ThreeVector(xPosCuShieldingGap,yPosCuShieldingGap,zPosCuShieldingGap),
+  //  CuShieldingGap_log,"CuShieldingGap",expHall_log,false,0);
 
   // set colors
   CuShielding_log->SetVisAttributes(orange);
@@ -716,13 +704,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   outerPbShieldingFixed_log->SetVisAttributes(blue);
   outerPbShieldingMov_log->SetVisAttributes(blue);
 
-  /////////////
-  /////////////
-  /////////////
-  /////////////
-  /////////////
-
-  // +++++++ parts of Ge detector housing ++++++++++++++++++++++++++++++++++
+  //_______Ge HOUSING_______
 
   G4Tubs* Endcap_tube =
       new G4Tubs("Endcap_tube", 0. * cm, outerRadiusEndcap - 0.005 * cm,
@@ -751,7 +733,6 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
       new G4Tubs("Coldfinger_tube", 0. * cm, outerRadiusColdfinger,
                  heightArm / 2., startAngle, spanningAngle);
 
-  // combine volumes
   G4UnionSolid* CuHsg_bottom_uni = new G4UnionSolid(
       "CuHsg_bottom_uni", CuHsg_bottom_tube1, CuHsg_bottom_tube2, 0,
       G4ThreeVector(0., 0., -(heightCuHsg_bottom - dCuHsg_bottom) / 2.));
@@ -775,16 +756,12 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
       "CuHsg_uni2", CuHsg_uni1, CuHsg_bottom_uni2, 0,
       G4ThreeVector(
           0., 0., -heightCuHsg + heightEndcap / 2. - heightCuHsg_bottom / 2.));
-  // G4UnionSolid* CuHsg_uni2	= new
-  // G4UnionSolid("CuHsg_uni2",CuHsg_uni1,CuHsg_bottom_uni2,0,G4ThreeVector(0.,0.,-heightCuHsg+heightEndcap/2.-heightCuHsg_bottom/2.+0.005*cm));
 
-  // define logical volumes
   G4LogicalVolume* CuHsg_log =
       new G4LogicalVolume(CuHsg_uni2, copper_mat, "CuHsg_log", 0, 0, 0);
   G4LogicalVolume* Coldfinger_log = new G4LogicalVolume(
       Coldfinger_tube, copper_mat, "Coldfinger_log", 0, 0, 0);
 
-  // place volumes
   new G4PVPlacement(0, G4ThreeVector(0., 0., zPosEndcap), CuHsg_log, "CuHsg",
                     expHall_log, false, 0);
   new G4PVPlacement(G4Transform3D(rm2, G4ThreeVector(0., yPosArm, zPosArm)),
@@ -794,9 +771,9 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   CuHsg_log->SetVisAttributes(orange);
   Coldfinger_log->SetVisAttributes(orange);
 
-  // +++++++ parts of Ge detector holder ++++++++++++++++++++++++++++++++++
+  //_______Ge DETECTOR HOLDER_______
 
-  // ++++++++++++++ copper holder
+  // Copper holder
   G4Tubs* DetHolder_tube =
       new G4Tubs("DetHolder_tube", innerRadiusDetHolder, outerRadiusDetHolder,
                  heightDetHolder / 2. + overlap, startAngle, spanningAngle);
@@ -826,7 +803,6 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
                  outerRadiusSupportHolder, heightSupportHolder2 / 2.,
                  startAngle, spanningAngle);
 
-  // join parts of detector holder
   G4UnionSolid* DetHolder_uni1 = new G4UnionSolid(
       "DetHolder_uni1", DetHolder_tube, DetHolder_bottom_tube1, 0,
       G4ThreeVector(0., 0., -(heightDetHolder + heightDetHolder_bottom1) / 2.));
@@ -858,7 +834,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
           0., 0.,
           (heightDetHolder / 2. - heightSupportHolder2 / 2. - d_Support2)));
 
-  // ++++++++++++++ teflon holder
+  // Teflon holder
   G4Tubs* TeflonHolder_top_tube =
       new G4Tubs("TeflonHolder_top_tube", 0. * cm,
                  outerRadiusGe + d_TefHolder_side + 0.001 * cm,
@@ -868,19 +844,16 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
       outerRadiusGe + d_TefHolder_side,
       (heightTeflonHolder - d_TefHolder_top) / 2., startAngle, spanningAngle);
 
-  // combine volumes
   G4UnionSolid* TeflonHolder_uni = new G4UnionSolid(
       "TeflonHolder_uni", TeflonHolder_top_tube, TeflonHolder_side_tube, 0,
       G4ThreeVector(0., 0., -(heightTeflonHolder - d_TefHolder_top) / 2.));
 
-  // define logical volumes
   G4LogicalVolume* DetHolder_log =
       new G4LogicalVolume(DetHolder_uni6, copper_mat, "DetHolder_log", 0, 0, 0);
 
   G4LogicalVolume* TeflonHolder_log = new G4LogicalVolume(
       TeflonHolder_uni, teflon_mat, "TeflonHolder_log", 0, 0, 0);
 
-  // place volumes
   new G4PVPlacement(0, G4ThreeVector(0., 0., zPosDetHolder), DetHolder_log,
                     "DetHolder", expHall_log, false, 0);
 
@@ -889,7 +862,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
 
   DetHolder_log->SetVisAttributes(orange);
 
-  // +++++++ parts of Ge detector ++++++++++++++++++++++++++++++++++
+  //_______Ge DETECTOR_______
 
   // inner part (HPGe)
   G4Tubs* GeIn_tube =
@@ -930,7 +903,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   G4UnionSolid("GeIn_uni5",GeIn_uni4,GeBottomIn_tube,0,G4ThreeVector(0.,0.,-(heightGe/2.-d_LiContact/2.)));
   */
 
-  // outer electrode (Li contact)
+  // Outer electrode (Li contact)
   G4Tubs* LiWindow_tube =
       new G4Tubs("LiWindow_tube", 0. * cm, outerRadiusGe, d_LiContact / 2.,
                  startAngle, spanningAngle);
@@ -984,14 +957,12 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   // G4UnionSolid*  		Ge_hole	= new
   // G4UnionSolid("Ge_hole",Hole_tube,Hole_cap,G4Transform3D(rm1,G4ThreeVector(0.,0.,heightHole/2.)));
 
-  // define logical volumes
   G4LogicalVolume* Ge_log =
       new G4LogicalVolume(GeIn_sub, germanium_mat, "Ge_log", 0, 0, 0);
 
   G4LogicalVolume* LiContact_log = new G4LogicalVolume(
       LiContact_uni, germanium_mat, "LiContact_log", 0, 0, 0);
 
-  // place volumes
   new G4PVPlacement(0, G4ThreeVector(0., 0., -d_LiContact / 2.), Ge_log,
                     "Ge_detector", expHall_log, false, 0);
   new G4PVPlacement(0, G4ThreeVector(0., 0., (heightGe - d_LiContact) / 2.),
@@ -1001,8 +972,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   Ge_log->SetVisAttributes(grey);
   LiContact_log->SetVisAttributes(blue);
 
-  // +++++++ vacuum inside Ge detector housing
-  // ++++++++++++++++++++++++++++++++++
+  //_______VACUUM IN Ge DETECTOR HOUSING_______
 
   G4Tubs* VacuumDet_tube =
       new G4Tubs("VacuumDet_tube", 0. * cm, innerRadiusCuHsg,
@@ -1033,17 +1003,14 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
       "VacuumDet_sub5", VacuumDet_sub4, Coldfinger_tube,
       G4Transform3D(rm2, G4ThreeVector(0., yPosArm, zPosArm - zPosVacuumDet)));
 
-  // define logical volumes
   G4LogicalVolume* VacuumDet_log =
       new G4LogicalVolume(VacuumDet_sub5, vacuum_mat, "VacuumDet_log", 0, 0, 0);
 
-  // place volumes
-  // new G4PVPlacement
-  // (0,G4ThreeVector(0.,0.,zPosVacuumDet),VacuumDet_log,"VacuumDet",CuHsg_log,false,0);
   new G4PVPlacement(0, G4ThreeVector(0., 0., zPosVacuumDet), VacuumDet_log,
                     "VacuumDet", expHall_log, false, 0);
 
-  //____Place CAD sample _____________________________________________
+  //_______CAD SAMPLE_______
+   
   G4RotationMatrix rmr;
   rmr.rotateX(0);
   rmr.rotateZ(0);
@@ -1084,25 +1051,17 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   // sample_mass << " g" << G4endl; G4cout << "############################\n" <<
   // G4endl;
 
-  //____Place sample from *icc file_____________________________________________
-  //#include "../sample_geometries/xenonnt_materials/nT_HVconnectors.c"
-  //#include "../sample_geometries/xenonnt_materials/nT_Cu_wires_FSRs.c"
-  //#include "../sample_geometries/xenonnt_materials/nT_PMTbases.c"
+  //_______SAMPLE FROM sample_geometries FOLDER___________
   #include "../sample_geometries/xenonnt_materials/nT_PMTs_holders_10.c"
-  //#include "../sample_geometries/nT_PTFE_trilobed_holders.c"
-
+  
   //____Overlap check___________________________________________________________
   OverlapCheck();
 
   //____Define sensitive detector_______________________________________________
   G4SDManager* SDman = G4SDManager::GetSDMpointer();
-
-  // Ge detector
   G4String SDname = "Ge_detector";
   GeMSE_SensitiveDetector* aSD = new GeMSE_SensitiveDetector(SDname);
-
   SDman->AddNewDetector(aSD);
-
   Ge_log->SetSensitiveDetector(aSD);
 
   return physiWorld;
