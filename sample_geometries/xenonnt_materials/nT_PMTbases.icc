@@ -9,6 +9,7 @@
 // Top block: 692 g
 
 // Materials
+G4Element* N  = nist->FindOrBuildElement("N");
 G4Material *Cirlex = new G4Material("Cirlex", 1.43 * g / cm3, 4, kStateSolid);
 Cirlex->AddElement(C, 22);
 Cirlex->AddElement(H, 10);
@@ -61,6 +62,7 @@ new G4PVPlacement(0,
                expHall_log, false,0);
 
 // Visualization attributes
+G4VisAttributes* violet = new G4VisAttributes(G4Colour(0.5,0.0,1.0));
 bases_sidebrick1_log->SetVisAttributes(violet);
 bases_sidebrick2_log->SetVisAttributes(violet);
 bases_topbrick_log->SetVisAttributes(violet);

@@ -40,6 +40,7 @@ new G4PVPlacement(0,
                expHall_log, false,0);
 
 // Visualization attributes
+G4VisAttributes* violet = new G4VisAttributes(G4Colour(0.5,0.0,1.0));
 hvConnectorsBrick_log->SetVisAttributes(violet);
 
 // Output sample mass

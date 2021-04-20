@@ -110,24 +110,19 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   SS304LSteel->AddElement(Si, 0.01);
 
   //======= define colors ==============================================
-  // G4VisAttributes* red		= new
-  // G4VisAttributes(G4Colour(1.0,0.0,0.0)); G4VisAttributes* violet	= new
-  // G4VisAttributes(G4Colour(0.5,0.0,1.0));
-  // G4VisAttributes* pink		= new
-  // G4VisAttributes(G4Colour(1.0,0.0,1.0)); G4VisAttributes* black	= new
-  // G4VisAttributes(G4Colour(1.0,1.0,1.0));
-  // G4VisAttributes* lightblue  	= new
-  // G4VisAttributes(G4Colour(0.0,0.5,1.0));
-  // G4VisAttributes* yellow     	= new
-  // G4VisAttributes(G4Colour(1.0,1.0,0.0));
+  // G4VisAttributes* red = new G4VisAttributes(G4Colour(1.0,0.0,0.0));
+  // G4VisAttributes* violet = new G4VisAttributes(G4Colour(0.5,0.0,1.0));
+  // G4VisAttributes* pink = new G4VisAttributes(G4Colour(1.0,0.0,1.0));
+  // G4VisAttributes* black = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
+  // G4VisAttributes* lightblue = new G4VisAttributes(G4Colour(0.0,0.5,1.0));
+  // G4VisAttributes* yellow = new G4VisAttributes(G4Colour(1.0,1.0,0.0));
   G4VisAttributes* orange = new G4VisAttributes(G4Colour(1.0, 0.4, 0.2));
-  // G4VisAttributes* purple     	= new
-  // G4VisAttributes(G4Colour(0.7,0.0,0.7)); G4VisAttributes* green	= new
-  // G4VisAttributes(G4Colour(0.0,1.0,0.0));
+  // G4VisAttributes* purple = new G4VisAttributes(G4Colour(0.7,0.0,0.7));
+  // G4VisAttributes* green = new G4VisAttributes(G4Colour(0.0,1.0,0.0));
   G4VisAttributes* blue = new G4VisAttributes(G4Colour(0.0, 0.0, 1.0));
   G4VisAttributes* cyan = new G4VisAttributes(G4Colour(0.0, 1.0, 1.0));
   G4VisAttributes* grey = new G4VisAttributes(G4Colour(0.5, 0.5, 0.5));
-  G4VisAttributes* brown = new G4VisAttributes(G4Colour(0.7, 0.4, 0.1));
+  //G4VisAttributes* brown = new G4VisAttributes(G4Colour(0.7, 0.4, 0.1));
 
   //======= define dimensions ============================================
   // overlap for boolean solids
@@ -1145,35 +1140,36 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   chondrite_EH->AddElement(Na, fractionmass = 0.0072);
   chondrite_EH->AddElement(Cr, fractionmass = 0.0033);
 
-// G4VSolid * sample_solid;
-// G4LogicalVolume * sample_logical;
-// G4VPhysicalVolume * sample_physical;
+  // G4VSolid * sample_solid;
+  // G4LogicalVolume * sample_logical;
+  // G4VPhysicalVolume * sample_physical;
 
-// G4ThreeVector sample_pos = G4ThreeVector(-25,20,-2.*mm);
-// CADMesh *mesh_top = new
-// CADMesh("../sample_geometries/apdRingOben_ohneLoch_fein_ascii.STL", mm,
-// sample_pos, false); CADMesh *mesh_top = new
-// CADMesh("sample_geometries/test_basalt5.stl", mm, sample_pos, false); banana
-// G4ThreeVector sample_pos = G4ThreeVector(-25,20,-3.*mm);
-// CADMesh *mesh_top = new CADMesh("sample_geometries/banana.stl", mm,
-// sample_pos, false);
-//
-// sample_solid = mesh_top->TessellatedMesh();
-// sample_logical = new G4LogicalVolume(sample_solid, chondrite_EH,
-// "sample_logical", 0, 0, 0); sample_physical = new
-// G4PVPlacement(G4Transform3D(rmr, sample_pos) , sample_logical,
-// "sample",expHall_log, false, 0); const G4double sample_mass =
-// sample_logical->GetMass(false, false)/g; G4cout <<
-// "\n\n############################" << G4endl; G4cout << "Sample mass: " <<
-// sample_mass << " g" << G4endl; G4cout << "############################\n" <<
-// G4endl;
+  // G4ThreeVector sample_pos = G4ThreeVector(-25,20,-2.*mm);
+  // CADMesh *mesh_top = new
+  // CADMesh("../sample_geometries/apdRingOben_ohneLoch_fein_ascii.STL", mm,
+  // sample_pos, false); CADMesh *mesh_top = new
+  // CADMesh("sample_geometries/test_basalt5.stl", mm, sample_pos, false); banana
+  // G4ThreeVector sample_pos = G4ThreeVector(-25,20,-3.*mm);
+  // CADMesh *mesh_top = new CADMesh("sample_geometries/banana.stl", mm,
+  // sample_pos, false);
+  //
+  // sample_solid = mesh_top->TessellatedMesh();
+  // sample_logical = new G4LogicalVolume(sample_solid, chondrite_EH,
+  // "sample_logical", 0, 0, 0); sample_physical = new
+  // G4PVPlacement(G4Transform3D(rmr, sample_pos) , sample_logical,
+  // "sample",expHall_log, false, 0); const G4double sample_mass =
+  // sample_logical->GetMass(false, false)/g; G4cout <<
+  // "\n\n############################" << G4endl; G4cout << "Sample mass: " <<
+  // sample_mass << " g" << G4endl; G4cout << "############################\n" <<
+  // G4endl;
 
-//____Place sample from *icc file_____________________________________________
-//#include "PMTholders_10PMTs.icc"
-//#include "PMTholders_9PMTs.icc"
-//#include "../sample_geometries/nT_HVconnectors.icc"
-#include "../sample_geometries/xenonnt_materials/nT_Cu_wires_FSRs.icc"
-  //#include "../sample_geometries/nT_PMTbases.icc"
+  //____Place sample from *icc file_____________________________________________
+  //#include "PMTholders_10PMTs.icc"
+  //#include "PMTholders_9PMTs.icc"
+  //#include "../sample_geometries/xenonnt_materials/nT_HVconnectors.icc"
+  //#include "../sample_geometries/xenonnt_materials/nT_Cu_wires_FSRs.icc"
+  //#include "../sample_geometries/xenonnt_materials/nT_PMTbases.icc"
+  #include "../sample_geometries/xenonnt_materials/nT_PMTs_holders_10.icc"
   //#include "../sample_geometries/nT_PTFE_trilobed_holders.icc"
 
   //____PCBs_parallelepiped_____________________________________________
