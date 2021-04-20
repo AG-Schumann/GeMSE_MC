@@ -7,9 +7,7 @@
 class GeMSE_ParticleSource;
 
 class G4ParticleTable;
-//#if GEANTVERSION>=10
 class G4IonTable;
-//#endif
 class G4UIcommand;
 class G4UIdirectory;
 class G4UIcmdWithoutParameter;
@@ -32,9 +30,7 @@ class GeMSE_ParticleSourceMessenger : public G4UImessenger {
  private:
   GeMSE_ParticleSource *m_pParticleSource;
   G4ParticleTable *m_pParticleTable;
-  //#if GEANTVERSION>=10
   G4IonTable *m_pIonTable;
-  //#endif
 
   G4UIdirectory *m_pDirectory;
 

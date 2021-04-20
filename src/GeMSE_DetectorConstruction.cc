@@ -4,9 +4,7 @@
 
 #include "globals.hh"
 
-//#if GEANTVERSION>=10
 #include <G4SystemOfUnits.hh>
-//#endif
 #include "G4Box.hh"
 #include "G4LogicalBorderSurface.hh"
 #include "G4LogicalSkinSurface.hh"

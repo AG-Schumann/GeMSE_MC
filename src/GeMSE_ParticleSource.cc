@@ -10,9 +10,7 @@ using std::ifstream;
 using std::stringstream;
 using std::vector;
 
-//#if GEANTVERSION>=10
 #include <G4SystemOfUnits.hh>
-//#endif
 #include <G4Event.hh>
 #include <G4IonTable.hh>
 #include <G4Ions.hh>

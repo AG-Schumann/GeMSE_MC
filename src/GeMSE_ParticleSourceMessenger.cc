@@ -4,10 +4,8 @@
 #include <fstream>
 #include <iomanip>
 
-//#if GEANTVERSION>=10
 #include <G4IonTable.hh>
 #include <G4SystemOfUnits.hh>
-//#endif
 #include <G4Geantino.hh>
 #include <G4ParticleTable.hh>
 #include <G4ThreeVector.hh>
@@ -27,9 +25,7 @@ GeMSE_ParticleSourceMessenger::GeMSE_ParticleSourceMessenger(
     GeMSE_ParticleSource *pParticleSource)
     : m_pParticleSource(pParticleSource), m_bShootIon(false) {
   m_pParticleTable = G4ParticleTable::GetParticleTable();
-  //#if GEANTVERSION>=10
   m_pIonTable = G4IonTable::GetIonTable();
-  //#endif
 
   // create directory
   m_pDirectory = new G4UIdirectory("/GeMSE/gun/");
@@ -262,12 +258,8 @@ void GeMSE_ParticleSourceMessenger::SetNewValue(G4UIcommand *command,
 
       G4ParticleDefinition *ion;
 
-      //#if GEANTVERSION>=10
       ion = m_pIonTable->GetIon(m_iAtomicNumber, m_iAtomicMass,
                                 m_dIonExciteEnergy);
-      //#else
-      // ion = m_pParticleTable->GetIon(m_iAtomicNumber, m_iAtomicMass,
-      // m_dIonExciteEnergy); #endif
 
       if (ion == 0) {
         G4cout << "Ion with Z=" << m_iAtomicNumber;

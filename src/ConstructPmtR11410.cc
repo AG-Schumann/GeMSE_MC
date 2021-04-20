@@ -7,9 +7,7 @@
 #include <string.h>
 #include "globals.hh"
 
-//#if GEANTVERSION>=10
 #include <G4SystemOfUnits.hh>
-//#endif
 #include "G4Box.hh"
 #include "G4Colour.hh"
 #include "G4Cons.hh"
