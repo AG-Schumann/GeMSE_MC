@@ -1091,19 +1091,6 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   #include "../sample_geometries/xenonnt_materials/nT_PMTs_holders_10.c"
   //#include "../sample_geometries/nT_PTFE_trilobed_holders.c"
 
-  //____PCBs_parallelepiped_____________________________________________
-  // G4Material *Cirlex = new G4Material("Cirlex", 1.43 * g / cm3, 4,
-  // kStateSolid); Cirlex->AddElement(C, 22); Cirlex->AddElement(H, 10);
-  // Cirlex->AddElement(N, 2);
-  // Cirlex->AddElement(O, 5);
-  // #include "PCBs_28.icc"
-  // const G4double pcbs_i_mass = 2*PCBs7_i_log->GetMass(false, false)/g;
-  // const G4double pcbs_iii_mass = 2*PCBs7_iii_log->GetMass(false, false)/g;
-  // const G4double pcbs_mass_total = pcbs_i_mass + pcbs_iii_mass;
-  // G4cout << "\n\n############################" << G4endl;
-  // G4cout << "Sample mass: " << pcbs_mass_total << " g" << G4endl;
-  // G4cout << "############################\n" << G4endl;
-
   //____Overlap check___________________________________________________________
   OverlapCheck();
 

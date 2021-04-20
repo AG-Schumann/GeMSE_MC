@@ -3,6 +3,13 @@
 /////////////////////////////////////////////////////////////////////////
 
 // 28 PCBs in total
+// Simulated as parallelepiped
+
+// Material
+G4Material *Cirlex = new G4Material("Cirlex", 1.43 * g / cm3, 4, kStateSolid);
+Cirlex->AddElement(C, 22); Cirlex->AddElement(H, 10);
+Cirlex->AddElement(N, 2);
+Cirlex->AddElement(O, 5); 
 
 // Dimensions of piles of 7 PCBs (GeMSE sample on 01.06.2018)
 G4double pcbs_height = 286. * mm;
@@ -46,6 +53,16 @@ new G4PVPlacement(0,
                                 47.4 * mm),
                   PCBs7_iv_log, "PCBs7_iv", expHall_log, false, 0);
 
+// Visualization attributes
 PCBs7_i_log->SetVisAttributes(violet);
 PCBs7_iii_log->SetVisAttributes(violet);
 PCBs7_iv_log->SetVisAttributes(violet);
+
+// Mass output
+const G4double pcbs_i_mass = 2*PCBs7_i_log->GetMass(false, false)/g;
+const G4double pcbs_iii_mass = 2*PCBs7_iii_log->GetMass(false, false)/g;
+const G4double pcbs_mass_total = pcbs_i_mass + pcbs_iii_mass;
+G4cout << "\n\n############################" << G4endl;
+G4cout << "Sample mass: " << pcbs_mass_total << " g" << G4endl;
+G4cout << "############################\n" << G4endl;
+
