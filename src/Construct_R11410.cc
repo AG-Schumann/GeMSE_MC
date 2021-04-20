@@ -79,19 +79,18 @@ G4LogicalVolume* GeMSE_DetectorConstruction::ConstructPmtR11410() {
   G4Element* S = new G4Element(name = "Sulfur", symbol = "S", z = 16.,
                                a = 32.066 * g / mole);
   // G4Element* Na     = new G4Element(name="Sodium", symbol="Na", z=11.,
-  // a=22.989769	*g/mole); G4Element* Mg     = new G4Element(name="Magnesium",
-  // symbol="Mg", z=12., a=24.3050*g/mole); G4Element* Ca     = new
-  // G4Element(name="Calcium", symbol="Ca", z=20., a=40.078*g/mole); G4Element* K
-  // = new G4Element(name="Potassium", symbol="K", z=19., a=39.0983*g/mole);
-  // G4Element* Zn     = new G4Element(name="Zinc", symbol="Zn", z=30.,
-  // a=65.38*g/mole); G4Element* Th     = new G4Element(name="Thorium",
-  // symbol="Th", z=90., a=232.0381*g/mole); G4Element* Au     = new
-  // G4Element(name="Gold", symbol="Au", z=79., a=196.9666*g/mole); G4Element*
-  // Pb_el  = new G4Element(name="Lead", symbol="Pb", z=82., a=207.2*g/mole);
-  // G4Element* Cu_el  = new G4Element(name="Copper", symbol="Cu", z=29.,
-  // a=63.546*g/mole);
-  // G4Element* W  = new G4Element(name="Tungsten", symbol="W", z=74.,
-  // a=183.84*g/mole);
+  // a=22.989769	*g/mole); G4Element* Mg     = new
+  // G4Element(name="Magnesium", symbol="Mg", z=12., a=24.3050*g/mole);
+  // G4Element* Ca     = new G4Element(name="Calcium", symbol="Ca", z=20.,
+  // a=40.078*g/mole); G4Element* K = new G4Element(name="Potassium",
+  // symbol="K", z=19., a=39.0983*g/mole); G4Element* Zn     = new
+  // G4Element(name="Zinc", symbol="Zn", z=30., a=65.38*g/mole); G4Element* Th
+  // = new G4Element(name="Thorium", symbol="Th", z=90., a=232.0381*g/mole);
+  // G4Element* Au     = new G4Element(name="Gold", symbol="Au", z=79.,
+  // a=196.9666*g/mole); G4Element* Pb_el  = new G4Element(name="Lead",
+  // symbol="Pb", z=82., a=207.2*g/mole); G4Element* Cu_el  = new
+  // G4Element(name="Copper", symbol="Cu", z=29., a=63.546*g/mole); G4Element* W
+  // = new G4Element(name="Tungsten", symbol="W", z=74., a=183.84*g/mole);
 
   // G4Material* Pb = new G4Material("Lead", z=82., a=207.19*g/mole,
   // density=11.34*g/cm3);

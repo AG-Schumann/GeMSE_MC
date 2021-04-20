@@ -122,7 +122,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   G4VisAttributes* blue = new G4VisAttributes(G4Colour(0.0, 0.0, 1.0));
   G4VisAttributes* cyan = new G4VisAttributes(G4Colour(0.0, 1.0, 1.0));
   G4VisAttributes* grey = new G4VisAttributes(G4Colour(0.5, 0.5, 0.5));
-  //G4VisAttributes* brown = new G4VisAttributes(G4Colour(0.7, 0.4, 0.1));
+  // G4VisAttributes* brown = new G4VisAttributes(G4Colour(0.7, 0.4, 0.1));
 
   //======= define dimensions ============================================
   // overlap for boolean solids
@@ -1004,7 +1004,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   /*
   G4Tubs*			GeCenter_tube 	= new G4Tubs ("GeCenter_tube",
   0.*cm, outerRadiusGe, heightGe/2.-edgeRadius, startAngle, spanningAngle);
-  G4Tubs*			GeEnds_tube     = new G4Tubs        ("GeEnds_tube",
+  G4Tubs*			GeEnds_tube     = new G4Tubs ("GeEnds_tube",
   0.*cm, outerRadiusGe-edgeRadius, edgeRadius/2.+0.0001*cm, startAngle,
   spanningAngle); G4Torus*        GeEdge_torus    = new G4Torus ("GeEdge_torus",
   0.*cm, edgeRadius, outerRadiusGe-edgeRadius, 0.*deg, 360.*deg);
@@ -1023,17 +1023,17 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   G4SubtractionSolid("Ge_sub1",Ge_uni4,GeIn_uni5,0,G4ThreeVector(0.,0.,0.));
     */
 
-  // G4Sphere*		Hole_cap   	= new G4Sphere      ("Hole_cap", innerRadius,
-  // outerRadiusHole, startPhi, deltaPhi, startTheta, deltaTheta);
+  // G4Sphere*		Hole_cap   	= new G4Sphere      ("Hole_cap",
+  // innerRadius, outerRadiusHole, startPhi, deltaPhi, startTheta, deltaTheta);
 
   // G4Tubs*			Groove_tube = new G4Tubs        ("Groove_tube",
   // innerRadiusGroove, outerRadiusGroove, heightGroove/2.+overlap, startAngle,
   // spanningAngle);
 
-  // G4Tubs*			Wcontact_tube 	= new G4Tubs        ("Window_contact",
+  // G4Tubs*			Wcontact_tube 	= new G4Tubs ("Window_contact",
   // 0.*cm, outerRadiusGe, d_LiContact/2., startAngle, spanningAngle);
 
-  // G4Tubs*			Ocontact_tube 	= new G4Tubs        ("Outer_contact",
+  // G4Tubs*			Ocontact_tube 	= new G4Tubs ("Outer_contact",
   // outerRadiusGe-d_LiContact, outerRadiusGe, (heightGe-heightWContact)/2.,
   // startAngle, spanningAngle);
 
@@ -1140,34 +1140,34 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   chondrite_EH->AddElement(Na, fractionmass = 0.0072);
   chondrite_EH->AddElement(Cr, fractionmass = 0.0033);
 
-  // G4VSolid * sample_solid;
-  // G4LogicalVolume * sample_logical;
-  // G4VPhysicalVolume * sample_physical;
+// G4VSolid * sample_solid;
+// G4LogicalVolume * sample_logical;
+// G4VPhysicalVolume * sample_physical;
 
-  // G4ThreeVector sample_pos = G4ThreeVector(-25,20,-2.*mm);
-  // CADMesh *mesh_top = new
-  // CADMesh("../sample_geometries/apdRingOben_ohneLoch_fein_ascii.STL", mm,
-  // sample_pos, false); CADMesh *mesh_top = new
-  // CADMesh("sample_geometries/test_basalt5.stl", mm, sample_pos, false); banana
-  // G4ThreeVector sample_pos = G4ThreeVector(-25,20,-3.*mm);
-  // CADMesh *mesh_top = new CADMesh("sample_geometries/banana.stl", mm,
-  // sample_pos, false);
-  //
-  // sample_solid = mesh_top->TessellatedMesh();
-  // sample_logical = new G4LogicalVolume(sample_solid, chondrite_EH,
-  // "sample_logical", 0, 0, 0); sample_physical = new
-  // G4PVPlacement(G4Transform3D(rmr, sample_pos) , sample_logical,
-  // "sample",expHall_log, false, 0); const G4double sample_mass =
-  // sample_logical->GetMass(false, false)/g; G4cout <<
-  // "\n\n############################" << G4endl; G4cout << "Sample mass: " <<
-  // sample_mass << " g" << G4endl; G4cout << "############################\n" <<
-  // G4endl;
+// G4ThreeVector sample_pos = G4ThreeVector(-25,20,-2.*mm);
+// CADMesh *mesh_top = new
+// CADMesh("../sample_geometries/apdRingOben_ohneLoch_fein_ascii.STL", mm,
+// sample_pos, false); CADMesh *mesh_top = new
+// CADMesh("sample_geometries/test_basalt5.stl", mm, sample_pos, false); banana
+// G4ThreeVector sample_pos = G4ThreeVector(-25,20,-3.*mm);
+// CADMesh *mesh_top = new CADMesh("sample_geometries/banana.stl", mm,
+// sample_pos, false);
+//
+// sample_solid = mesh_top->TessellatedMesh();
+// sample_logical = new G4LogicalVolume(sample_solid, chondrite_EH,
+// "sample_logical", 0, 0, 0); sample_physical = new
+// G4PVPlacement(G4Transform3D(rmr, sample_pos) , sample_logical,
+// "sample",expHall_log, false, 0); const G4double sample_mass =
+// sample_logical->GetMass(false, false)/g; G4cout <<
+// "\n\n############################" << G4endl; G4cout << "Sample mass: " <<
+// sample_mass << " g" << G4endl; G4cout << "############################\n" <<
+// G4endl;
 
-  //____Place sample from *icc file_____________________________________________
-  //#include "../sample_geometries/xenonnt_materials/nT_HVconnectors.c"
-  //#include "../sample_geometries/xenonnt_materials/nT_Cu_wires_FSRs.c"
-  //#include "../sample_geometries/xenonnt_materials/nT_PMTbases.c"
-  #include "../sample_geometries/xenonnt_materials/nT_PMTs_holders_10.c"
+//____Place sample from *icc file_____________________________________________
+//#include "../sample_geometries/xenonnt_materials/nT_HVconnectors.c"
+//#include "../sample_geometries/xenonnt_materials/nT_Cu_wires_FSRs.c"
+//#include "../sample_geometries/xenonnt_materials/nT_PMTbases.c"
+#include "../sample_geometries/xenonnt_materials/nT_PMTs_holders_10.c"
   //#include "../sample_geometries/nT_PTFE_trilobed_holders.c"
 
   //____PCBs_parallelepiped_____________________________________________
