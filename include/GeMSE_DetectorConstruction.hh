@@ -5,7 +5,6 @@
 
 #include "G4LogicalVolume.hh"
 #include "G4VUserDetectorConstruction.hh"
-#include "PMTholders.ihh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
