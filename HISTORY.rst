@@ -7,6 +7,7 @@ History
 (date of GitHub release, original changes summarized on 2019-07-03)
 
 Untagged changes for this release:
+
 * Body of the simulation taken from Dr. Moritz Von Sivers (https://github.com/vonsivers/GeMSE_efficiency_simulation)
 * New naming convention for classes
 * Upgrade to G4.10.xx versions. Compilation with G4.9.xx no longer compatible
