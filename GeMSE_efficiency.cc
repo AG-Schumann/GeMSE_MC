@@ -23,45 +23,48 @@
 
 int main(int argc, char** argv)  //
 {
-  std::string git_tag = "1.0.0";
-  G4cout << G4endl << "Welcome to GeMSE MC Version " << git_tag.c_str()
-         << G4endl;
+    std::string git_tag = "1.0.0";
+    G4cout << G4endl << "Welcome to GeMSE MC version " << git_tag.c_str() << G4endl;
+    
+    // Choose the Random engine
+    CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
+    
+    //set random seed with system time
+    //G4long seed = time(NULL);
 
-  // Choose the Random engine
-  CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
-
-  // set random seed with system time
-  // G4long seed = time(NULL);
-
-  // set seed
-  CLHEP::HepRandom::setTheSeed(24312);
-
-  // User Verbose output class
-  //
-  /*G4VSteppingVerbose* verbosity = new GeMSE_SteppingVerbose;
-  G4VSteppingVerbose::SetInstance(verbosity);*/
-  //-----------------------------
-
-  int c = 0;
-  bool Macro = false;
-  G4String MacroFilename;
-  G4String GeometryFilename = "src/worldVolume.txt";
-  G4String OutputFolder = "";
-
-  while ((c = getopt(argc, argv, "m:o:g:")) != -1) {
-    switch (c) {
-      case 'm':
-        Macro = true;
-        MacroFilename = optarg;
-        break;
-
-      case 'g':
-        GeometryFilename = optarg;
-        break;
-
-      case 'o':
-        OutputFolder = optarg;
-        break;
+    // set seed
+    CLHEP::HepRandom::setTheSeed(24312);
+  
+    // User Verbose output class
+    //
+    /*G4VSteppingVerbose* verbosity = new GeMSE_SteppingVerbose;
+    G4VSteppingVerbose::SetInstance(verbosity);*/
+    //-----------------------------
+    
+    int c = 0;
+    bool Macro = false;
+    G4String MacroFilename;
+    G4String GeometryFilename = "src/worldVolume.txt";
+    G4String OutputFolder = "";
+    
+    while((c = getopt(argc,argv,"m:o:g:")) != -1)
+    {
+        switch(c)
+        {
+            case 'm':
+                Macro = true;
+                MacroFilename = optarg;
+                break;
+                
+            case 'g':
+                GeometryFilename = optarg;
+                break;
+                
+            case 'o':
+                OutputFolder = optarg;
+                break;
+                
+        }
     }
   }
 
@@ -172,3 +175,4 @@ int main(int argc, char** argv)  //
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
