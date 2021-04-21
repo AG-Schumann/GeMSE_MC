@@ -1,4 +1,4 @@
-# GeMSE_MC_efficiency
+# GeMSE_MC
 
 Geant4 code to simulate the GeMSE detector efficiency
 
@@ -8,14 +8,14 @@ Geant4 code to simulate the GeMSE detector efficiency
 
 For compilation, ensure ROOT and Geant4 (10.3 recommended) are set up and simplu run:
 ```
-git clone https://github.com/AG-Schumann/GeMSE_MC_efficiency.git
-cd GeMSE_MC_efficiency
+git clone https://github.com/AG-Schumann/GeMSE_MC.git
+cd GeMSE_MC
 make -j # "-j" for parallel compilation using all available CPU
 ```
 
 Run the executable with:
 ```
-$G4WORKDIR/bin/Linux-g++GeMSE_efficiency -m <macrofile.mac> -o <results_folder>
+$G4WORKDIR/bin/Linux-g++/GeMSE_MC -m <macrofile.mac> -o <results_folder>
 ```
 
 ### macrofile.mac

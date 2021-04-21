@@ -3,10 +3,9 @@
 # Last updated: Apr 2021
 # --------------------------------
 
-name := GeMSE_efficiency
+name := GeMSE_MC
 
 #GEANTVERSION = $(shell geant4-config --version | cut -d'.' -f1)
-
 #ifneq ($(GEANTVERSION), 9)
 #name := $(shell ln -sf GeMSE_efficiency.cc GeMSE_efficiency_p$(GEANTVERSION).cc && echo GeMSE_efficiency_p$(GEANTVERSION))
 #endif
@@ -23,8 +22,6 @@ ROOTCFLAGS      = $(shell root-config --cflags)
 ROOTGLIBS       = $(shell root-config --glibs)
 
 EXTRALIBS +=$(ROOTGLIBS) $(GEANTLIBS)
-#EXTRALIBS +=/scratch/dr1036/Software/assimp/lib/libassimp.so
-#EXTRALIBS +=/scratch/dr1036/Software/tetgen/tetlib.so
 
 CPPFLAGS += $(ROOTCFLAGS)
 
