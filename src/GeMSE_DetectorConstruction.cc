@@ -1052,7 +1052,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   // G4endl;
 
   //_______SAMPLE FROM sample_geometries FOLDER___________
-  #include "../sample_geometries/xenonnt_materials/nT_PMTs_holders_10.c"
+  #include "../sample_geometries/xenonnt_materials/nT_PMTs_holders_10.cc"
   
   //____Overlap check___________________________________________________________
   OverlapCheck();
