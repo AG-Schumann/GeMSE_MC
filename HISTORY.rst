@@ -2,6 +2,10 @@
 History
 =======
 
+1.1.0 (2021-04-21)
+------------------
+* Major code cleanup (summary in #3)
+
 1.0.0 (2021-04-20)
 ------------------
 (date of GitHub release, original changes summarized on 2019-07-03, for commit 450f026)
