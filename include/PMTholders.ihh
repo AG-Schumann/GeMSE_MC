@@ -1,7 +1,0 @@
-//oooOOOOooo........oooOOOooo.......oooOOOooo.......oooOOOooo.......
-
-//G4LogicalVolume* ConstructPMTholder_long();
-//G4LogicalVolume* ConstructPMTholder_short();
-
-
-G4LogicalVolume* ConstructPmtR11410();

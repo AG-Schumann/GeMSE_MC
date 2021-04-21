@@ -9,28 +9,27 @@
 #include <vector>
 using namespace std;
 
-class GeMSE_PhysicsList: public G4VModularPhysicsList 
-{
-  public:
-    GeMSE_PhysicsList();
-    virtual ~GeMSE_PhysicsList();
-    
-  public:
-    void SetCuts();
+class GeMSE_PhysicsList : public G4VModularPhysicsList {
+ public:
+  GeMSE_PhysicsList();
+  virtual ~GeMSE_PhysicsList();
 
-  private:
-    G4VPhysicsConstructor *X1TG4OpticalPhysics;
-    
-    G4double defaultCutValue;
-    G4double cutForGamma;
-    G4double cutForElectron;
-    G4double cutForPositron;
-    G4double cutForProton;
-    G4double cutForAlpha;
-    G4double cutForGenericIon;
-    
-    G4int VerboseLevel;
+ public:
+  void SetCuts();
 
-    //G4String physRootFile;
+ private:
+  G4VPhysicsConstructor *X1TG4OpticalPhysics;
+
+  G4double defaultCutValue;
+  G4double cutForGamma;
+  G4double cutForElectron;
+  G4double cutForPositron;
+  G4double cutForProton;
+  G4double cutForAlpha;
+  G4double cutForGenericIon;
+
+  G4int VerboseLevel;
+
+  // G4String physRootFile;
 };
-#endif // __GeMSE_PHYSICSLIST_H__
+#endif  // __GeMSE_PHYSICSLIST_H__

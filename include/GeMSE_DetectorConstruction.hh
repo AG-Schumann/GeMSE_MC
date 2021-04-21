@@ -2,30 +2,25 @@
 #define GeMSE_DetectorConstruction_h 1
 
 #include "globals.hh"
-#include "G4VUserDetectorConstruction.hh"
+
 #include "G4LogicalVolume.hh"
-
-
-#include "PMTholders.ihh"
-
+#include "G4VUserDetectorConstruction.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-class GeMSE_DetectorConstruction : public G4VUserDetectorConstruction
-{
-  public:
-    GeMSE_DetectorConstruction(G4String GeometryFile);
-   ~GeMSE_DetectorConstruction();
+class GeMSE_DetectorConstruction : public G4VUserDetectorConstruction {
+ public:
+  GeMSE_DetectorConstruction(G4String GeometryFile);
+  ~GeMSE_DetectorConstruction();
 
-  public:
-    G4LogicalVolume* ConstructPmtR11410();
-    G4LogicalVolume* ConstructPMTholder_long();
-    G4VPhysicalVolume* Construct();
+ public:
+  G4LogicalVolume* ConstructPmtR11410();
+  G4LogicalVolume* ConstructPMTholder_long();
+  G4VPhysicalVolume* Construct();
 
-  private:
-    void OverlapCheck();
-    G4String fGeometryFile;
-
+ private:
+  void OverlapCheck();
+  G4String fGeometryFile;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
