@@ -13,12 +13,12 @@
 #define CADMesh_HH
 
 // TETGEN //
-#include "/scratch/dr1036/Software/tetgen/tetgen.h"
+#include "/opt/GeMSE/tetgen/tetgen.h"
 
 // Open Asset Importer Library //
-#include "/scratch/dr1036/Software/assimp/include/assimp/Importer.hpp"
-#include "/scratch/dr1036/Software/assimp/include/assimp/postprocess.h"
-#include "/scratch/dr1036/Software/assimp/include/assimp/scene.h"
+#include "/opt/GeMSE/assimp/include/assimp/Importer.hpp"
+#include "/opt/GeMSE/assimp/include/assimp/postprocess.h"
+#include "/opt/GeMSE/assimp/include/assimp/scene.h"
 
 // GEANT4 //
 #include "G4AssemblyVolume.hh"
