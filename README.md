@@ -27,7 +27,7 @@ and you're ready to go:
 ```
 git clone https://github.com/AG-Schumann/GeMSE_MC.git
 cd GeMSE_MC
-export G4WORKDIR=${PWD} # optional, otherwise defaulted to /home/geant4workdir/
+export G4WORKDIR=${PWD} # optional, otherwise defaulted to /home/<username>/geant4workdir/
 make -j # "-j" for parallel compilation using all available CPU
 ```
 
