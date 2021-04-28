@@ -21,7 +21,9 @@ GEANTLIBS       = $(shell geant4-config --libs)
 ROOTCFLAGS      = $(shell root-config --cflags)
 ROOTGLIBS       = $(shell root-config --glibs)
 
-EXTRALIBS +=$(ROOTGLIBS) $(GEANTLIBS)
+EXTRALIBS +=$(ROOTGLIBS) $(GEANTLIBS) -ltbb
+EXTRALIBS +=/opt/GeMSE/assimp/bin/libassimp.so
+EXTRALIBS +=/opt/GeMSE/tetgen/tetlib.so
 
 CPPFLAGS += $(ROOTCFLAGS)
 

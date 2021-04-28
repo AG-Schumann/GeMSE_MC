@@ -1,6 +1,7 @@
 #include "GeMSE_DetectorConstruction.hh"
 #include "GeMSE_RunAction.hh"
 #include "GeMSE_SensitiveDetector.hh"
+#include <CADMesh.hh>
 
 #include "globals.hh"
 
@@ -35,7 +36,6 @@
 #include "G4Polycone.hh"
 #include "G4tgbVolumeMgr.hh"
 
-//#include <CADMesh.hh>
 
 GeMSE_DetectorConstruction::GeMSE_DetectorConstruction(G4String GeometryFile) {
   fGeometryFile = GeometryFile;
@@ -1010,8 +1010,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
                     "VacuumDet", expHall_log, false, 0);
 
   //_______CAD SAMPLE_______
-   
-  G4RotationMatrix rmr;
+  /*G4RotationMatrix rmr;
   rmr.rotateX(0);
   rmr.rotateZ(0);
 
@@ -1028,31 +1027,25 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   chondrite_EH->AddElement(Na, fractionmass = 0.0072);
   chondrite_EH->AddElement(Cr, fractionmass = 0.0033);
 
-  // G4VSolid * sample_solid;
-  // G4LogicalVolume * sample_logical;
-  // G4VPhysicalVolume * sample_physical;
+  G4VSolid * sample_solid;
+  G4LogicalVolume * sample_logical;
+  G4VPhysicalVolume * sample_physical;
+  G4ThreeVector sample_pos = G4ThreeVector(-25,20,-3.*mm);
+  CADMesh *mesh_top = new CADMesh("sample_geometries/scans_3d/banana_LRT_talk.stl", mm,
+                                   sample_pos, false);
 
-  // G4ThreeVector sample_pos = G4ThreeVector(-25,20,-2.*mm);
-  // CADMesh *mesh_top = new
-  // CADMesh("../sample_geometries/apdRingOben_ohneLoch_fein_ascii.STL", mm,
-  // sample_pos, false); CADMesh *mesh_top = new
-  // CADMesh("sample_geometries/test_basalt5.stl", mm, sample_pos, false); banana
-  // G4ThreeVector sample_pos = G4ThreeVector(-25,20,-3.*mm);
-  // CADMesh *mesh_top = new CADMesh("sample_geometries/banana.stl", mm,
-  // sample_pos, false);
-
-  // sample_solid = mesh_top->TessellatedMesh();
-  // sample_logical = new G4LogicalVolume(sample_solid, chondrite_EH,
-  // "sample_logical", 0, 0, 0); sample_physical = new
-  // G4PVPlacement(G4Transform3D(rmr, sample_pos) , sample_logical,
-  // "sample",expHall_log, false, 0); const G4double sample_mass =
-  // sample_logical->GetMass(false, false)/g; G4cout <<
-  // "\n\n############################" << G4endl; G4cout << "Sample mass: " <<
-  // sample_mass << " g" << G4endl; G4cout << "############################\n" <<
-  // G4endl;
+  sample_solid = mesh_top->TessellatedMesh();
+  sample_logical = new G4LogicalVolume(sample_solid, chondrite_EH,
+                                       "sample_logical", 0, 0, 0);
+  sample_physical = new G4PVPlacement(G4Transform3D(rmr, sample_pos), sample_logical,
+                                      "sample",expHall_log, false, 0);
+  const G4double sample_mass = sample_logical->GetMass(false, false)/g;
+  G4cout << "\n\n############################" << G4endl;
+  G4cout << "Sample mass: " << sample_mass << " g" << G4endl;
+  G4cout << "############################\n" << G4endl;*/
 
   //_______SAMPLE FROM sample_geometries FOLDER___________
-  #include "../sample_geometries/xenonnt_materials/nT_PMTs_holders_10.cc"
+  //#include "../sample_geometries/xenonnt_materials/nT_PMTs_holders_10.cc"
   
   //____Overlap check___________________________________________________________
   OverlapCheck();
