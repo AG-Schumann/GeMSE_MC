@@ -23,7 +23,7 @@
 
 int main(int argc, char** argv)  //
 {
-  std::string git_tag = "1.1.0";
+  std::string git_tag = "1.2.0";
   G4cout << G4endl << "Welcome to GeMSE_MC version " << git_tag.c_str()
          << G4endl;
 
