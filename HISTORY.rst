@@ -2,6 +2,11 @@
 History
 =======
 
+1.2.0 (2021-04-29)
+------------------
+* Delete custom binmake file and default to G4INSTALL (#5)
+* Add CADMesh functionality back (#4)
+
 1.1.0 (2021-04-21)
 ------------------
 * Major code cleanup (summary in #3)
