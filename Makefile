@@ -31,4 +31,4 @@ CPPFLAGS += $(ROOTCFLAGS)
 
 all: lib bin
 
-include config/binmake.gmk
+include ${G4INSTALL}/config/binmake.gmk
