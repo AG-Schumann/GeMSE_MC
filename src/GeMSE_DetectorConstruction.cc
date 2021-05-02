@@ -1010,7 +1010,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
                     "VacuumDet", expHall_log, false, 0);
 
   //_______CAD SAMPLE_______
-  /*G4RotationMatrix rmr;
+  G4RotationMatrix rmr;
   rmr.rotateX(0);
   rmr.rotateZ(0);
 
@@ -1027,22 +1027,23 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   chondrite_EH->AddElement(Na, fractionmass = 0.0072);
   chondrite_EH->AddElement(Cr, fractionmass = 0.0033);
 
-  G4VSolid * sample_solid;
   G4LogicalVolume * sample_logical;
-  G4VPhysicalVolume * sample_physical;
   G4ThreeVector sample_pos = G4ThreeVector(-25,20,-3.*mm);
-  CADMesh *mesh_top = new CADMesh("sample_geometries/scans_3d/banana_LRT_talk.stl", mm,
-                                   sample_pos, false);
 
-  sample_solid = mesh_top->TessellatedMesh();
+  auto mesh = CADMesh::TessellatedMesh::FromSTL("sample_geometries/scans_3d/test_basalt5.stl");
+  //mesh->SetScale(100.0); // Default is 1, corresponding to mm in Geant4
+  mesh->SetOffset(sample_pos);
+  auto sample_solid = mesh->GetSolid();
+
   sample_logical = new G4LogicalVolume(sample_solid, chondrite_EH,
                                        "sample_logical", 0, 0, 0);
-  sample_physical = new G4PVPlacement(G4Transform3D(rmr, sample_pos), sample_logical,
+  new G4PVPlacement(G4Transform3D(rmr, sample_pos), sample_logical,
                                       "sample",expHall_log, false, 0);
+
   const G4double sample_mass = sample_logical->GetMass(false, false)/g;
   G4cout << "\n\n############################" << G4endl;
   G4cout << "Sample mass: " << sample_mass << " g" << G4endl;
-  G4cout << "############################\n" << G4endl;*/
+  G4cout << "############################\n" << G4endl;
 
   //_______SAMPLE FROM sample_geometries FOLDER___________
   //#include "../sample_geometries/xenonnt_materials/nT_PMTs_holders_10.cc"
