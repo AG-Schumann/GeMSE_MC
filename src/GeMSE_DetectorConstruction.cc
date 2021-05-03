@@ -1,6 +1,8 @@
 #include "GeMSE_DetectorConstruction.hh"
 #include "GeMSE_RunAction.hh"
 #include "GeMSE_SensitiveDetector.hh"
+
+#define USE_CADMESH_TETGEN // To use tetgen
 #include <CADMesh.hh>
 
 #include "globals.hh"
@@ -1030,7 +1032,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   G4LogicalVolume * sample_logical;
   G4ThreeVector sample_pos = G4ThreeVector(-25,20,-3.*mm);
 
-  auto mesh = CADMesh::TessellatedMesh::FromSTL("sample_geometries/test_basalt5.stl");
+  auto mesh = CADMesh::TessellatedMesh::FromSTL("sample_geometries/scans_3d/test_basalt5.stl");
   //mesh->SetScale(100.0); // Default is 1, corresponding to mm in Geant4
   mesh->SetOffset(sample_pos);
   auto sample_solid = mesh->GetSolid();
@@ -1039,6 +1041,16 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
                                        "sample_logical", 0, 0, 0);
   new G4PVPlacement(G4Transform3D(rmr, sample_pos), sample_logical,
                                       "sample",expHall_log, false, 0);
+
+
+  // Filling meshes with tetrahedra for navigation speedup
+  //auto mesh = CADMesh::TetrahedralMesh::FromSTL("sample_geometries/scans_3d/test_basalt5.stl");
+  //mesh->SetOffset(sample_pos);
+  //auto assembly = mesh->GetAssembly();
+  //auto position = G4ThreeVector();
+  //auto rotation = new G4RotationMatrix();
+  //assembly->MakeImprint(expHall_log, position, rotation);
+  
 
   const G4double sample_mass = sample_logical->GetMass(false, false)/g;
   G4cout << "\n\n############################" << G4endl;
