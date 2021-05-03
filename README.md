@@ -7,7 +7,7 @@ Geant4 code to simulate the GeMSE detector efficiency
 ## Compilation
 
 If you are sitting on top of the [GeMSE_environment](https://github.com/AG-Schumann/GeMSE_environment), run:
-```
+```bash
 git clone https://github.com/AG-Schumann/GeMSE_MC.git
 cd GeMSE_MC
 source /opt/GeMSE/setup_sims.sh
@@ -17,14 +17,22 @@ and your executables will be built under `./bin/Linux-g++/GeMSE_MC`, where `.` i
 
 If running locally, make sure you have ROOT and Geant4 (10.3 recommended) installed. Compilation errors will arise because of the nonexistent paths that the `CADMesh.hh` class needs to execute. You can either install these extra libraries (ask Diego) or just run the code without CADMesh, assuming you do not want to simulate a 3D sample. In order to do that:
 + remove `include/CADMesh.hh` files from its directory,
-+ comment out the line `#include <CADMesh.hh>` from the top of the `src/GeMSE_DetectorConstruction.cc` file,
++ comment out these lines from the top of the `src/GeMSE_DetectorConstruction.cc` file:
+
+```cpp
+        #define USE_CADMESH_TETGEN // To use tetgen
+        #include <CADMesh.hh>
+```
+
 + comment out these two lines from the `Makefile`
-```yaml
-EXTRALIBS +=/opt/GeMSE/assimp/bin/libassimp.so
-EXTRALIBS +=/opt/GeMSE/tetgen/tetlib.so
+
+```make
+        EXTRALIBS +=/opt/GeMSE/assimp/bin/libassimp.so
+        EXTRALIBS +=/opt/GeMSE/tetgen/tetlib.so
 ```
+
 and you're ready to go:
-```
+```bash
 git clone https://github.com/AG-Schumann/GeMSE_MC.git
 cd GeMSE_MC
 export G4WORKDIR=${PWD} # optional, otherwise defaulted to /home/<username>/geant4workdir/
@@ -34,7 +42,7 @@ make -j # "-j" for parallel compilation using all available CPU
 ## Execution
 
 Run the executable with:
-```
+```bash
 $G4WORKDIR/bin/Linux-g++/GeMSE_MC -m <macrofile.mac> -o <results_folder>
 ```
 
