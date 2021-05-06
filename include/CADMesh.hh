@@ -1007,7 +1007,6 @@ inline bool Lexer::SkipLine() {
 }
 
 inline State *Lexer::Error(std::string message) {
-
   std::stringstream error;
   error << "Error around line " << line_ << ": " << message << std::endl;
 
@@ -1370,12 +1369,10 @@ inline G4VSolid *TetrahedralMesh::GetSolid(G4int /*index*/) { return nullptr; }
 
 inline G4VSolid *TetrahedralMesh::GetSolid(G4String /*name*/,
                                            G4bool /*exact*/) {
-
   return nullptr;
 }
 
 inline std::vector<G4VSolid *> TetrahedralMesh::GetSolids() {
-
   return std::vector<G4VSolid *>();
 }
 
