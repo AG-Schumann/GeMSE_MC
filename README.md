@@ -7,7 +7,7 @@ Geant4 code to simulate the GeMSE detector efficiency
 ## Compilation
 
 If you are sitting on top of the [GeMSE_environment](https://github.com/AG-Schumann/GeMSE_environment), run:
-```
+```bash
 git clone https://github.com/AG-Schumann/GeMSE_MC.git
 cd GeMSE_MC
 source /opt/GeMSE/setup_sims.sh
@@ -15,16 +15,20 @@ make -j # "-j" for parallel compilation using all available CPU
 ```
 and your executables will be built under `./bin/Linux-g++/GeMSE_MC`, where `.` is the default working directory (`$G4WORKDIR`).
 
-If running locally, make sure you have ROOT and Geant4 (10.3 recommended) installed. Compilation errors will arise because of the nonexistent paths that the `CADMesh.cc` class needs to execute. You can either install these extra libraries (ask Diego) or just run without CADMesh, assuming you do not want to simulate a 3D sample. In order to do that:
-+ remove `include/CADMesh.hh` and `src/CADMesh.cc` files from these directories,
-+ comment out the line `#include <CADMesh.hh>` from the top of the `src/GeMSE_DetectorConstruction.cc` file,
+If running locally, make sure you have ROOT and Geant4 (10.3 recommended) installed. Compilation errors will arise because of the nonexistent paths that the `CADMesh.hh` class needs to execute. You can either install these extra libraries (ask Diego) or just run the code without CADMesh, assuming you do not want to simulate a 3D sample. In order to do that:
++ remove `include/CADMesh.hh` files from its directory,
++ comment out these lines from the top of the `src/GeMSE_DetectorConstruction.cc` file:      
+    ```cpp
+    #define USE_CADMESH_TETGEN // To use tetgen
+    #include <CADMesh.hh>
+    ```
 + comment out these two lines from the `Makefile`
-```yaml
-EXTRALIBS +=/opt/GeMSE/assimp/bin/libassimp.so
-EXTRALIBS +=/opt/GeMSE/tetgen/tetlib.so
-```
+    ```make
+    EXTRALIBS +=/opt/GeMSE/assimp/bin/libassimp.so
+    EXTRALIBS +=/opt/GeMSE/tetgen/tetlib.so
+    ```
 and you're ready to go:
-```
+```bash
 git clone https://github.com/AG-Schumann/GeMSE_MC.git
 cd GeMSE_MC
 export G4WORKDIR=${PWD} # optional, otherwise defaulted to /home/<username>/geant4workdir/
@@ -34,7 +38,7 @@ make -j # "-j" for parallel compilation using all available CPU
 ## Execution
 
 Run the executable with:
-```
+```bash
 $G4WORKDIR/bin/Linux-g++/GeMSE_MC -m <macrofile.mac> -o <results_folder>
 ```
 
@@ -53,3 +57,9 @@ $G4WORKDIR/bin/Linux-g++/GeMSE_MC -m <macrofile.mac> -o <results_folder>
 		* TBranch `efficiency`: detection efficiency
         * TBranch `efficiency_err`: statistical uncertainty of detection efficiency
         * TBranch `eff_BR`: product of detection efficiency and branching ratio
+
+## Import CAD samples
+
+The [CADMesh](https://github.com/christopherpoole/CADMesh) interface, specifically [v2.0.3](https://github.com/christopherpoole/CADMesh/releases/tag/v2.0.3) is integrated into this code. This means that one can import CAD samples in STL, PLY or OBJ format into Geant4 for their construction. See an example in `src/GeMSE_DetectorConstruction.cc`, under `CAD SAMPLE`.
+
+*Note*: Contrary to the CADMesh version used up to (and including) [GeMSE_MC v1.2.0](https://github.com/AG-Schumann/GeMSE_MC/releases/tag/v1.2.0), this one does not support binary STL files (see `sample_geometries/scans_3d/banana_LRT_talk_binary.stl`). These can be converted to ASCII using commercial CAD software.
