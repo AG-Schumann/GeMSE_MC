@@ -6,9 +6,6 @@
 #include "GeMSE_TrackingAction.hh"
 #include "GeMSE_RunMessenger.hh"
 
-#include "G4Run.hh"
-#include "G4RunManager.hh"
-
 #include <sys/time.h>
 #include <vector>
 #include <string>
@@ -17,10 +14,14 @@
 #include "TBranch.h"
 #include "TSystem.h"
 
+#include "G4Run.hh"
+#include "G4RunManager.hh"
+
 using std::string;
 
 GeMSE_RunAction::GeMSE_RunAction(TTree* tree) {
   ftree = tree;
+  
   timer = new G4Timer;
 
   // create run analysis
@@ -86,7 +87,7 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
   GeHitTree = new TTree("GeHits", "GeHits");
   PrimariesTree = new TTree("Primaries", "Primaries");
   RunTree = new TTree("RunInfo", "RunInfo");
-
+  
   GeHitTree->Branch("EventID", &HEventID);
   GeHitTree->Branch("NHits", &NHits);
   GeHitTree->Branch("TotEdep", &TotEdep);
@@ -113,7 +114,7 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
   RunTree->Branch("NEvents", &NEvents);
   RunTree->Branch("NDecays", &NDecays);
   
-  G4int NEvents = aRun->GetNumberOfEventToBeProcessed();
+  NEvents = aRun->GetNumberOfEventToBeProcessed();
   
   fNDecays = 0;
 
@@ -162,11 +163,11 @@ void GeMSE_RunAction::EndOfRunAction(const G4Run* aRun) {
   //-----------write trees and close file-------------
   //ResultFile->cd();
 
-  RunTree->Fill();
+  fRunTree->Fill();
 
-  GeHitTree->Write();
-  PrimariesTree->Write();
-  RunTree->Write();
+  //GeHitTree->Write();
+  //PrimariesTree->Write();
+  //RunTree->Write();
 
   //ResultFile->Close();
 

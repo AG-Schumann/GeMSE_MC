@@ -32,7 +32,7 @@ class GeMSE_RunAction : public G4UserRunAction {
 
   void AddDecay();
 
-  void SelectAction(G4String string) { selectedAction = string; };
+  void SelectAction(G4String string_action) { selectedAction = string_action; };
   G4String GetSelectedAction() { return selectedAction; };
 
   GeMSE_Analysis* GetRunAnalysis() { return fRunAnalysis; };
@@ -69,17 +69,17 @@ class GeMSE_RunAction : public G4UserRunAction {
 
   TFile* ResultFile;
 
+  G4String selectedAction;
+  G4String fOutputFolder;
+
   TTree* GeHitTree;
   TTree* PrimariesTree;
   TTree* RunTree;
 
+  TTree* ftree;
   TTree* fGeHitTree;
   TTree* fPrimariesTree;
-
-  G4String selectedAction;
-  G4String fOutputFolder;
-
-  TTree* ftree;
+  TTree* fRunTree;
 
   G4long aSeed;
   GeMSE_Analysis* fRunAnalysis;

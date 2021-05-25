@@ -6,7 +6,6 @@
 
 #include "G4Run.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 GeMSE_RunMessenger::GeMSE_RunMessenger(GeMSE_Analysis* RunAnalysis)
     : fRunAnalysis(RunAnalysis) {
@@ -24,8 +23,6 @@ GeMSE_RunMessenger::GeMSE_RunMessenger(GeMSE_Analysis* RunAnalysis)
   BkgRegionCmd->SetDefaultValue(10.);
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 GeMSE_RunMessenger::~GeMSE_RunMessenger() {
   delete energyCmd;
   delete G4BRCmd;
@@ -33,8 +30,6 @@ GeMSE_RunMessenger::~GeMSE_RunMessenger() {
   delete SigRegionCmd;
   delete BkgRegionCmd;
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void GeMSE_RunMessenger::SetNewValue(G4UIcommand* command, G4String newValues) {
   if (command == energyCmd) {
@@ -49,5 +44,3 @@ void GeMSE_RunMessenger::SetNewValue(G4UIcommand* command, G4String newValues) {
     fRunAnalysis->AddBkgRegion(BkgRegionCmd->GetNewDoubleValue(newValues));
   }
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
