@@ -14,10 +14,23 @@ GeMSE_Hit::GeMSE_Hit() { ; }
 
 GeMSE_Hit::~GeMSE_Hit() { ; }
 
-GeMSE_Hit::GeMSE_Hit(const GeMSE_Hit& right) : G4VHit() { edep = right.edep; }
+GeMSE_Hit::GeMSE_Hit(const GeMSE_Hit& right) : G4VHit()
+{ 
+  edep = right.edep;
+  pos = right.pos;
+  particleID = right.particleID;
+  trackID = right.trackID;
+  particleEnergy = right.particleEnergy;
+  time = right.time;
+}
 
 const GeMSE_Hit& GeMSE_Hit::operator=(const GeMSE_Hit& right) {
   edep = right.edep;
+  pos = right.pos;
+  particleID = right.particleID;
+  trackID = right.trackID;
+  particleEnergy = right.particleEnergy;
+  time = right.time;
 
   return *this;
 }

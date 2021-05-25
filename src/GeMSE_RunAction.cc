@@ -3,15 +3,21 @@
 
 #include "GeMSE_Analysis.hh"
 #include "GeMSE_RunAction.hh"
+#include "GeMSE_TrackingAction.hh"
 #include "GeMSE_RunMessenger.hh"
 
 #include "G4Run.hh"
 #include "G4RunManager.hh"
 
 #include <sys/time.h>
+#include <vector>
+#include <string>
 #include "TTree.h"
+#include "TFile.h"
+#include "TBranch.h"
+#include "TSystem.h"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+using std::string;
 
 GeMSE_RunAction::GeMSE_RunAction(TTree* tree) {
   ftree = tree;
@@ -24,15 +30,11 @@ GeMSE_RunAction::GeMSE_RunAction(TTree* tree) {
   runMessenger = new GeMSE_RunMessenger(fRunAnalysis);
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 GeMSE_RunAction::~GeMSE_RunAction() {
   delete timer;
   // delete fRunAnalysis;
   delete runMessenger;
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
   CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
@@ -55,8 +57,6 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
          << G4endl;
   timer->Start();
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void GeMSE_RunAction::EndOfRunAction(const G4Run* aRun) {
   // if a tree is defined
@@ -91,4 +91,20 @@ void GeMSE_RunAction::EndOfRunAction(const G4Run* aRun) {
   G4cout << "Runtime: " << *timer << G4endl;
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+TTree* GeMSE_RunAction::GetGeHitTree()
+{
+  fGeHitTree=GeHitTree;
+  return fGeHitTree;
+}
+
+
+TTree* GeMSE_RunAction::GetPrimariesTree()
+{
+  fPrimariesTree=PrimariesTree;
+  return fPrimariesTree;
+}
+
+void GeMSE_RunAction::AddDecay()
+{
+  fNDecays++;
+}
