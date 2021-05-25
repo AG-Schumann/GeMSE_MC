@@ -48,7 +48,74 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
 
   G4int RunID = aRun->GetRunID();
 
+//    if (selectedAction=="default") {
+//         
+//         std::ostringstream convert;   // stream used for the conversion
+//         
+//         convert << RunID;      // insert the textual representation in the characters in the stream
+//         
+//         TString RunName=convert.str();
+//         
+//         ResultFileName = "results_run" + RunName + ".root";
+// 
+//     }
+//     else {
+// 
+//         ResultFileName = selectedAction;
+// 
+//     }
+// 	
+//     // try to open results directory
+//     if (!gSystem->OpenDirectory(fOutputFolder)) {
+//         
+//         // if directory does not exist make one
+//         if (gSystem->MakeDirectory(fOutputFolder)==-1) {
+//             std::cout << "###### ERROR: could not create directory " << fOutputFolder << std::endl;
+//         }
+//     }
+// 
+//     
+// 	ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"Create");
+//     
+//     if (ResultFile->IsZombie()) {
+//         G4cout << "##### Warning: " << ResultFileName << " already exists! Overwriting!" << G4endl;
+//         ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"recreate");
+//     }
+    
+        
+  GeHitTree = new TTree("GeHits", "GeHits");
+  PrimariesTree = new TTree("Primaries", "Primaries");
+  RunTree = new TTree("RunInfo", "RunInfo");
+
+  GeHitTree->Branch("EventID", &HEventID);
+  GeHitTree->Branch("NHits", &NHits);
+  GeHitTree->Branch("TotEdep", &TotEdep);
+
+  GeHitTree->Branch("TrackID", &HTrackID);
+  GeHitTree->Branch("ParticleID", &HParticleID);
+  GeHitTree->Branch("Edep", &Edep);
+  GeHitTree->Branch("xPos", &xPos);
+  GeHitTree->Branch("yPos", &yPos);
+  GeHitTree->Branch("zPos", &zPos);
+  GeHitTree->Branch("Time", &Time);
+  GeHitTree->Branch("Ekin", &HEkin);
+
+  PrimariesTree->Branch("EventID", &PEventID);
+  PrimariesTree->Branch("TrackID", &PTrackID);
+  PrimariesTree->Branch("ParentID", &ParentID);
+  PrimariesTree->Branch("Ekin", &PEkin);
+  PrimariesTree->Branch("xDir", &xDir);
+  PrimariesTree->Branch("yDir", &yDir);
+  PrimariesTree->Branch("zDir", &zDir);
+  PrimariesTree->Branch("ParticleID", &PParticleID);
+  PrimariesTree->Branch("CreatorProcess", &Process);
+
+  RunTree->Branch("NEvents", &NEvents);
+  RunTree->Branch("NDecays", &NDecays);
+  
   G4int NEvents = aRun->GetNumberOfEventToBeProcessed();
+  
+  fNDecays = 0;
 
   // set Nb of events
   fRunAnalysis->SetNEvents(NEvents);
@@ -85,10 +152,27 @@ void GeMSE_RunAction::EndOfRunAction(const G4Run* aRun) {
   }
 
   timer->Stop();
+  
+  NDecays=fNDecays;
 
   G4cout << "\n"
          << "### Finished ###" << G4endl;
   G4cout << "Runtime: " << *timer << G4endl;
+  
+  //-----------write trees and close file-------------
+  //ResultFile->cd();
+
+  RunTree->Fill();
+
+  GeHitTree->Write();
+  PrimariesTree->Write();
+  RunTree->Write();
+
+  //ResultFile->Close();
+
+  //delete GeHitTree;
+  //delete GammaTree;
+  //delete ResultFile;
 }
 
 TTree* GeMSE_RunAction::GetGeHitTree()
