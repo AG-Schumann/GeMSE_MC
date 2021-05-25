@@ -163,7 +163,7 @@ void GeMSE_RunAction::EndOfRunAction(const G4Run* aRun) {
   //-----------write trees and close file-------------
   //ResultFile->cd();
 
-  fRunTree->Fill();
+  //fRunTree->Fill();
 
   //GeHitTree->Write();
   //PrimariesTree->Write();
