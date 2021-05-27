@@ -19,8 +19,11 @@
 
 using std::string;
 
-GeMSE_RunAction::GeMSE_RunAction(TTree* tree) {
-  ftree = tree;
+//GeMSE_RunAction::GeMSE_RunAction(TTree* tree) {
+GeMSE_RunAction::GeMSE_RunAction(G4String OutputFolder) {
+  //ftree = tree;
+  fOutputFolder = OutputFolder;
+  selectedAction = "default"; // ToDo: messenger for this guy!!
   
   timer = new G4Timer;
 
@@ -47,43 +50,39 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
   CLHEP::HepRandom::setTheSeed(aSeed);
   G4cout << "Setting the seed for this run to " << aSeed << G4endl;
 
+  TString ResultFileName;
+  
   G4int RunID = aRun->GetRunID();
 
-//    if (selectedAction=="default") {
-//         
-//         std::ostringstream convert;   // stream used for the conversion
-//         
-//         convert << RunID;      // insert the textual representation in the characters in the stream
-//         
-//         TString RunName=convert.str();
-//         
-//         ResultFileName = "results_run" + RunName + ".root";
-// 
-//     }
-//     else {
-// 
-//         ResultFileName = selectedAction;
-// 
-//     }
-// 	
-//     // try to open results directory
-//     if (!gSystem->OpenDirectory(fOutputFolder)) {
-//         
-//         // if directory does not exist make one
-//         if (gSystem->MakeDirectory(fOutputFolder)==-1) {
-//             std::cout << "###### ERROR: could not create directory " << fOutputFolder << std::endl;
-//         }
-//     }
-// 
-//     
-// 	ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"Create");
-//     
-//     if (ResultFile->IsZombie()) {
-//         G4cout << "##### Warning: " << ResultFileName << " already exists! Overwriting!" << G4endl;
-//         ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"recreate");
-//     }
-    
+    if (selectedAction=="default") {
+         std::ostringstream convert;   // stream used for the conversion
+         convert << RunID;      // insert the textual representation in the characters in the stream
+         TString RunName=convert.str();
+         ResultFileName = "results_run" + RunName + ".root";
+     }
+     else {
+         ResultFileName = selectedAction;
+     }
+ 	
+     // try to open results directory
+     if (!gSystem->OpenDirectory(fOutputFolder)) {
+         // if directory does not exist make one
+         if (gSystem->MakeDirectory(fOutputFolder)==-1) {
+             std::cout << "###### ERROR: could not create directory " << fOutputFolder << std::endl;
+         }
+     }
+     
+     ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"Create");
+     
+     if (ResultFile->IsZombie()) {
+         G4cout << "##### Warning: " << ResultFileName << " already exists! Overwriting!" << G4endl;
+         ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"recreate");
+     }
+
+
+////////////////////////    
         
+  tree = new TTree("tree", "tree"); 
   GeHitTree = new TTree("GeHits", "GeHits");
   PrimariesTree = new TTree("Primaries", "Primaries");
   RunTree = new TTree("RunInfo", "RunInfo");
@@ -128,16 +127,16 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
 
 void GeMSE_RunAction::EndOfRunAction(const G4Run* aRun) {
   // if a tree is defined
-  if (ftree) {
+  if (tree) {
     // calculate efficiencies
     fRunAnalysis->CalcEfficiencies();
 
     // fill ROOT Tree
     G4double energy, efficiency, efficiency_err, eff_BR;
-    ftree->Branch("energy", &energy);
-    ftree->Branch("efficiency", &efficiency);
-    ftree->Branch("efficiency_err", &efficiency_err);
-    ftree->Branch("eff_BR", &eff_BR);
+    tree->Branch("energy", &energy);
+    tree->Branch("efficiency", &efficiency);
+    tree->Branch("efficiency_err", &efficiency_err);
+    tree->Branch("eff_BR", &eff_BR);
     int nlines = fRunAnalysis->GetNLines();
     for (int i = 0; i < nlines; ++i) {
       energy = fRunAnalysis->GetEnergy(i);
@@ -145,7 +144,7 @@ void GeMSE_RunAction::EndOfRunAction(const G4Run* aRun) {
       efficiency_err = fRunAnalysis->GetEfficiency_err(i);
       eff_BR = fRunAnalysis->GetEffBR(i);
 
-      ftree->Fill();
+      tree->Fill();
     }
 
     // clear data
@@ -161,16 +160,18 @@ void GeMSE_RunAction::EndOfRunAction(const G4Run* aRun) {
   G4cout << "Runtime: " << *timer << G4endl;
   
   //-----------write trees and close file-------------
-  //ResultFile->cd();
+  ResultFile->cd();
 
   //fRunTree->Fill();
 
-  //GeHitTree->Write();
-  //PrimariesTree->Write();
-  //RunTree->Write();
+  tree->Write();
+  GeHitTree->Write();
+  PrimariesTree->Write();
+  RunTree->Write();  
 
-  //ResultFile->Close();
+  ResultFile->Close();
 
+  //delete tree;
   //delete GeHitTree;
   //delete GammaTree;
   //delete ResultFile;

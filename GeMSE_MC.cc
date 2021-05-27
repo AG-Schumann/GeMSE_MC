@@ -66,6 +66,8 @@ int main(int argc, char** argv)  //
     }
   }
 
+  
+  /* Diego: commenting this out
   // initialize pointers
   TFile* file = 0;
   TTree* tree = 0;
@@ -101,6 +103,7 @@ int main(int argc, char** argv)  //
 
     tree = new TTree("tree", "tree");
   }
+  */
 
   // Run manager
   G4RunManager* runManager = new G4RunManager;
@@ -118,7 +121,7 @@ int main(int argc, char** argv)  //
   visManager->Initialize();
 
   // UserAction classes
-  GeMSE_RunAction* run_action = new GeMSE_RunAction(tree);
+  GeMSE_RunAction* run_action = new GeMSE_RunAction(OutputFolder);
   runManager->SetUserAction(run_action);
 
   GeMSE_PrimaryGeneratorAction* gen_action = new GeMSE_PrimaryGeneratorAction;
@@ -136,7 +139,6 @@ int main(int argc, char** argv)  //
     session->SessionStart();
     delete session;
   }
-
   else {
     // Get the pointer to the User Interface manager
     G4UImanager* UI = G4UImanager::GetUIpointer();
@@ -155,9 +157,9 @@ int main(int argc, char** argv)  //
     // c1->SaveAs(graphfile);
 
     //-------------------------------------------------------
-    file->cd();
-    tree->Write();
-    file->Close();
+    //file->cd();
+    //tree->Write();
+    //file->Close();
   }
 
   // Job termination

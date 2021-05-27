@@ -20,7 +20,8 @@ class GeMSE_RunMessenger;
 
 class GeMSE_RunAction : public G4UserRunAction {
  public:
-  GeMSE_RunAction(TTree* tree);
+  //GeMSE_RunAction(TTree* tree);
+  GeMSE_RunAction(G4String Outputfolder);
   ~GeMSE_RunAction();
 
  public:
@@ -72,6 +73,7 @@ class GeMSE_RunAction : public G4UserRunAction {
   G4String selectedAction;
   G4String fOutputFolder;
 
+  TTree* tree;
   TTree* GeHitTree;
   TTree* PrimariesTree;
   TTree* RunTree;
