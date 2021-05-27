@@ -13,11 +13,6 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 
-//#include <math.h>
-//#include <stdlib.h>
-
-//#include <iostream>
-
 
 GeMSE_TrackingAction::GeMSE_TrackingAction()
 {
@@ -41,7 +36,7 @@ void GeMSE_TrackingAction::PreUserTrackingAction(const G4Track* theTrack)
 void GeMSE_TrackingAction::PostUserTrackingAction(const G4Track* theTrack){
   const G4ParticleDefinition* particleDefinition =  theTrack->GetDefinition();
   
-  if (theTrack->GetTrackID()==2 && theTrack->GetCreatorProcess()->GetProcessName()=="RadioactiveDecay") {
+  if (theTrack->GetTrackID()==2 && theTrack->GetCreatorProcess()->GetProcessName().find("RadioactiveDecay") != std::string::npos) {
     run_action->AddDecay();
   }
 
@@ -49,10 +44,11 @@ void GeMSE_TrackingAction::PostUserTrackingAction(const G4Track* theTrack){
   //{
   //G4cout << "Gamma produced!!!!!" << G4endl;
   
-  if(selectedAction==true){
+  //if(selectedAction==true){
     //save the particle only after it has been tracked
     if(theTrack->GetTrackStatus()==fStopAndKill)
     {
+      //G4cout << "Hola" << G4endl;
       EventID = G4EventManager::GetEventManager()->GetConstCurrentEvent()->GetEventID();
       TrackID = theTrack->GetTrackID();
       ParentID = theTrack->GetParentID();
@@ -63,12 +59,10 @@ void GeMSE_TrackingAction::PostUserTrackingAction(const G4Track* theTrack){
       zDir=VDir[2];
       ParticleID = new G4String(particleDefinition->GetParticleName());
       
-      if(theTrack->GetCreatorProcess()!=0){
-          CreatorProcess = new G4String(theTrack->GetCreatorProcess()->GetProcessName());
-      }
-      else {
-          CreatorProcess = new G4String;
-      }
+      if(theTrack->GetCreatorProcess()!=0)
+        CreatorProcess = new G4String(theTrack->GetCreatorProcess()->GetProcessName());
+      else
+        CreatorProcess = new G4String;
         
       PrimariesTree->SetBranchAddress("EventID", &EventID);
       PrimariesTree->SetBranchAddress("TrackID", &TrackID);
@@ -82,5 +76,5 @@ void GeMSE_TrackingAction::PostUserTrackingAction(const G4Track* theTrack){
         
       PrimariesTree->Fill();
     }
-  }
+  //}
 }

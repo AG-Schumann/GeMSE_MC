@@ -70,9 +70,8 @@ G4bool GeMSE_SensitiveDetector::ProcessHits(G4Step* aStep,
 }
 
 void GeMSE_SensitiveDetector::EndOfEvent(G4HCofThisEvent* HCE) {
-  if (HCID < 0) {
+  if (HCID < 0)
     HCID = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]);
-  }
 
   HCE->AddHitsCollection(HCID, HitsCollection);
 
@@ -125,10 +124,8 @@ void GeMSE_SensitiveDetector::EndOfEvent(G4HCofThisEvent* HCE) {
     fhTotEdep->Fill(totalEdep);
   }
 
-  if (EventID % 10000 == 0) {
-    G4cout << "\r"
-           << "Simulating Event Nr.: " << EventID << std::flush;
-  }
+  if (EventID % 10000 == 0)
+    G4cout << "\rSimulating Event Nr.: " << EventID << std::flush;
 
   delete Edep;
   delete Ekin;

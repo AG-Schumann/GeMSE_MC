@@ -14,7 +14,6 @@ using std::string;
 
 class GeMSE_TrackingMessenger;
 
-
 class GeMSE_TrackingAction : public G4UserTrackingAction
 {
   public:
@@ -22,10 +21,10 @@ class GeMSE_TrackingAction : public G4UserTrackingAction
     virtual ~GeMSE_TrackingAction();
     
     virtual void PreUserTrackingAction(const G4Track* theTrack);
-    virtual void PostUserTrackingAction(const G4Track* );
+    virtual void PostUserTrackingAction(const G4Track*);
     
-    void SelectAction(G4bool boolean)	{ selectedAction = boolean; };
-    G4bool GetSelectedAction()			{ return selectedAction; }; 
+    void SelectAction(G4bool boolean) { selectedAction = boolean; };
+    G4bool GetSelectedAction() { return selectedAction; }; 
 
   private:
     G4int EventID;

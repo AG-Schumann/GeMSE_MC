@@ -41,6 +41,7 @@ GeMSE_RunAction::~GeMSE_RunAction() {
 }
 
 void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
+  // Add random seed
   CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
   struct timeval hTimeValue;
   gettimeofday(&hTimeValue, NULL);
@@ -50,38 +51,34 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
   CLHEP::HepRandom::setTheSeed(aSeed);
   G4cout << "Setting the seed for this run to " << aSeed << G4endl;
 
-  TString ResultFileName;
-  
+  TString ResultFileName;  
   G4int RunID = aRun->GetRunID();
 
-    if (selectedAction=="default") {
-         std::ostringstream convert;   // stream used for the conversion
-         convert << RunID;      // insert the textual representation in the characters in the stream
-         TString RunName=convert.str();
-         ResultFileName = "results_run" + RunName + ".root";
-     }
-     else {
-         ResultFileName = selectedAction;
-     }
- 	
-     // try to open results directory
-     if (!gSystem->OpenDirectory(fOutputFolder)) {
-         // if directory does not exist make one
-         if (gSystem->MakeDirectory(fOutputFolder)==-1) {
-             std::cout << "###### ERROR: could not create directory " << fOutputFolder << std::endl;
-         }
-     }
-     
-     ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"Create");
-     
-     if (ResultFile->IsZombie()) {
-         G4cout << "##### Warning: " << ResultFileName << " already exists! Overwriting!" << G4endl;
-         ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"recreate");
-     }
+  if (selectedAction=="default") {
+    std::ostringstream convert;   // stream used for the conversion
+    convert << RunID; // insert the textual representation in the characters in the stream
+    TString RunName=convert.str();
+    ResultFileName = "results_run" + RunName + ".root";
+  }
+  else
+    ResultFileName = selectedAction;
 
+  // Try to open results directory
+  if (!gSystem->OpenDirectory(fOutputFolder)) {
+    // if directory does not exist make one
+    if (gSystem->MakeDirectory(fOutputFolder)==-1)
+      G4cout << "###### ERROR: could not create directory " << fOutputFolder
+             << G4endl;
+  }
 
-////////////////////////    
-        
+  ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"Create");
+
+  if (ResultFile->IsZombie()) {
+    G4cout << "##### Warning: " << ResultFileName << " already exists! Overwriting!" << G4endl;
+    ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"recreate");
+  }
+
+  // Create trees
   tree = new TTree("tree", "tree"); 
   GeHitTree = new TTree("GeHits", "GeHits");
   PrimariesTree = new TTree("Primaries", "Primaries");
@@ -90,7 +87,6 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
   GeHitTree->Branch("EventID", &HEventID);
   GeHitTree->Branch("NHits", &NHits);
   GeHitTree->Branch("TotEdep", &TotEdep);
-
   GeHitTree->Branch("TrackID", &HTrackID);
   GeHitTree->Branch("ParticleID", &HParticleID);
   GeHitTree->Branch("Edep", &Edep);
@@ -155,11 +151,10 @@ void GeMSE_RunAction::EndOfRunAction(const G4Run* aRun) {
   
   NDecays=fNDecays;
 
-  G4cout << "\n"
-         << "### Finished ###" << G4endl;
+  G4cout << "\n### Finished ###" << G4endl;
   G4cout << "Runtime: " << *timer << G4endl;
   
-  //-----------write trees and close file-------------
+  // Write trees and close file
   ResultFile->cd();
 
   //fRunTree->Fill();

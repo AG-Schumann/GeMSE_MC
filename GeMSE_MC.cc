@@ -126,6 +126,9 @@ int main(int argc, char** argv)  //
 
   GeMSE_PrimaryGeneratorAction* gen_action = new GeMSE_PrimaryGeneratorAction;
   runManager->SetUserAction(gen_action);
+  
+  G4UserTrackingAction* track_action = new GeMSE_TrackingAction;
+    runManager->SetUserAction(track_action);
 
   // Initialize G4 kernel
   runManager->Initialize();
