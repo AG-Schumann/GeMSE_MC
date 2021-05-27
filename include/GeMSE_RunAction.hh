@@ -81,7 +81,6 @@ class GeMSE_RunAction : public G4UserRunAction {
   TTree* ftree;
   TTree* fGeHitTree;
   TTree* fPrimariesTree;
-  TTree* fRunTree;
 
   G4long aSeed;
   GeMSE_Analysis* fRunAnalysis;

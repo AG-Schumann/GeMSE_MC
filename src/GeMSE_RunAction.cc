@@ -150,15 +150,14 @@ void GeMSE_RunAction::EndOfRunAction(const G4Run* aRun) {
   timer->Stop();
   
   NDecays=fNDecays;
-
+  
   G4cout << "\n### Finished ###" << G4endl;
   G4cout << "Runtime: " << *timer << G4endl;
   
   // Write trees and close file
   ResultFile->cd();
 
-  //fRunTree->Fill();
-
+  RunTree->Fill();
   tree->Write();
   GeHitTree->Write();
   PrimariesTree->Write();
