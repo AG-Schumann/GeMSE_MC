@@ -23,13 +23,13 @@
 using G4AnalysisManager = G4GenericAnalysisManager;
 using std::string;
 
-//GeMSE_RunAction::GeMSE_RunAction(TTree* tree) {
 GeMSE_RunAction::GeMSE_RunAction(G4String OutputFolder) {
   fOutputFolder = OutputFolder;
   timer = new G4Timer;
   mcVersionTag = "0.0.0";
 
   auto analysisManager = G4AnalysisManager::Instance();
+  analysisManager->SetVerboseLevel(0);
   // create run analysis
   fRunAnalysis = new GeMSE_Analysis();
   // create a messenger for this class
@@ -49,9 +49,10 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
   gettimeofday(&hTimeValue, NULL);
   aSeed = hTimeValue.tv_usec;
   CLHEP::HepRandom::setTheSeed(aSeed);
-  G4cout << "\n\nStarting run with seed = " << aSeed << G4endl;
+  G4cout << "\nStarting run with seed = " << aSeed << G4endl;
 
   auto analysisManager = G4AnalysisManager::Instance();
+  analysisManager->SetVerboseLevel(0);
 
   TString ResultFileName;  
   G4int RunID = aRun->GetRunID();
@@ -79,7 +80,7 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
     ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"Create");
 
     if (ResultFile->IsZombie()) {
-      G4cout << "##### Warning: " << ResultFileName << " already exists! Overwriting!" << G4endl;
+      G4cout << "#### " << ResultFileName << " -> Overwriting!" << G4endl;
       ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"recreate");
     }
   }
@@ -105,6 +106,9 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
   PrimariesTree->Branch("EventID", &PEventID);
   PrimariesTree->Branch("TrackID", &PTrackID);
   PrimariesTree->Branch("ParentID", &ParentID);
+  PrimariesTree->Branch("xPriPos", &xPriPos);
+  PrimariesTree->Branch("yPriPos", &yPriPos);
+  PrimariesTree->Branch("zPriPos", &zPriPos);
   PrimariesTree->Branch("Ekin", &PEkin);
   PrimariesTree->Branch("xDir", &xDir);
   PrimariesTree->Branch("yDir", &yDir);

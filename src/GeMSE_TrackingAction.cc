@@ -36,23 +36,26 @@ void GeMSE_TrackingAction::PreUserTrackingAction(const G4Track* theTrack)
 void GeMSE_TrackingAction::PostUserTrackingAction(const G4Track* theTrack){
   const G4ParticleDefinition* particleDefinition =  theTrack->GetDefinition();
   
-  if (theTrack->GetTrackID()==2 && theTrack->GetCreatorProcess()->GetProcessName().find("RadioactiveDecay") != std::string::npos) {
+  if (theTrack->GetTrackID()==2
+      && theTrack->GetCreatorProcess()->GetProcessName().find("RadioactiveDecay") != std::string::npos) {
     run_action->AddDecay();
   }
 
   //if(particleDefinition->GetParticleName() == "gamma")
-  //{
-  //G4cout << "Gamma produced!!!!!" << G4endl;
+  //  G4cout << "Gamma produced!!!!!" << G4endl;
   
   if(savePrimaries==true){
     //save the particle only after it has been tracked
     if(theTrack->GetTrackStatus()==fStopAndKill)
     {
-      //G4cout << "Hola" << G4endl;
       EventID = G4EventManager::GetEventManager()->GetConstCurrentEvent()->GetEventID();
       TrackID = theTrack->GetTrackID();
       ParentID = theTrack->GetParentID();
       Ekin = theTrack->GetVertexKineticEnergy()/keV;
+      G4ThreeVector VPos = theTrack->GetVertexPosition();
+      xPriPos=VPos[0];
+      yPriPos=VPos[1];
+      zPriPos=VPos[2];
       G4ThreeVector VDir = theTrack->GetVertexMomentumDirection();
       xDir=VDir[0];
       yDir=VDir[1];
@@ -67,6 +70,9 @@ void GeMSE_TrackingAction::PostUserTrackingAction(const G4Track* theTrack){
       PrimariesTree->SetBranchAddress("EventID", &EventID);
       PrimariesTree->SetBranchAddress("TrackID", &TrackID);
       PrimariesTree->SetBranchAddress("ParentID", &ParentID);
+      PrimariesTree->SetBranchAddress("xPriPos", &xPriPos);
+      PrimariesTree->SetBranchAddress("yPriPos", &yPriPos);
+      PrimariesTree->SetBranchAddress("zPriPos", &zPriPos);
       PrimariesTree->SetBranchAddress("Ekin", &Ekin);
       PrimariesTree->SetBranchAddress("xDir", &xDir);
       PrimariesTree->SetBranchAddress("yDir", &yDir);

@@ -20,7 +20,6 @@ class GeMSE_RunMessenger;
 
 class GeMSE_RunAction : public G4UserRunAction {
  public:
-  //GeMSE_RunAction(TTree* tree);
   GeMSE_RunAction(G4String Outputfolder);
   ~GeMSE_RunAction();  
 
@@ -63,6 +62,9 @@ class GeMSE_RunAction : public G4UserRunAction {
   G4int ParentID;
   string* PParticleID;
   string* Process;
+  G4double xPriPos;
+  G4double yPriPos;
+  G4double zPriPos;
   G4double PEkin;
   G4double xDir;
   G4double yDir;

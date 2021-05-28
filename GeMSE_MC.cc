@@ -63,33 +63,6 @@ int main(int argc, char** argv)
            << "###### WARNING: no folder specified, no output will be written "
            << "\n######\n\n ";
 
-  /* Diego: commenting this out
-  else {
-    // try to open results directory
-    if (!gSystem->OpenDirectory(OutputFolder)) {
-      // if directory does not exist make one
-      if (gSystem->MakeDirectory(OutputFolder) == -1) {
-        std::cout << "###### ERROR: could not create directory " << OutputFolder
-                  << std::endl;
-        return 0;
-      }
-    }
-
-    // create output file
-    TString outputfile = OutputFolder + "/simulated_efficiencies.root";
-    file = new TFile(outputfile, "Create");
-
-    if (file->IsZombie()) {
-      G4cout
-          << "###### ERROR: could not create file 'simulated_efficiencies.root'"
-          << G4endl;
-      return 0;
-    }
-
-    tree = new TTree("tree", "tree");
-  }
-  */
-
   // Run manager
   G4RunManager* runManager = new G4RunManager;
 
@@ -138,6 +111,7 @@ int main(int argc, char** argv)
   //                 owned and deleted by the run manager, so they should not
   //                 be deleted in the main() program !
 
+  G4cout << "\n";
   delete visManager;
   delete runManager;
   //delete verbosity;

@@ -30,6 +30,9 @@ class GeMSE_TrackingAction : public G4UserTrackingAction
     G4int EventID;
     G4int TrackID;
     G4int ParentID;
+    G4double xPriPos;
+    G4double yPriPos;
+    G4double zPriPos;
     G4double Ekin;
     G4double xDir;
     G4double yDir;
