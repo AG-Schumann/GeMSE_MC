@@ -202,10 +202,8 @@ void GeMSE_ParticleSource::ConfineSourceToVolume(G4String hVolumeList) {
   } else if (m_hVolumeNames.empty())
     m_bConfine = false;
   else {
-    G4cout << " **** Error: One or more volumes do not exist **** " << G4endl;
-    G4cout << " Ignoring confine condition" << G4endl;
-    m_hVolumeNames.clear();
-    m_bConfine = false;
+    G4cout << " **** /GeMSE/gun/confine: ERROR: One or more volumes do not exist **** " << G4endl;
+    exit(1);
   }
 }
 

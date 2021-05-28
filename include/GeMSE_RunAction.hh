@@ -32,8 +32,6 @@ class GeMSE_RunAction : public G4UserRunAction {
   TTree* GetPrimariesTree();
 
   void AddDecay();
-  void SelectAction(G4String string_action) { selectedAction = string_action; };
-  G4String GetSelectedAction() { return selectedAction; };
   void SetVersionTag(const G4String &hVersionTag) {
     mcVersionTag = hVersionTag;
   }
@@ -70,9 +68,7 @@ class GeMSE_RunAction : public G4UserRunAction {
   G4double yDir;
   G4double zDir;
 
-  G4String selectedAction;
   G4String fOutputFolder;
-
   TFile* ResultFile;
   TTree* tree;
   TTree* GeHitTree;

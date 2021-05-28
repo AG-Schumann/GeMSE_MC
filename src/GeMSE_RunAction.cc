@@ -18,20 +18,20 @@
 #include "G4Run.hh"
 #include "G4RunManager.hh"
 #include "G4Version.hh"
+#include "G4GenericAnalysisManager.hh"
 
+using G4AnalysisManager = G4GenericAnalysisManager;
 using std::string;
 
 //GeMSE_RunAction::GeMSE_RunAction(TTree* tree) {
 GeMSE_RunAction::GeMSE_RunAction(G4String OutputFolder) {
   fOutputFolder = OutputFolder;
-  selectedAction = "default"; // ToDo: messenger for this guy!!
-  
   timer = new G4Timer;
   mcVersionTag = "0.0.0";
 
+  auto analysisManager = G4AnalysisManager::Instance();
   // create run analysis
   fRunAnalysis = new GeMSE_Analysis();
-
   // create a messenger for this class
   runMessenger = new GeMSE_RunMessenger(fRunAnalysis);
 }
@@ -49,20 +49,22 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
   gettimeofday(&hTimeValue, NULL);
   aSeed = hTimeValue.tv_usec;
   CLHEP::HepRandom::setTheSeed(aSeed);
-  G4cout << "Setting the seed for this run to " << aSeed << G4endl;
+  G4cout << "\n\nStarting run with seed = " << aSeed << G4endl;
+
+  auto analysisManager = G4AnalysisManager::Instance();
 
   TString ResultFileName;  
   G4int RunID = aRun->GetRunID();
 
   if (fOutputFolder != "") {
-    if (selectedAction=="default") {
+    if (analysisManager->GetFileName()=="") {
       std::ostringstream convert;   // stream used for the int->str conversion
       convert << RunID;
       TString RunName=convert.str();
       ResultFileName = "results_run" + RunName + ".root";
     }
     else
-      ResultFileName = selectedAction;
+      ResultFileName = analysisManager->GetFileName();
 
     // try to open results directory
     if (!gSystem->OpenDirectory(fOutputFolder)) {
@@ -196,3 +198,4 @@ void GeMSE_RunAction::AddDecay()
 {
   fNDecays++;
 }
+
