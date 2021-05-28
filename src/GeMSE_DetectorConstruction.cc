@@ -47,7 +47,6 @@ GeMSE_DetectorConstruction::~GeMSE_DetectorConstruction() {}
 
 G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   //======= define materials ==============================================
-
   G4double density, fractionmass, a, z;
   G4int ncomponents;
 

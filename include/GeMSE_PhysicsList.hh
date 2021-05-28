@@ -1,9 +1,8 @@
 #ifndef __GeMSE_PHYSICSLIST_H__
 #define __GeMSE_PHYSICSLIST_H__
 
-// GEANT4Version >= 10
 #include "G4VModularPhysicsList.hh"
-//#include "GeMSE_PhysicsMessenger.hh"
+
 #include "globals.hh"
 
 #include <vector>
@@ -29,7 +28,6 @@ class GeMSE_PhysicsList : public G4VModularPhysicsList {
   G4double cutForGenericIon;
 
   G4int VerboseLevel;
-
   // G4String physRootFile;
 };
-#endif  // __GeMSE_PHYSICSLIST_H__
+#endif

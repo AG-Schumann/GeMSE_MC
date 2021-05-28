@@ -11,8 +11,6 @@
 class GeMSE_RunAction;
 class G4UIcmdWithADouble;
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 class GeMSE_RunMessenger : public G4UImessenger {
  public:
   GeMSE_RunMessenger(GeMSE_Analysis* RunAnalysis);
@@ -22,7 +20,7 @@ class GeMSE_RunMessenger : public G4UImessenger {
 
  private:
   // GeMSE_Analysis* fRunAnalysis = new GeMSE_Analysis();
-  GeMSE_Analysis* fRunAnalysis;  // DR 20170926 - For Geant493
+  GeMSE_Analysis* fRunAnalysis;
 
   G4UIdirectory* runDirectory;
 
@@ -32,7 +30,5 @@ class GeMSE_RunMessenger : public G4UImessenger {
   G4UIcmdWithADouble* SigRegionCmd;
   G4UIcmdWithADouble* BkgRegionCmd;
 };
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif

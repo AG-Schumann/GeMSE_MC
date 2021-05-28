@@ -1,6 +1,4 @@
-// GEANT4Version >= 10
 #include "GeMSE_PhysicsList.hh"
-//#include "GeMSE_PhysicsMessenger.hh"
 
 #include "TFile.h"
 #include "TH1.h"
@@ -19,7 +17,6 @@
 #include <G4ios.hh>
 #include "G4SystemOfUnits.hh"
 #include "G4UnitsTable.hh"
-
 #include "G4HadronElasticPhysicsHP.hh"
 #include "G4HadronInelasticQBBC.hh"
 #include "G4HadronPhysicsFTFP_BERT_HP.hh"
@@ -31,13 +28,11 @@
 #include "G4IonINCLXXPhysics.hh"
 #include "G4IonPhysics.hh"
 //#include "GammaPhysics.hh" see Hadr03
-
 #include "G4EmLivermorePhysics.hh"
 #include "G4PhysListFactory.hh"
 #include "G4RadioactiveDecayPhysics.hh"
 #include "G4VModularPhysicsList.hh"
 
-//__________________________________________________________________________________________________________
 // GeMSE_PhysicsList::GeMSE_PhysicsList(G4String fName):G4VModularPhysicsList()
 GeMSE_PhysicsList::GeMSE_PhysicsList() : G4VModularPhysicsList() {
   defaultCutValue = 1.0 * mm;
@@ -112,11 +107,7 @@ GeMSE_PhysicsList::GeMSE_PhysicsList() : G4VModularPhysicsList() {
   // physRootFile = fName;
 }
 
-//__________________________________________________________________________________________________________
-
 GeMSE_PhysicsList::~GeMSE_PhysicsList() {}
-
-//__________________________________________________________________________________________________________
 
 void GeMSE_PhysicsList::SetCuts() {
   if (VerboseLevel > 1) G4cout << "GeMSE_PhysicsList::SetCuts:";

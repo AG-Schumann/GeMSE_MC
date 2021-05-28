@@ -103,4 +103,4 @@ class GeMSE_ParticleSource : public G4VPrimaryGenerator {
   G4Navigator *m_pNavigator;
 };
 
-#endif  // __GeMSE_ParticleSource_H__
+#endif

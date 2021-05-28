@@ -43,20 +43,20 @@ void GeMSE_Hit::Draw() {
   G4VVisManager* pVVisManager = G4VVisManager::GetConcreteInstance();
   if (pVVisManager) {
     /*
-G4Circle circle(pos);
-circle.SetScreenSize(5);
-circle.SetFillStyle(G4Circle::filled);
-G4Colour colour(1.,0.,.5);
-G4VisAttributes attribs(colour);
-circle.SetVisAttributes(attribs);
-pVVisManager->Draw(circle);
+    G4Circle circle(pos);
+    circle.SetScreenSize(5);
+    circle.SetFillStyle(G4Circle::filled);
+    G4Colour colour(1.,0.,.5);
+    G4VisAttributes attribs(colour);
+    circle.SetVisAttributes(attribs);
+    pVVisManager->Draw(circle);
      */
   }
 }
 
 void GeMSE_Hit::Print() {
   /*
-G4cout << "  energy deposit: " << G4BestUnit(edep,"Energy")
-   << "  time:" <<G4BestUnit(hit_time,"Time")
+    G4cout << "  energy deposit: " << G4BestUnit(edep,"Energy")
+    << "  time:" <<G4BestUnit(hit_time,"Time")
    */
 }

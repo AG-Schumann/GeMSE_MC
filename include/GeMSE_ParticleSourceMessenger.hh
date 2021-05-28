@@ -1,8 +1,8 @@
 #ifndef __GeMSE_ParticleSourceMESSENGER_H__
 #define __GeMSE_ParticleSourceMESSENGER_H__
 
-#include <G4UImessenger.hh>
 #include <globals.hh>
+#include <G4UImessenger.hh>
 
 class GeMSE_ParticleSource;
 
@@ -58,4 +58,4 @@ class GeMSE_ParticleSourceMessenger : public G4UImessenger {
   G4double m_dIonExciteEnergy;
 };
 
-#endif  // __GeMSE_ParticleSourceMESSENGER_H__
+#endif

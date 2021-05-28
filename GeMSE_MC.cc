@@ -57,7 +57,7 @@ int main(int argc, char** argv)
     }
   }
   
-  // check if output folder was specified
+  // Check if output folder was specified
   if (OutputFolder == "")
     G4cout << "\n###### " << G4endl
            << "###### WARNING: no folder specified, no output will be written "
@@ -74,7 +74,7 @@ int main(int argc, char** argv)
   G4VUserPhysicsList* physics = new GeMSE_PhysicsList;
   runManager->SetUserInitialization(physics);
 
-  // visualization manager
+  // Visualization manager
   G4VisManager* visManager = new G4VisExecutive;
   visManager->Initialize();
 
