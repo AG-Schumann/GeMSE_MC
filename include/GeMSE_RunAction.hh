@@ -22,11 +22,14 @@ class GeMSE_RunAction : public G4UserRunAction {
  public:
   //GeMSE_RunAction(TTree* tree);
   GeMSE_RunAction(G4String Outputfolder);
-  ~GeMSE_RunAction();
+  ~GeMSE_RunAction();  
 
  public:
   void BeginOfRunAction(const G4Run* aRun);
   void EndOfRunAction(const G4Run* aRun);
+  void SetVersionTag(const G4String &hVersionTag) {
+    m_hVersionTag = hVersionTag;
+  }
 
   TTree* GetGeHitTree();
   TTree* GetPrimariesTree();
@@ -43,6 +46,7 @@ class GeMSE_RunAction : public G4UserRunAction {
 
   G4int NDecays;
   G4int fNDecays;
+  G4String m_hVersionTag;
 
   G4int NEvents;
   G4int HEventID;

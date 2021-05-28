@@ -123,6 +123,7 @@ int main(int argc, char** argv)  //
   // UserAction classes
   GeMSE_RunAction* run_action = new GeMSE_RunAction(OutputFolder);
   runManager->SetUserAction(run_action);
+  run_action->SetVersionTag(git_tag);
 
   GeMSE_PrimaryGeneratorAction* gen_action = new GeMSE_PrimaryGeneratorAction;
   runManager->SetUserAction(gen_action);
