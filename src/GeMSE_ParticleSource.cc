@@ -250,6 +250,13 @@ void GeMSE_ParticleSource::GeneratePointsInVolume() {
     }
   }
 
+  else if (m_hShape == "Box")
+  {
+    x = 2 * (G4UniformRand() - 0.5) * m_dHalfx;
+    y = 2 * (G4UniformRand() - 0.5) * m_dHalfy;
+    z = 2 * (G4UniformRand() - 0.5) * m_dHalfz;
+  }
+
   else
     G4cout << "Error: Volume Shape Does Not Exist" << G4endl;
 
