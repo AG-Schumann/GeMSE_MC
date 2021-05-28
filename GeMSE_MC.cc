@@ -59,7 +59,7 @@ int main(int argc, char** argv)
   
   // check if output folder was specified
   if (OutputFolder == "")
-    G4cout << "\n###### " << G4endl;
+    G4cout << "\n###### " << G4endl
            << "###### WARNING: no folder specified, no output will be written "
            << "\n######\n\n ";
 

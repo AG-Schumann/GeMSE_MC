@@ -28,7 +28,7 @@ GeMSE_TrackingAction::~GeMSE_TrackingAction()
 void GeMSE_TrackingAction::PreUserTrackingAction(const G4Track* theTrack)
 {
   //G4cout << "Tracking active!!!!!" << G4endl;
-  // Get pointer to the current LenaRunAction instance
+  // Get pointer to the current RunAction instance
   run_action = (GeMSE_RunAction*)G4RunManager::GetRunManager()->GetUserRunAction();
   PrimariesTree = run_action->GetPrimariesTree();
 }
@@ -44,7 +44,7 @@ void GeMSE_TrackingAction::PostUserTrackingAction(const G4Track* theTrack){
   //{
   //G4cout << "Gamma produced!!!!!" << G4endl;
   
-  //if(selectedAction==true){
+  if(savePrimaries==true){
     //save the particle only after it has been tracked
     if(theTrack->GetTrackStatus()==fStopAndKill)
     {
@@ -76,5 +76,5 @@ void GeMSE_TrackingAction::PostUserTrackingAction(const G4Track* theTrack){
         
       PrimariesTree->Fill();
     }
-  //}
+  }
 }

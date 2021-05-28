@@ -70,7 +70,7 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
       if (gSystem->MakeDirectory(fOutputFolder)==-1) {
         G4cout << "###### ERROR: could not create directory " << fOutputFolder
                << G4endl;
-        //return 0;
+        return;
       }
     }
 

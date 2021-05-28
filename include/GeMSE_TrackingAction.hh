@@ -23,8 +23,8 @@ class GeMSE_TrackingAction : public G4UserTrackingAction
     virtual void PreUserTrackingAction(const G4Track* theTrack);
     virtual void PostUserTrackingAction(const G4Track*);
     
-    void SelectAction(G4bool boolean) { selectedAction = boolean; };
-    G4bool GetSelectedAction() { return selectedAction; }; 
+    void SelectAction(G4bool boolean) { savePrimaries = boolean; };
+    G4bool GetSelectedAction() { return savePrimaries; }; 
 
   private:
     G4int EventID;
@@ -39,7 +39,7 @@ class GeMSE_TrackingAction : public G4UserTrackingAction
 
     TTree* PrimariesTree;
 
-    G4bool selectedAction;
+    G4bool savePrimaries;
     GeMSE_TrackingMessenger* trackingMessenger;
     GeMSE_RunAction* run_action;
 };
