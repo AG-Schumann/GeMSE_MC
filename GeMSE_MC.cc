@@ -2,6 +2,8 @@
 #include "GeMSE_PhysicsList.hh"
 #include "GeMSE_PrimaryGeneratorAction.hh"
 #include "GeMSE_RunAction.hh"
+#include "GeMSE_TrackingAction.hh"
+#include "GeMSE_SensitiveDetector.hh"
 
 //#include <Randomize.hh>
 #include <TCanvas.h>
@@ -19,22 +21,12 @@
 #include "G4VisExecutive.hh"
 #include "G4ios.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-int main(int argc, char** argv)  //
+int main(int argc, char** argv)
 {
   std::string git_tag = "1.2.0";
   G4cout << G4endl << "Welcome to GeMSE_MC version " << git_tag.c_str()
          << G4endl;
-
-  // Choose the Random engine
-  CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
-
-  // set random seed with system time
-  // G4long seed = time(NULL);
-
-  // set seed
-  CLHEP::HepRandom::setTheSeed(24312);
 
   // User Verbose output class
   //
@@ -64,42 +56,12 @@ int main(int argc, char** argv)  //
         break;
     }
   }
-
-  // initialize pointers
-  TFile* file = 0;
-  TTree* tree = 0;
-
-  // check if output folder was specified
-  if (OutputFolder == "") {
-    std::cout
-        << "###### WARNING: no folder specified, no output will be written "
-        << std::endl;
-  }
-
-  else {
-    // try to open results directory
-    if (!gSystem->OpenDirectory(OutputFolder)) {
-      // if directory does not exist make one
-      if (gSystem->MakeDirectory(OutputFolder) == -1) {
-        std::cout << "###### ERROR: could not create directory " << OutputFolder
-                  << std::endl;
-        return 0;
-      }
-    }
-
-    // create output file
-    TString outputfile = OutputFolder + "/simulated_efficiencies.root";
-    file = new TFile(outputfile, "Create");
-
-    if (file->IsZombie()) {
-      G4cout
-          << "###### ERROR: could not create file 'simulated_efficiencies.root'"
-          << G4endl;
-      return 0;
-    }
-
-    tree = new TTree("tree", "tree");
-  }
+  
+  // Check if output folder was specified
+  if (OutputFolder == "")
+    G4cout << "\n###### " << G4endl
+           << "###### WARNING: no folder specified, no output will be written "
+           << "\n######\n\n ";
 
   // Run manager
   G4RunManager* runManager = new G4RunManager;
@@ -112,51 +74,36 @@ int main(int argc, char** argv)  //
   G4VUserPhysicsList* physics = new GeMSE_PhysicsList;
   runManager->SetUserInitialization(physics);
 
-  // visualization manager
+  // Visualization manager
   G4VisManager* visManager = new G4VisExecutive;
   visManager->Initialize();
 
   // UserAction classes
-  GeMSE_RunAction* run_action = new GeMSE_RunAction(tree);
+  GeMSE_RunAction* run_action = new GeMSE_RunAction(OutputFolder);
   runManager->SetUserAction(run_action);
+  run_action->SetVersionTag(git_tag);
 
   GeMSE_PrimaryGeneratorAction* gen_action = new GeMSE_PrimaryGeneratorAction;
   runManager->SetUserAction(gen_action);
+  
+  G4UserTrackingAction* track_action = new GeMSE_TrackingAction;
+    runManager->SetUserAction(track_action);
 
   // Initialize G4 kernel
   runManager->Initialize();
 
-  //------Shell & Visualization-------------------------------------------------
-
+  // Shell & Visualization
   if (!Macro) {
     // Define UI session for interactive mode
     G4UIsession* session = new G4UIterminal();
-
     session->SessionStart();
     delete session;
   }
-
   else {
     // Get the pointer to the User Interface manager
     G4UImanager* UI = G4UImanager::GetUIpointer();
-
     G4String command = "/control/execute " + MacroFilename;
     UI->ApplyCommand(command);
-  }
-
-  if (OutputFolder != "") {
-    //------------- plot efficiency curve -------------------
-    // gROOT->SetBatch(1);
-
-    // TCanvas* c1 = new TCanvas("c1");
-    // tree->Draw("efficiency:energy","","*");
-    // TString graphfile = OutputFolder+"/simulated_efficiencies.pdf";
-    // c1->SaveAs(graphfile);
-
-    //-------------------------------------------------------
-    file->cd();
-    tree->Write();
-    file->Close();
   }
 
   // Job termination
@@ -164,11 +111,10 @@ int main(int argc, char** argv)  //
   //                 owned and deleted by the run manager, so they should not
   //                 be deleted in the main() program !
 
+  G4cout << "\n";
   delete visManager;
   delete runManager;
-  // delete verbosity;
+  //delete verbosity;
 
   return 0;
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

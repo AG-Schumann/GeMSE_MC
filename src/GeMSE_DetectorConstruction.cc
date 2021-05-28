@@ -47,14 +47,13 @@ GeMSE_DetectorConstruction::~GeMSE_DetectorConstruction() {}
 
 G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   //======= define materials ==============================================
-
   G4double density, fractionmass, a, z;
   G4int ncomponents;
 
   // define materials from NIST manager
   G4NistManager* nist = G4NistManager::Instance();
 
-  G4Material* air_mat = nist->FindOrBuildMaterial("G4_AIR");
+  //G4Material* air_mat = nist->FindOrBuildMaterial("G4_AIR");
   G4Material* copper_mat = nist->FindOrBuildMaterial("G4_Cu");
   G4Material* lead_mat = nist->FindOrBuildMaterial("G4_Pb");
   G4Material* germanium_mat = nist->FindOrBuildMaterial("G4_Ge");
@@ -70,12 +69,12 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   G4Element* H = nist->FindOrBuildElement("H");
   G4Element* O = nist->FindOrBuildElement("O");
   G4Element* Si = nist->FindOrBuildElement("Si");
-  G4Element* Mg = nist->FindOrBuildElement("Mg");
+  //G4Element* Mg = nist->FindOrBuildElement("Mg");
   G4Element* Fe = nist->FindOrBuildElement("Fe");
-  G4Element* S = nist->FindOrBuildElement("S");
-  G4Element* Al = nist->FindOrBuildElement("Al");
-  G4Element* Ca = nist->FindOrBuildElement("Ca");
-  G4Element* Na = nist->FindOrBuildElement("Na");
+  //G4Element* S = nist->FindOrBuildElement("S");
+  //G4Element* Al = nist->FindOrBuildElement("Al");
+  //G4Element* Ca = nist->FindOrBuildElement("Ca");
+  //G4Element* Na = nist->FindOrBuildElement("Na");
   G4Element* Ni = nist->FindOrBuildElement("Ni");
   G4Element* F = nist->FindOrBuildElement("F");
   G4Element* Cr = nist->FindOrBuildElement("Cr");
@@ -1081,8 +1080,7 @@ void GeMSE_DetectorConstruction::OverlapCheck() {
   G4cout << "******************************" << G4endl;
 
   G4cout << thePVStore->size() << " physical volumes are defined" << G4endl;
-  G4bool overlapFlag =
-      false;  // Boolean variable overlapFlag, initialized to 'false'
+  G4bool overlapFlag = false;  // Boolean variable initialized to 'false'
 
   for (size_t i = 0; i < thePVStore->size(); i++)
     overlapFlag = (*thePVStore)[i]->CheckOverlaps(5000) | overlapFlag;

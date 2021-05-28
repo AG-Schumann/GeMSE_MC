@@ -6,8 +6,6 @@
 #include "G4LogicalVolume.hh"
 #include "G4VUserDetectorConstruction.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 class GeMSE_DetectorConstruction : public G4VUserDetectorConstruction {
  public:
   GeMSE_DetectorConstruction(G4String GeometryFile);
@@ -23,6 +21,4 @@ class GeMSE_DetectorConstruction : public G4VUserDetectorConstruction {
   G4String fGeometryFile;
 };
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-#endif /*GeMSE_DetectorConstruction_h*/
+#endif

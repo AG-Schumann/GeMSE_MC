@@ -48,17 +48,45 @@ $G4WORKDIR/bin/Linux-g++/GeMSE_MC -m <macrofile.mac> -o <results_folder>
 * For visualization only use `macros/visualization_vrml.mac` (no need for `-o` argument in this case).
 
 ### results_folder
-* Folder where result files are written.
+* Folder where result files are written. **No output will be written if this argument isn't specified**
 
-### Output
-* `simulated_efficiencies.root`
-	* TTree `tree`: Tree with information about detection efficiency and branching ratio (emission probability) for every gamma line
-		* TBranch `energy`: energy of gamma line
-		* TBranch `efficiency`: detection efficiency
-        * TBranch `efficiency_err`: statistical uncertainty of detection efficiency
-        * TBranch `eff_BR`: product of detection efficiency and branching ratio
+## Output format
 
-## Import CAD samples
+The simulation output is a `*.root` file with several layers of information:
+* TNamed `G4VERSION_TAG`, with the information on the Geant4 version used during the run
+* TNamed `MCVERSION_TAG`, with the information on the GeMSE_MC version used during the run
+* TTree `RunInfo`: tree with basic run information
+  * TBranch `nEvents`: number of simulated events
+  * TBranch `nDecays`: number of primary decays in the run (i.e., decays on the primary particle)
+  * TBranch `RunTime`: guess what
+  * TBranch `Seed`: random seed of the run, so that you can reproduce it
+* TTree `tree`: tree with information about detection efficiency and branching ratio (emission probability) for every gamma line chosen (empty branches if no `/gammaline/` commands are provided in the run macro)
+  * TBranch `energy`: energy of gamma line
+  * TBranch `efficiency`: detection efficiency
+  * TBranch `efficiency_err`: statistical uncertainty of detection efficiency
+  * TBranch `eff_BR`: product of detection efficiency and branching ratio
+* TTree `GeHits`: tree with information on every particle hit (energy deposit > 0) in the Ge
+  * TBranch `EventID`: run event id
+  * TBranch `NHits`: number of Ge hits for a given event
+  * TBranch `TotEdep`: total energy deposit in the Ge crystal for a given event
+  * TBranch `TrackID`: id of the tracks producing the hits in the Ge crystal
+  * TBranch `ParticleID`: Geant4 particle identifier for the hits
+  * TBranch `Edep`: energy deposit of the individual hits
+  * TBranch `xPos`, `yPos`, `zPos`: position of the individual hits
+  * TBranch `Time`: time of the individual hits
+  * TBranch `Ekin`: kinetic energy of the particle at the time of the hit
+* TTree `Primaries`: Tree with information on all generated particles in the run (deactivated by default, add `/writePrimaries true` to your macro to fill the branches below)
+  * TBranch `EventID` 
+  * TBranch `TrackID` 
+  * TBranch `ParentID`: run id of the parent particle
+  * TBranch `xPriPos`, `yPriPos`, `zPriPos`: primary position
+  * TBranch `Ekin`
+  * TBranch `ParticleID`
+  * TBranch `xDir`, `yDir`, `zDir`: initial momentum direction
+
+*Note*: The `tree` tree must keep that name for backwards compatibility with simulations and analysis scripts.
+
+## Import 3D CAD samples
 
 The [CADMesh](https://github.com/christopherpoole/CADMesh) interface, specifically [v2.0.3](https://github.com/christopherpoole/CADMesh/releases/tag/v2.0.3) is integrated into this code. This means that one can import CAD samples in STL, PLY or OBJ format into Geant4 for their construction. See an example in `src/GeMSE_DetectorConstruction.cc`, under `CAD SAMPLE`.
 

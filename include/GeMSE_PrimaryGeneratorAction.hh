@@ -39,4 +39,4 @@ class GeMSE_PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction {
   GeMSE_ParticleSource *m_pParticleSource;
 };
 
-#endif  // __GeMSE_PrimaryGeneratorAction_H__
+#endif

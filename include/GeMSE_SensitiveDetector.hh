@@ -3,9 +3,12 @@
 
 #include "GeMSE_Hit.hh"
 
-#include <TH1D.h>
-
 #include "G4VSensitiveDetector.hh"
+
+#include <TH1D.h>
+#include "TTree.h"
+#include <vector>
+#include <string>
 
 class G4Step;
 class G4HCofThisEvent;
@@ -25,6 +28,12 @@ class GeMSE_SensitiveDetector : public G4VSensitiveDetector {
 
  private:
   GeMSE_HitsCollection* HitsCollection;
+  TTree* GeHitTree;
+
+  G4int EventID;
+  G4int NHits;
+  G4double TotEdep;
+
   int HCID;
   TH1D* fhTotEdep;
 };

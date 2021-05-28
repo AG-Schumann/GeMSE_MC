@@ -2,10 +2,10 @@
 #include "GeMSE_DetectorConstruction.hh"
 #include "GeMSE_Hit.hh"
 #include "GeMSE_RunAction.hh"
+#include "GeMSE_PrimaryGeneratorAction.hh"
 
 #include "G4HCofThisEvent.hh"
 #include "G4ThreeVector.hh"
-
 #include "G4EventManager.hh"
 #include "G4LogicalVolume.hh"
 #include "G4ParticleDefinition.hh"
@@ -21,6 +21,12 @@
 #include "G4VPhysicalVolume.hh"
 #include "G4VTouchable.hh"
 #include "G4ios.hh"
+
+#include "TROOT.h"
+#include "TFile.h"
+#include "TBranch.h"
+
+using namespace std;
 
 GeMSE_SensitiveDetector::GeMSE_SensitiveDetector(G4String name)
     : G4VSensitiveDetector(name), HCID(-1) {
@@ -39,16 +45,24 @@ void GeMSE_SensitiveDetector::Initialize(G4HCofThisEvent*) {
 
   fhTotEdep =
       runAction->GetRunAnalysis()->GetHisto();  // get pointer to histogram
+
+  GeHitTree = runAction->GetGeHitTree(); //get name of results tree
 }
 
 G4bool GeMSE_SensitiveDetector::ProcessHits(G4Step* aStep,
                                             G4TouchableHistory* ROhist) {
   G4double edep = aStep->GetTotalEnergyDeposit();
+  G4ParticleDefinition* particleType = aStep->GetTrack()->GetDefinition();  
 
   if (edep == 0.) return false;
 
   GeMSE_Hit* newHit = new GeMSE_Hit();
+  newHit->SetTrack(aStep->GetTrack()->GetTrackID());
   newHit->SetEdep(edep);
+  newHit->SetPos(aStep->GetPostStepPoint()->GetPosition());
+  newHit->SetTime(aStep->GetPreStepPoint()->GetGlobalTime());
+  newHit->SetParticle(particleType->GetPDGEncoding());
+  newHit->SetParticleEnergy(aStep->GetPreStepPoint()->GetKineticEnergy());
 
   HitsCollection->insert(newHit);
 
@@ -56,31 +70,69 @@ G4bool GeMSE_SensitiveDetector::ProcessHits(G4Step* aStep,
 }
 
 void GeMSE_SensitiveDetector::EndOfEvent(G4HCofThisEvent* HCE) {
-  if (HCID < 0) {
+  if (HCID < 0)
     HCID = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]);
-  }
 
   HCE->AddHitsCollection(HCID, HitsCollection);
 
   G4double totalEdep = 0.;
+  EventID =
+      G4EventManager::GetEventManager()->GetConstCurrentEvent()->GetEventID();
   G4int n_hits = HitsCollection->entries();
+
+  vector<double>* Edep = new vector<double>;
+  vector<double>* Ekin = new vector<double>;
+  vector<double>* Time = new vector<double>;
+  vector<double>* xPos = new vector<double>;
+  vector<double>* yPos = new vector<double>;
+  vector<double>* zPos = new vector<double>;
+  vector<int>* ParticleID = new vector<int>;
+  vector<int>* TrackID = new vector<int>;
 
   // gather info on hits
   for (int i = 0; i < n_hits; i++) {
     G4double edep = (*HitsCollection)[i]->GetEdep() / keV;
+    G4ThreeVector Pos=(*HitsCollection)[i]->GetPos()/mm;
+    Edep->push_back(edep);
+    xPos->push_back(Pos[0]);
+    yPos->push_back(Pos[1]);
+    zPos->push_back(Pos[2]);
+    Time->push_back((*HitsCollection)[i]->GetTime()/ns);
+    ParticleID->push_back((*HitsCollection)[i]->GetParticle());
+    TrackID->push_back((*HitsCollection)[i]->GetTrack());
+    Ekin->push_back((*HitsCollection)[i]->GetParticleEnergy()/keV);
+    
     totalEdep += edep;  // sum up the edep
   }
 
   // fill histogram
-  if (totalEdep > 0) {
+  if (totalEdep > 0) {    
+    GeHitTree->SetBranchAddress("EventID", &EventID);
+    GeHitTree->SetBranchAddress("NHits", &n_hits);
+    GeHitTree->SetBranchAddress("TotEdep", &totalEdep);
+    GeHitTree->SetBranchAddress("Edep", &Edep);
+    GeHitTree->SetBranchAddress("xPos", &xPos);
+    GeHitTree->SetBranchAddress("yPos", &yPos);
+    GeHitTree->SetBranchAddress("zPos", &zPos);
+    GeHitTree->SetBranchAddress("Time", &Time);
+    GeHitTree->SetBranchAddress("ParticleID", &ParticleID);
+    GeHitTree->SetBranchAddress("TrackID", &TrackID);
+    GeHitTree->SetBranchAddress("Ekin", &Ekin);
+
+    GeHitTree->Fill();
+
     fhTotEdep->Fill(totalEdep);
   }
 
-  G4int EventID =
-      G4EventManager::GetEventManager()->GetConstCurrentEvent()->GetEventID();
+  if (EventID % 10000 == 0)
+    G4cout << "\rSimulating Event Nr.: " << EventID << std::flush;
 
-  if (EventID % 10000 == 0) {
-    G4cout << "\r"
-           << "Simulating Event Nr.: " << EventID << std::flush;
-  }
+  delete Edep;
+  delete Ekin;
+  delete Time;
+  delete xPos;
+  delete yPos;
+  delete zPos;
+  delete ParticleID;
+  delete TrackID;
 }

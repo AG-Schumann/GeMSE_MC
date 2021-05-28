@@ -1,8 +1,8 @@
 #ifndef __GeMSE_ParticleSourceMESSENGER_H__
 #define __GeMSE_ParticleSourceMESSENGER_H__
 
-#include <G4UImessenger.hh>
 #include <globals.hh>
+#include <G4UImessenger.hh>
 
 class GeMSE_ParticleSource;
 
@@ -37,6 +37,8 @@ class GeMSE_ParticleSourceMessenger : public G4UImessenger {
   G4UIcmdWithAString *m_pTypeCmd;
   G4UIcmdWithAString *m_pShapeCmd;
   G4UIcmdWith3VectorAndUnit *m_pCenterCmd;
+  G4UIcmdWithADoubleAndUnit *m_pHalfxCmd;
+  G4UIcmdWithADoubleAndUnit *m_pHalfyCmd;
   G4UIcmdWithADoubleAndUnit *m_pHalfzCmd;
   G4UIcmdWithADoubleAndUnit *m_pRadiusCmd;
   G4UIcmdWithAString *m_pConfineCmd;
@@ -58,4 +60,4 @@ class GeMSE_ParticleSourceMessenger : public G4UImessenger {
   G4double m_dIonExciteEnergy;
 };
 
-#endif  // __GeMSE_ParticleSourceMESSENGER_H__
+#endif

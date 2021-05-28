@@ -72,7 +72,6 @@ void GeMSE_ParticleSource::SetParticleDefinition(
 
 void GeMSE_ParticleSource::SetEnergyFile(G4String hEnergyFile) {
   m_hEnergyFile = hEnergyFile;
-
   ReadEnergySpectrum();
 }
 
@@ -120,7 +119,6 @@ G4bool GeMSE_ParticleSource::ReadEnergySpectrum() {
 
   while (!hIn.eof()) {
     G4double dBinEnergy = 0., dProbability = 0.;
-
     hIn >> dBinEnergy >> dProbability;
 
     if (hIn.good()) {
@@ -204,10 +202,8 @@ void GeMSE_ParticleSource::ConfineSourceToVolume(G4String hVolumeList) {
   } else if (m_hVolumeNames.empty())
     m_bConfine = false;
   else {
-    G4cout << " **** Error: One or more volumes do not exist **** " << G4endl;
-    G4cout << " Ignoring confine condition" << G4endl;
-    m_hVolumeNames.clear();
-    m_bConfine = false;
+    G4cout << " **** /GeMSE/gun/confine: ERROR: One or more volumes do not exist **** " << G4endl;
+    exit(1);
   }
 }
 
@@ -252,6 +248,13 @@ void GeMSE_ParticleSource::GeneratePointsInVolume() {
       y = (y * 2. * m_dRadius) - m_dRadius;
       z = (z * 2. * m_dHalfz) - m_dHalfz;
     }
+  }
+
+  else if (m_hShape == "Box")
+  {
+    x = 2 * (G4UniformRand() - 0.5) * m_dHalfx;
+    y = 2 * (G4UniformRand() - 0.5) * m_dHalfy;
+    z = 2 * (G4UniformRand() - 0.5) * m_dHalfz;
   }
 
   else
