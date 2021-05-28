@@ -23,15 +23,14 @@ using std::string;
 
 //GeMSE_RunAction::GeMSE_RunAction(TTree* tree) {
 GeMSE_RunAction::GeMSE_RunAction(G4String OutputFolder) {
-  //ftree = tree;
   fOutputFolder = OutputFolder;
   selectedAction = "default"; // ToDo: messenger for this guy!!
   
   timer = new G4Timer;
+  mcVersionTag = "0.0.0";
 
   // create run analysis
   fRunAnalysis = new GeMSE_Analysis();
-  m_hVersionTag = "0.0.0";
 
   // create a messenger for this class
   runMessenger = new GeMSE_RunMessenger(fRunAnalysis);
@@ -44,41 +43,43 @@ GeMSE_RunAction::~GeMSE_RunAction() {
 }
 
 void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
-  // Add random seed
+  // set random seed
   CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
   struct timeval hTimeValue;
   gettimeofday(&hTimeValue, NULL);
   aSeed = hTimeValue.tv_usec;
-  // aSeed=(G4long)time(NULL)+(G4long)getpid();
-  // aSeed=(G4long)getrandom()+(G4long)time(NULL);
   CLHEP::HepRandom::setTheSeed(aSeed);
   G4cout << "Setting the seed for this run to " << aSeed << G4endl;
 
   TString ResultFileName;  
   G4int RunID = aRun->GetRunID();
 
-  if (selectedAction=="default") {
-    std::ostringstream convert;   // stream used for the conversion
-    convert << RunID; // insert the textual representation in the characters in the stream
-    TString RunName=convert.str();
-    ResultFileName = "results_run" + RunName + ".root";
-  }
-  else
-    ResultFileName = selectedAction;
+  if (fOutputFolder != "") {
+    if (selectedAction=="default") {
+      std::ostringstream convert;   // stream used for the int->str conversion
+      convert << RunID;
+      TString RunName=convert.str();
+      ResultFileName = "results_run" + RunName + ".root";
+    }
+    else
+      ResultFileName = selectedAction;
 
-  // Try to open results directory
-  if (!gSystem->OpenDirectory(fOutputFolder)) {
-    // if directory does not exist make one
-    if (gSystem->MakeDirectory(fOutputFolder)==-1)
-      G4cout << "###### ERROR: could not create directory " << fOutputFolder
-             << G4endl;
-  }
+    // try to open results directory
+    if (!gSystem->OpenDirectory(fOutputFolder)) {
+      // if directory does not exist make one
+      if (gSystem->MakeDirectory(fOutputFolder)==-1) {
+        G4cout << "###### ERROR: could not create directory " << fOutputFolder
+               << G4endl;
+        //return 0;
+      }
+    }
 
-  ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"Create");
+    ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"Create");
 
-  if (ResultFile->IsZombie()) {
-    G4cout << "##### Warning: " << ResultFileName << " already exists! Overwriting!" << G4endl;
-    ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"recreate");
+    if (ResultFile->IsZombie()) {
+      G4cout << "##### Warning: " << ResultFileName << " already exists! Overwriting!" << G4endl;
+      ResultFile = new TFile(fOutputFolder+"/"+ResultFileName,"recreate");
+    }
   }
 
   // Create trees
@@ -86,7 +87,7 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
   GeHitTree = new TTree("GeHits", "All energy-depositing Ge hits");
   PrimariesTree = new TTree("Primaries", "Information on all generated particles in the run");
   RunTree = new TTree("RunInfo", "Run information");
-  
+
   GeHitTree->Branch("EventID", &HEventID);
   GeHitTree->Branch("NHits", &NHits);
   GeHitTree->Branch("TotEdep", &TotEdep);
@@ -113,7 +114,6 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
   RunTree->Branch("nDecays", &NDecays);
   
   NEvents = aRun->GetNumberOfEventToBeProcessed();
-  
   fNDecays = 0;
 
   // set Nb of events
@@ -145,7 +145,6 @@ void GeMSE_RunAction::EndOfRunAction(const G4Run* aRun) {
 
       tree->Fill();
     }
-
     // clear data
     fRunAnalysis->Clear();
   }
@@ -157,42 +156,28 @@ void GeMSE_RunAction::EndOfRunAction(const G4Run* aRun) {
   G4cout << "\n### Finished ###" << G4endl;
   G4cout << "Runtime: " << *timer << G4endl;
   
-  // Write trees and close file
-  ResultFile->cd();
-  
-  // Info to the output file
-  G4double dt = timer->GetRealElapsed();
-  RunTree->Branch("RunTime", &dt);
-  G4double Seed = aSeed;
-  RunTree->Branch("Seed", &Seed);
-  
-  
-  //TParameter<G4int> *m_pRanSeed = new TParameter<int>("RANDOM_SEED", aSeed);
-  //m_pRanSeed->Write();
-  TNamed *G4version = new TNamed("G4VERSION_TAG", G4VERSION_TAG);
-  G4version->Write();
-  TNamed *MCversiontag = new TNamed("MCVERSION_TAG", m_hVersionTag);
-  /*MCversiontag->Write();
-  TParameter<G4int> *decays = new TParameter<int>("nDecays", NDecays);
-  decays->Write();
-  TParameter<G4double> *Runtime = new TParameter<double>("RunTime", dt);
-  Runtime->Write();*/
-  
+  // write trees and close file
+  if (fOutputFolder != "") {
+    ResultFile->cd();
 
-  RunTree->Fill();
-  //NDecays->Write();
-  //NEvents->Write();
-  tree->Write();
-  GeHitTree->Write();
-  PrimariesTree->Write();
-  RunTree->Write();  
+    TNamed *G4version = new TNamed("G4VERSION_TAG", G4VERSION_TAG);
+    G4version->Write(); 
+    TNamed *MCversiontag = new TNamed("MCVERSION_TAG", mcVersionTag);
+    MCversiontag->Write();
 
-  ResultFile->Close();
+    G4double dt = timer->GetRealElapsed();
+    RunTree->Branch("RunTime", &dt);
+    G4double Seed = aSeed; // this is ugly, rewrite at some point
+    RunTree->Branch("Seed", &Seed);
+    RunTree->Fill();
 
-  //delete tree;
-  //delete GeHitTree;
-  //delete GammaTree;
-  //delete ResultFile;
+    tree->Write();
+    GeHitTree->Write();
+    PrimariesTree->Write();
+    RunTree->Write();  
+
+    ResultFile->Close();
+  }
 }
 
 TTree* GeMSE_RunAction::GetGeHitTree()
@@ -200,7 +185,6 @@ TTree* GeMSE_RunAction::GetGeHitTree()
   fGeHitTree=GeHitTree;
   return fGeHitTree;
 }
-
 
 TTree* GeMSE_RunAction::GetPrimariesTree()
 {

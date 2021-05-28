@@ -22,20 +22,11 @@
 #include "G4ios.hh"
 
 
-int main(int argc, char** argv)  //
+int main(int argc, char** argv)
 {
   std::string git_tag = "1.2.0";
   G4cout << G4endl << "Welcome to GeMSE_MC version " << git_tag.c_str()
          << G4endl;
-
-  // Choose the Random engine
-  CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
-
-  // set random seed with system time
-  // G4long seed = time(NULL);
-
-  // set seed
-  CLHEP::HepRandom::setTheSeed(24312);
 
   // User Verbose output class
   //
@@ -65,20 +56,14 @@ int main(int argc, char** argv)  //
         break;
     }
   }
-
   
-  /* Diego: commenting this out
-  // initialize pointers
-  TFile* file = 0;
-  TTree* tree = 0;
-
   // check if output folder was specified
-  if (OutputFolder == "") {
-    std::cout
-        << "###### WARNING: no folder specified, no output will be written "
-        << std::endl;
-  }
+  if (OutputFolder == "")
+    G4cout << "\n###### " << G4endl;
+           << "###### WARNING: no folder specified, no output will be written "
+           << "\n######\n\n ";
 
+  /* Diego: commenting this out
   else {
     // try to open results directory
     if (!gSystem->OpenDirectory(OutputFolder)) {
@@ -134,36 +119,18 @@ int main(int argc, char** argv)  //
   // Initialize G4 kernel
   runManager->Initialize();
 
-  //------Shell & Visualization-------------------------------------------------
-
+  // Shell & Visualization
   if (!Macro) {
     // Define UI session for interactive mode
     G4UIsession* session = new G4UIterminal();
-
     session->SessionStart();
     delete session;
   }
   else {
     // Get the pointer to the User Interface manager
     G4UImanager* UI = G4UImanager::GetUIpointer();
-
     G4String command = "/control/execute " + MacroFilename;
     UI->ApplyCommand(command);
-  }
-
-  if (OutputFolder != "") {
-    //------------- plot efficiency curve -------------------
-    // gROOT->SetBatch(1);
-
-    // TCanvas* c1 = new TCanvas("c1");
-    // tree->Draw("efficiency:energy","","*");
-    // TString graphfile = OutputFolder+"/simulated_efficiencies.pdf";
-    // c1->SaveAs(graphfile);
-
-    //-------------------------------------------------------
-    //file->cd();
-    //tree->Write();
-    //file->Close();
   }
 
   // Job termination
@@ -173,8 +140,7 @@ int main(int argc, char** argv)  //
 
   delete visManager;
   delete runManager;
-  // delete verbosity;
+  //delete verbosity;
 
   return 0;
 }
-

@@ -27,27 +27,25 @@ class GeMSE_RunAction : public G4UserRunAction {
  public:
   void BeginOfRunAction(const G4Run* aRun);
   void EndOfRunAction(const G4Run* aRun);
-  void SetVersionTag(const G4String &hVersionTag) {
-    m_hVersionTag = hVersionTag;
-  }
-
+  
   TTree* GetGeHitTree();
   TTree* GetPrimariesTree();
 
   void AddDecay();
-
   void SelectAction(G4String string_action) { selectedAction = string_action; };
   G4String GetSelectedAction() { return selectedAction; };
+  void SetVersionTag(const G4String &hVersionTag) {
+    mcVersionTag = hVersionTag;
+  }
 
   GeMSE_Analysis* GetRunAnalysis() { return fRunAnalysis; };
 
  private:
   G4Timer* timer;
-
+  G4long aSeed;
   G4int NDecays;
   G4int fNDecays;
-  G4String m_hVersionTag;
-
+  G4String mcVersionTag;
   G4int NEvents;
   G4int HEventID;
   G4int NHits;
@@ -72,21 +70,18 @@ class GeMSE_RunAction : public G4UserRunAction {
   G4double yDir;
   G4double zDir;
 
-  TFile* ResultFile;
-
   G4String selectedAction;
   G4String fOutputFolder;
 
+  TFile* ResultFile;
   TTree* tree;
   TTree* GeHitTree;
   TTree* PrimariesTree;
   TTree* RunTree;
-
   TTree* ftree;
   TTree* fGeHitTree;
   TTree* fPrimariesTree;
 
-  G4long aSeed;
   GeMSE_Analysis* fRunAnalysis;
   GeMSE_RunMessenger* runMessenger;
 };

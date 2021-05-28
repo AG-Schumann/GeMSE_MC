@@ -72,7 +72,6 @@ void GeMSE_ParticleSource::SetParticleDefinition(
 
 void GeMSE_ParticleSource::SetEnergyFile(G4String hEnergyFile) {
   m_hEnergyFile = hEnergyFile;
-
   ReadEnergySpectrum();
 }
 
@@ -120,7 +119,6 @@ G4bool GeMSE_ParticleSource::ReadEnergySpectrum() {
 
   while (!hIn.eof()) {
     G4double dBinEnergy = 0., dProbability = 0.;
-
     hIn >> dBinEnergy >> dProbability;
 
     if (hIn.good()) {
