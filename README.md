@@ -39,7 +39,7 @@ make -j # "-j" for parallel compilation using all available CPU
 
 Run the executable with:
 ```bash
-$G4WORKDIR/bin/Linux-g++/GeMSE_MC -m <macrofile.mac> -o <results_folder> -g<geometry from text>
+$G4WORKDIR/bin/Linux-g++/GeMSE_MC -m <macrofile.mac> -o <results_folder> -g<geometry_from_text>
 ```
 where the `-g` option is only for the cases in which you define you sample shape via txt file (see [sample_geometries](sample_geometries) README).
 
