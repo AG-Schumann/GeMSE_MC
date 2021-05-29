@@ -1,6 +1,7 @@
 #include "GeMSE_DetectorConstruction.hh"
 #include "GeMSE_RunAction.hh"
 #include "GeMSE_SensitiveDetector.hh"
+#include "GeMSE_MVSensitiveDetector.hh"
 
 #define USE_CADMESH_TETGEN // To use tetgen
 #include <CADMesh.hh>
@@ -56,8 +57,8 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   G4Material* lead_mat = nist->FindOrBuildMaterial("G4_Pb");
   G4Material* germanium_mat = nist->FindOrBuildMaterial("G4_Ge");
   G4Material* teflon_mat = nist->FindOrBuildMaterial("G4_TEFLON");
-  //G4Material* pvt_mat =
-  //  nist->FindOrBuildMaterial("G4_PLASTIC_SC_VINYLTOLUENE");
+  G4Material* pvt_mat =
+    nist->FindOrBuildMaterial("G4_PLASTIC_SC_VINYLTOLUENE");
   //G4Material* air_mat = nist->FindOrBuildMaterial("G4_AIR");
 
   G4Element* C = nist->FindOrBuildElement("C");
@@ -350,6 +351,21 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   // G4double zPosCuShieldingGap     =
   // zPosCuPlateThin_mov-zSizeCuPlateThin_mov/2.-zSizeCuShieldingGap/2.;
 
+  // Muon veto panels
+  G4double d_Panel = 2.*cm;
+  G4double lengthPanel = 140.*cm;
+  G4double widthPanel = 105.*cm;
+
+  G4double yPosPanel_top = 17.*cm;
+  G4double zPosPanel_top = (zPosEndcap+heightEndcap/2.)+150.*cm+d_Panel/2.;
+
+  G4double xPosPanel_back = -(55.*cm+d_Panel/2.);
+  G4double yPosPanel_back = yPosPanel_top;
+  G4double zPosPanel_back = zPosPanel_top-widthPanel/2.;
+
+  G4RotationMatrix rmMV;
+  rmMV.rotateY(90.*deg);
+
   // ======== Important dimensions ========
   G4cout << "############################" << G4endl;
   G4cout << "z-position of endcap: " << (zPosEndcap + heightEndcap / 2.) / cm
@@ -396,6 +412,20 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   G4LogicalVolume* expHall_log =
       G4tgbVolumeMgr::GetInstance()->FindG4LogVol("World", 1);
 
+  // +++++++ muon veto panels ++++++++++++++++++++++++++++++++++
+  G4Box* panel_box =
+     new G4Box("panel_box", widthPanel/2., lengthPanel/2., d_Panel/2.);
+
+  G4LogicalVolume* panel_log =
+     new G4LogicalVolume(panel_box, pvt_mat, "panel_log", 0,0,0);
+
+  new G4PVPlacement(0,
+                    G4ThreeVector(0., yPosPanel_top, zPosPanel_top),
+                    panel_log, "muonveto_panel_top", expHall_log, false, 0);
+  new G4PVPlacement
+     (G4Transform3D(rmMV,G4ThreeVector(xPosPanel_back, yPosPanel_back, zPosPanel_back)),
+                    panel_log, "muonveto_panel_back", expHall_log, false,0);
+      
   // +++++++ parts of the shielding ++++++++++++++++++++++++++++++++++
 
   //_______BOTTOM SHIELDING_______
@@ -995,10 +1025,16 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
 
   //____Define sensitive detector_______________________________________________
   G4SDManager* SDman = G4SDManager::GetSDMpointer();
+  
   G4String SDname = "Ge_detector";
   GeMSE_SensitiveDetector* aSD = new GeMSE_SensitiveDetector(SDname);
   SDman->AddNewDetector(aSD);
   Ge_log->SetSensitiveDetector(aSD);
+
+  G4String MuonSDname = "muonveto_panels";
+  GeMSE_MVSensitiveDetector* muonSD = new GeMSE_MVSensitiveDetector(MuonSDname);
+  SDman->AddNewDetector(muonSD);
+  panel_log->SetSensitiveDetector(muonSD);
 
   return physiWorld;
 }

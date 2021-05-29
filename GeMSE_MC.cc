@@ -3,7 +3,7 @@
 #include "GeMSE_PrimaryGeneratorAction.hh"
 #include "GeMSE_RunAction.hh"
 #include "GeMSE_TrackingAction.hh"
-#include "GeMSE_SensitiveDetector.hh"
+//#include "GeMSE_SensitiveDetector.hh"
 
 //#include <Randomize.hh>
 #include <TCanvas.h>

@@ -4,6 +4,11 @@
 #include "GeMSE_RunAction.hh"
 #include "GeMSE_PrimaryGeneratorAction.hh"
 
+#include "TROOT.h"
+#include "TFile.h"
+#include "TBranch.h"
+using namespace std;
+
 #include "G4HCofThisEvent.hh"
 #include "G4ThreeVector.hh"
 #include "G4EventManager.hh"
@@ -21,12 +26,6 @@
 #include "G4VPhysicalVolume.hh"
 #include "G4VTouchable.hh"
 #include "G4ios.hh"
-
-#include "TROOT.h"
-#include "TFile.h"
-#include "TBranch.h"
-
-using namespace std;
 
 GeMSE_SensitiveDetector::GeMSE_SensitiveDetector(G4String name)
     : G4VSensitiveDetector(name), HCID(-1) {
@@ -90,7 +89,7 @@ void GeMSE_SensitiveDetector::EndOfEvent(G4HCofThisEvent* HCE) {
   vector<int>* TrackID = new vector<int>;
 
   // gather info on hits
-  for (int i = 0; i < n_hits; i++) {
+  for (int i=0; i<n_hits; i++) {
     G4double edep = (*HitsCollection)[i]->GetEdep() / keV;
     G4ThreeVector Pos=(*HitsCollection)[i]->GetPos()/mm;
     Edep->push_back(edep);
