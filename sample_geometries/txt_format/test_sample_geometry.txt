@@ -1,5 +1,5 @@
 // Define meteorite materials
-#include sample_geometries/meteorite_materials.txt
+#include sample_geometries/txt_format/meteorite_materials.txt
 
 // Define the world volume
 #include src/worldVolume.txt

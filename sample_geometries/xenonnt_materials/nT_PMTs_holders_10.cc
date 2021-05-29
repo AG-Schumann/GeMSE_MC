@@ -1,12 +1,12 @@
-/////////////////////////////////////////////////////////////////////////
-// - This file is the only one needed to include in the GeConstruction
+////////////////////////////////////////////////////////////
+// To be called from the GeMSE_DetectorConstruction class //
+////////////////////////////////////////////////////////////
+
 // - If the holder is not contructed, the PMTs designated to that holder will
-// not be constructed,
-//   regardless of the number of PMTs specified
+//   not be constructed, regardless of the number of PMTs specified
 // - A single PMT on the endcap at the last line
 // - For just one PMT on the endcap, for example, set all holders to false and
-// uncomment the last line.
-/////////////////////////////////////////////////////////////////////////
+//   uncomment the last line.
 
 G4double pi_g = 3.141592653589793;
 
