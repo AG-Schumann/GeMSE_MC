@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////
-// To be included in the GeMSE_DetectorConstruction class //
+// To be called from the GeMSE_DetectorConstruction class //
 ////////////////////////////////////////////////////////////
 
 // CBSS2 calibration source used for the first GeMSE instrument paper (2016)
@@ -17,9 +17,11 @@ G4double zPosPS = zPosEndcap+heightEndcap/2.+heightPS/2.+overlap;
 G4double heightCBSS2 = 2.82*cm;
 G4double zPosCBSS2 = zPosEndcap+heightEndcap/2. + heightCBSS2/2.
                      + dPS_bottom+heightPS_bottom + 2.*overlap;
-
 G4cout << "z-position of CBBS source: " << zPosCBSS2/cm << " cm" << G4endl;
-                     
+
+// Materials
+G4Material* ps_mat = nist->FindOrBuildMaterial("G4_POLYSTYRENE");
+
 // Construction and placement
 
 // PS container (Semadeni)
@@ -60,3 +62,17 @@ G4cout << "Calibration source mass         : " << dSource_mass << " g" << G4endl
 G4cout << "Calibration container mass         : " << dContainer_mass << " g" << G4endl;
 G4cout << "############################" << G4endl;
 
+// Untracked calibration source from the ancient times (maybe the lab WT-20 source, or the Ba-133 one)
+/*
+G4Material* pmma_mat = nist->FindOrBuildMaterial("G4_PLEXIGLASS");
+
+G4Box* source_box = new G4Box("source_box", 1.675*cm, 0.55*cm, 0.1*cm);
+G4Sphere* hole_source = new G4Sphere("hole_source", 0, 0.05*cm,
+                                     0, 360.*deg, 0., 180.*deg);
+G4SubtractionSolid* source_sub =
+    new G4SubtractionSolid("source_sub", source_box, hole_source, 0, G4ThreeVector(0,0,0));
+
+G4LogicalVolume* source_log =
+    new G4LogicalVolume(source_sub,pmma_mat,"source_log",0,0,0); new
+G4PVPlacement(0,G4ThreeVector(0,0,4.75*cm), source_log, "source", expHall_log, false, 0);
+*/

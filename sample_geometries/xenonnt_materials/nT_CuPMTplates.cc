@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////
-// To be included in the GeMSE_DetectorConstruction class //
+// To be called from the GeMSE_DetectorConstruction class //
 ////////////////////////////////////////////////////////////
 
 // XENONnT Cu bricks for the XENONnT top and bottom PMT plates

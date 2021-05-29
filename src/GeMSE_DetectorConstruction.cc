@@ -7,7 +7,6 @@
 
 #include "globals.hh"
 
-#include <G4SystemOfUnits.hh>
 #include "G4Box.hh"
 #include "G4LogicalBorderSurface.hh"
 #include "G4LogicalSkinSurface.hh"
@@ -50,35 +49,25 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   G4double density, fractionmass, a, z;
   G4int ncomponents;
 
-  // define materials from NIST manager
+  // Materials and elements from NIST manager
   G4NistManager* nist = G4NistManager::Instance();
 
-  //G4Material* air_mat = nist->FindOrBuildMaterial("G4_AIR");
   G4Material* copper_mat = nist->FindOrBuildMaterial("G4_Cu");
   G4Material* lead_mat = nist->FindOrBuildMaterial("G4_Pb");
   G4Material* germanium_mat = nist->FindOrBuildMaterial("G4_Ge");
-  // G4Material* pvt_mat   	=
-  // nist->FindOrBuildMaterial("G4_PLASTIC_SC_VINYLTOLUENE");
   G4Material* teflon_mat = nist->FindOrBuildMaterial("G4_TEFLON");
-  // G4Material* pmma_mat   	= nist->FindOrBuildMaterial("G4_PLEXIGLASS");
-  // G4Material* ps_mat   		=
-  // nist->FindOrBuildMaterial("G4_POLYSTYRENE");
+  //G4Material* pvt_mat =
+  //  nist->FindOrBuildMaterial("G4_PLASTIC_SC_VINYLTOLUENE");
+  //G4Material* air_mat = nist->FindOrBuildMaterial("G4_AIR");
 
-  //======= define elements ==============================================
   G4Element* C = nist->FindOrBuildElement("C");
   G4Element* H = nist->FindOrBuildElement("H");
   G4Element* O = nist->FindOrBuildElement("O");
   G4Element* Si = nist->FindOrBuildElement("Si");
-  //G4Element* Mg = nist->FindOrBuildElement("Mg");
   G4Element* Fe = nist->FindOrBuildElement("Fe");
-  //G4Element* S = nist->FindOrBuildElement("S");
-  //G4Element* Al = nist->FindOrBuildElement("Al");
-  //G4Element* Ca = nist->FindOrBuildElement("Ca");
-  //G4Element* Na = nist->FindOrBuildElement("Na");
   G4Element* Ni = nist->FindOrBuildElement("Ni");
   G4Element* F = nist->FindOrBuildElement("F");
   G4Element* Cr = nist->FindOrBuildElement("Cr");
-  // G4Element* N  = nist->FindOrBuildElement("N");
   G4Element* Mn = nist->FindOrBuildElement("Mn");
 
   G4Material* matrix_mat =
@@ -374,7 +363,6 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   // (zPosOuterPbShielding+zSizeOuterPbShielding/2.+d_lid/2.)/cm << " cm" <<
   // G4endl;
   G4cout << "############################" << G4endl;
-  // ======================================
 
   // =========================================================== //
   // ======= CONSTRUCT VOLUMES ================================= //
@@ -387,9 +375,10 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
     G4double expHall_z=10.*m;
 
     G4Box* expHall_box  = new G4Box ("World",expHall_x,expHall_y,expHall_z);
-    G4LogicalVolume* expHall_log  = new G4LogicalVolume
-    (expHall_box,air_mat,"World",0,0,0); G4VPhysicalVolume* expHall_phys = new
-    G4PVPlacement   (0,G4ThreeVector(),expHall_log,"World",0,false,0);
+    G4LogicalVolume* expHall_log =
+      new G4LogicalVolume(expHall_box,air_mat,"World",0,0,0);
+    G4VPhysicalVolume* expHall_phys =
+      new G4PVPlacement(0,G4ThreeVector(),expHall_log,"World",0,false,0);
   */
 
   // +++++++ sample geometry + world volume ++++++++++++++++++++++++++++++++++
@@ -406,18 +395,6 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   G4VPhysicalVolume* physiWorld = volmgr->ReadAndConstructDetector();
   G4LogicalVolume* expHall_log =
       G4tgbVolumeMgr::GetInstance()->FindG4LogVol("World", 1);
-
-  // +++++++ calibration source ++++++++++++++++++++++++++++++++++++++++
-  /*
-  G4Box* source_box = new G4Box("source_box", 1.675*cm, 0.55*cm, 0.1*cm);
-  G4Sphere* hole_source   	= new G4Sphere      ("hole_source", 0, 0.05*cm,
-  0, 360.*deg, 0., 180.*deg); G4SubtractionSolid* source_sub	= new
-  G4SubtractionSolid("source_sub",source_box,hole_source,0,G4ThreeVector(0,0,0));
-
-  G4LogicalVolume* source_log = new
-  G4LogicalVolume(source_sub,pmma_mat,"source_log",0,0,0); new
-  G4PVPlacement(0,G4ThreeVector(0,0,4.75*cm),source_log,"source",expHall_log,false,0);
-  */
 
   // +++++++ parts of the shielding ++++++++++++++++++++++++++++++++++
 
@@ -1010,7 +987,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   new G4PVPlacement(0, G4ThreeVector(0., 0., zPosVacuumDet), VacuumDet_log,
                     "VacuumDet", expHall_log, false, 0);
 
-  //_______SAMPLE FROM sample_geometries FOLDER___________
+  //_______SAMPLE FROM FILE___________
   #include "../sample_geometries/banana_scan.cc"
   
   //____Overlap check___________________________________________________________

@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////
-// To be included in the GeMSE_DetectorConstruction class //
+// To be called from the GeMSE_DetectorConstruction class //
 ////////////////////////////////////////////////////////////
 
 // Copper filled cavity for sensitivity studies (2018)
@@ -24,10 +24,8 @@ G4cout << "Height of the copper tower: " << heightCuHsg_tube_filled/2./cm << " c
 CuFilling_log->SetVisAttributes(green);
 
 // Output sample mass
-G4double dContainer_mass = PS_log->GetMass(false, false) / g;
-G4double dSource_mass = CBSS2_log->GetMass(false, false) / g;
+G4double dCu_mass = CuFilling_log->GetMass(false, false) / g;
 G4cout << "\n############################" << G4endl;
-G4cout << "Calibration source mass         : " << dSource_mass << " g" << G4endl;
-G4cout << "Calibration container mass         : " << dContainer_mass << " g" << G4endl;
+G4cout << "Cu mass : " << dCu_mass << " g" << G4endl;
 G4cout << "############################" << G4endl;
 
