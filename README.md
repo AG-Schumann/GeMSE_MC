@@ -16,8 +16,8 @@ make -j # "-j" for parallel compilation using all available CPU
 and your executables will be built under `./bin/Linux-g++/GeMSE_MC`, where `.` is the default working directory (`$G4WORKDIR`).
 
 If running locally, make sure you have ROOT and Geant4 (10.3 recommended) installed. Compilation errors will arise because of the nonexistent paths that the `CADMesh.hh` class needs to execute. You can either install these extra libraries (ask Diego) or just run the code without CADMesh, assuming you do not want to simulate a 3D sample. In order to do that:
-+ remove `include/CADMesh.hh` files from its directory,
-+ comment out these lines from the top of the `src/GeMSE_DetectorConstruction.cc` file:      
++ remove the [include/CADMesh.hh](include/CADMesh.hh) file from its directory,
++ comment out these lines from the top of the [src/GeMSE_DetectorConstruction.cc](src/GeMSE_DetectorConstruction.cc) file:      
     ```cpp
     #define USE_CADMESH_TETGEN // To use tetgen
     #include <CADMesh.hh>
@@ -45,11 +45,13 @@ where the `-g` option is only for the cases in which you define you sample shape
 
 ### macrofile.mac
 * Contains the information which isotopes or gamma lines are simulated
-* See example, `macros/example_various_isotopes_G4103p3.mac`.
-* For visualization only use `macros/visualization_vrml.mac` (no need for `-o` argument in this case).
+* See example [macros/
+efficiency_standard_isotopes_G4103p3.mac ](macros/
+efficiency_standard_isotopes_G4103p3.mac ), where the various output tree option commands and gamma efficiency settings are explained.
+* For visualization only use `macros/<visualization_macro.mac>` (no need for `-o` argument in this case).
 
 ### results_folder
-* Folder where result files are written. **No output will be written if this argument isn't specified**
+* Folder where result files are written. **No output will be written if this argument is not specified**
 
 ## Output format
 
@@ -89,6 +91,6 @@ The simulation output is a `*.root` file with several layers of information:
 
 ## Import 3D CAD samples
 
-The [CADMesh](https://github.com/christopherpoole/CADMesh) interface, specifically [v2.0.3](https://github.com/christopherpoole/CADMesh/releases/tag/v2.0.3) is integrated into this code. This means that one can import CAD samples in STL, PLY or OBJ format into Geant4 for their construction. See an example in `sample_geometries/banana_scan.cc`.
+The [CADMesh](https://github.com/christopherpoole/CADMesh) interface, specifically [v2.0.3](https://github.com/christopherpoole/CADMesh/releases/tag/v2.0.3) is integrated into this code. This means that one can import CAD samples in STL, PLY or OBJ format into Geant4 for their construction. See an example in [sample_geometries/banana_scan.cc](sample_geometries/banana_scan.cc).
 
-*Note*: Contrary to the CADMesh version used up to (and including) [GeMSE_MC v1.2.0](https://github.com/AG-Schumann/GeMSE_MC/releases/tag/v1.2.0), this one does not support binary STL files (see `sample_geometries/scans_3d/banana_LRT_talk_binary.stl`). These can be converted to ASCII using commercial CAD software.
+*Note*: Contrary to the CADMesh version used up to (and including) [GeMSE_MC v1.2.0](https://github.com/AG-Schumann/GeMSE_MC/releases/tag/v1.2.0), this one does not support binary STL files (see [sample_geometries/scans_3d/banana_LRT_talk_binary.stl](sample_geometries/scans_3d/banana_LRT_talk_binary.stl)). These can be converted to ASCII using commercial CAD software.
