@@ -1010,54 +1010,8 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   new G4PVPlacement(0, G4ThreeVector(0., 0., zPosVacuumDet), VacuumDet_log,
                     "VacuumDet", expHall_log, false, 0);
 
-  //_______CAD SAMPLE_______
-  /*G4RotationMatrix rmr;
-  rmr.rotateX(0);
-  rmr.rotateZ(0);
-
-  G4Material* chondrite_EH = new G4Material(
-      "sample_mat", density = 3.1 * g / cm3, ncomponents = 10);  // chondrite_EH
-  chondrite_EH->AddElement(O, fractionmass = 0.296);
-  chondrite_EH->AddElement(Si, fractionmass = 0.177);
-  chondrite_EH->AddElement(Mg, fractionmass = 0.112);
-  chondrite_EH->AddElement(Fe, fractionmass = 0.307);
-  chondrite_EH->AddElement(S, fractionmass = 0.061);
-  chondrite_EH->AddElement(Al, fractionmass = 0.0086);
-  chondrite_EH->AddElement(Ca, fractionmass = 0.0090);
-  chondrite_EH->AddElement(Ni, fractionmass = 0.019);
-  chondrite_EH->AddElement(Na, fractionmass = 0.0072);
-  chondrite_EH->AddElement(Cr, fractionmass = 0.0033);
-
-  G4LogicalVolume * sample_logical;
-  G4ThreeVector sample_pos = G4ThreeVector(-25,20,-3.*mm);
-
-  auto mesh = CADMesh::TessellatedMesh::FromSTL("sample_geometries/scans_3d/test_basalt5.stl");
-  //mesh->SetScale(100.0); // Default is 1, corresponding to mm in Geant4
-  mesh->SetOffset(sample_pos);
-  auto sample_solid = mesh->GetSolid();
-
-  sample_logical = new G4LogicalVolume(sample_solid, chondrite_EH,
-                                       "sample_logical", 0, 0, 0);
-  new G4PVPlacement(G4Transform3D(rmr, sample_pos), sample_logical,
-                                      "sample",expHall_log, false, 0);
-
-
-  // Filling meshes with tetrahedra for navigation speedup
-  //auto mesh = CADMesh::TetrahedralMesh::FromSTL("sample_geometries/scans_3d/test_basalt5.stl");
-  //mesh->SetOffset(sample_pos);
-  //auto assembly = mesh->GetAssembly();
-  //auto position = G4ThreeVector();
-  //auto rotation = new G4RotationMatrix();
-  //assembly->MakeImprint(expHall_log, position, rotation);
-  
-
-  const G4double sample_mass = sample_logical->GetMass(false, false)/g;
-  G4cout << "\n\n############################" << G4endl;
-  G4cout << "Sample mass: " << sample_mass << " g" << G4endl;
-  G4cout << "############################\n" << G4endl;*/
-
   //_______SAMPLE FROM sample_geometries FOLDER___________
-  //#include "../sample_geometries/xenonnt_materials/nT_PMTs_holders_10.cc"
+  #include "../sample_geometries/banana_scan.cc"
   
   //____Overlap check___________________________________________________________
   OverlapCheck();
