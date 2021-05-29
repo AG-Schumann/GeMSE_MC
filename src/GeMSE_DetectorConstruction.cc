@@ -988,7 +988,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
                     "VacuumDet", expHall_log, false, 0);
 
   //_______SAMPLE FROM FILE___________
-  #include "../sample_geometries/banana_scan.cc"
+  //#include "../sample_geometries/banana_scan.cc"
   
   //____Overlap check___________________________________________________________
   OverlapCheck();
