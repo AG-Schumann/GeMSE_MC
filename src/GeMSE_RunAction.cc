@@ -88,7 +88,7 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
   // Create trees
   tree = new TTree("tree", "Ge efficiency calculation");
   GeHitTree = new TTree("GeHits", "All energy-depositing Ge hits");
-  MuonHitTree = new TTree("MuonHit", "Information on all energy-depositing muon veto hits");
+  MuonHitTree = new TTree("MuonHits", "Information on all energy-depositing muon veto hits");
   PrimariesTree = new TTree("Primaries", "Information on all generated particles in the run");
   RunTree = new TTree("RunInfo", "Run information");
 
