@@ -453,27 +453,27 @@ void GeMSE_ParticleSource::GeneratePrimaryVertex(G4Event *evt) {
     G4int LoopCount = 0;
 
     while (srcconf == false) {
-        if (m_hSourcePosType == "Point")
+      if (m_hSourcePosType == "Point")
         GeneratePointSource();
-        else if (m_hSourcePosType == "Volume")
+      else if (m_hSourcePosType == "Volume")
         GeneratePointsInVolume();
-        else if (m_hSourcePosType == "RandomSphere")
+      else if (m_hSourcePosType == "RandomSphere")
         SetRandomSpherePos();
-        else {
-        G4cout << "Error: SourcePosType undefined" << G4endl;
-        G4cout << "Generating point source" << G4endl;
-        GeneratePointSource();
-        }
+      else {
+       G4cout << "Error: SourcePosType undefined" << G4endl;
+       G4cout << "Generating point source" << G4endl;
+       GeneratePointSource();
+      }
 
-        if (m_bConfine == true) {
+      if (m_bConfine == true) {
         srcconf = IsSourceConfined();
         // if source in confined srcconf = true terminating the loop
         // if source isnt confined srcconf = false and loop continues
-        } else if (m_bConfine == false)
+      } else if (m_bConfine == false)
         srcconf = true;  // terminate loop
 
-        LoopCount++;
-        if (LoopCount == 1000000) {
+      LoopCount++;
+      if (LoopCount == 1000000) {
         G4cout << "*************************************" << G4endl;
         G4cout << "LoopCount = 1000000" << G4endl;
         G4cout << "Either the source distribution >> confinement" << G4endl;
@@ -484,24 +484,24 @@ void GeMSE_ParticleSource::GeneratePrimaryVertex(G4Event *evt) {
         G4cout << "for this event." << G4endl;
         G4cout << "*************************************" << G4endl;
         srcconf = true;  // Avoids an infinite loop
-        }
+      }
     }
 
     // angular stuff
     if (m_hAngDistType == "iso")
-        GenerateIsotropicFlux();
+      GenerateIsotropicFlux();
     else if (m_hAngDistType == "direction")
-        SetParticleMomentumDirection(m_hParticleMomentumDirection);
+      SetParticleMomentumDirection(m_hParticleMomentumDirection);
     else
-        G4cout << "Error: AngDistType has unusual value" << G4endl;
+      G4cout << "Error: AngDistType has unusual value" << G4endl;
 
     // energy stuff
     if (m_hEnergyDisType == "Mono")
-        GenerateMonoEnergetic();
+      GenerateMonoEnergetic();
     else if (m_hEnergyDisType == "Spectrum")
-        GenerateEnergyFromSpectrum();
+      GenerateEnergyFromSpectrum();
     else
-        G4cout << "Error: EnergyDisType has unusual value" << G4endl;
+      G4cout << "Error: EnergyDisType has unusual value" << G4endl;
   }
   
   else {
