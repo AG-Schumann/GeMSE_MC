@@ -31,9 +31,9 @@ class GeMSE_ParticleSourceMessenger : public G4UImessenger {
   GeMSE_ParticleSource *m_pParticleSource;
   G4ParticleTable *m_pParticleTable;
   G4IonTable *m_pIonTable;
-
   G4UIdirectory *m_pDirectory;
 
+  G4UIcmdWithAString *m_pGeneratorCmd;
   G4UIcmdWithAString *m_pTypeCmd;
   G4UIcmdWithAString *m_pShapeCmd;
   G4UIcmdWith3VectorAndUnit *m_pCenterCmd;

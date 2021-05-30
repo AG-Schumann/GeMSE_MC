@@ -95,6 +95,14 @@ GeMSE_ParticleSourceMessenger::GeMSE_ParticleSourceMessenger(
   param->SetDefaultValue("0.0");
   m_pIonCmd->SetParameter(param);
 
+  // particle generator type
+  m_pGeneratorCmd = new G4UIcmdWithAString("/GeMSE/gun/generator", this);
+  m_pGeneratorCmd->SetGuidance("Sets particle generator type.");
+  m_pGeneratorCmd->SetGuidance("[ generic | muon ]");
+  m_pGeneratorCmd->SetParameterName("GenType", true, true);
+  m_pGeneratorCmd->SetDefaultValue("generic");
+  m_pGeneratorCmd->SetCandidates("generic muon");
+
   // source distribution type
   m_pTypeCmd = new G4UIcmdWithAString("/GeMSE/gun/type", this);
   m_pTypeCmd->SetGuidance("Sets source distribution type.");
@@ -184,6 +192,7 @@ GeMSE_ParticleSourceMessenger::GeMSE_ParticleSourceMessenger(
 }
 
 GeMSE_ParticleSourceMessenger::~GeMSE_ParticleSourceMessenger() {
+  delete m_pGeneratorCmd;
   delete m_pTypeCmd;
   delete m_pShapeCmd;
   delete m_pCenterCmd;
@@ -207,7 +216,12 @@ GeMSE_ParticleSourceMessenger::~GeMSE_ParticleSourceMessenger() {
 
 void GeMSE_ParticleSourceMessenger::SetNewValue(G4UIcommand *command,
                                                 G4String newValues) {
-  if (command == m_pTypeCmd)
+  if (command == m_pGeneratorCmd)
+  {
+    m_pParticleSource->SetGeneratorType(newValues);
+  }
+  
+  else if (command == m_pTypeCmd)
     m_pParticleSource->SetPosDisType(newValues);
 
   else if (command == m_pShapeCmd)

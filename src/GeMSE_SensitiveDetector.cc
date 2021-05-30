@@ -123,7 +123,7 @@ void GeMSE_SensitiveDetector::EndOfEvent(G4HCofThisEvent* HCE) {
     fhTotEdep->Fill(totalEdep);
   }
 
-  if (EventID % 10000 == 0)
+  if (EventID % 1000 == 0)
     G4cout << "\rSimulating Event Nr.: " << EventID << std::flush;
 
   delete Edep;
