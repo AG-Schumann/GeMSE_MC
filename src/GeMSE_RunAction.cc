@@ -88,6 +88,7 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
   // Create trees
   tree = new TTree("tree", "Ge efficiency calculation");
   GeHitTree = new TTree("GeHits", "All energy-depositing Ge hits");
+  MuonHitTree = new TTree("MuonHits", "Information on all energy-depositing muon veto hits");
   PrimariesTree = new TTree("Primaries", "Information on all generated particles in the run");
   RunTree = new TTree("RunInfo", "Run information");
 
@@ -102,6 +103,19 @@ void GeMSE_RunAction::BeginOfRunAction(const G4Run* aRun) {
   GeHitTree->Branch("zPos", &zPos);
   GeHitTree->Branch("Time", &Time);
   GeHitTree->Branch("Ekin", &HEkin);
+
+  MuonHitTree->Branch("EventID", &HEventID);
+  MuonHitTree->Branch("NHits", &NHits);
+  MuonHitTree->Branch("TotEdep", &TotEdep);
+  MuonHitTree->Branch("TrackID", &HTrackID);
+  MuonHitTree->Branch("ParticleID", &HParticleID);
+  MuonHitTree->Branch("PanelNr", &PanelNr);
+  MuonHitTree->Branch("Edep", &Edep);
+  MuonHitTree->Branch("xPos", &xPos);
+  MuonHitTree->Branch("yPos", &yPos);
+  MuonHitTree->Branch("zPos", &zPos);
+  MuonHitTree->Branch("Time", &Time);
+  MuonHitTree->Branch("Ekin", &HEkin);
 
   PrimariesTree->Branch("EventID", &PEventID);
   PrimariesTree->Branch("TrackID", &PTrackID);
@@ -179,6 +193,7 @@ void GeMSE_RunAction::EndOfRunAction(const G4Run* aRun) {
 
     tree->Write();
     GeHitTree->Write();
+    MuonHitTree->Write();
     PrimariesTree->Write();
     RunTree->Write();  
 
@@ -190,6 +205,12 @@ TTree* GeMSE_RunAction::GetGeHitTree()
 {
   fGeHitTree=GeHitTree;
   return fGeHitTree;
+}
+
+TTree* GeMSE_RunAction::GetMuonHitTree()
+{
+  fMuonHitTree=MuonHitTree;
+  return fMuonHitTree;
 }
 
 TTree* GeMSE_RunAction::GetPrimariesTree()

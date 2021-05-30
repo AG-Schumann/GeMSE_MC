@@ -78,6 +78,8 @@ The simulation output is a `*.root` file with several layers of information:
   * TBranch `xPos`, `yPos`, `zPos`: position of the individual hits
   * TBranch `Time`: time of the individual hits
   * TBranch `Ekin`: kinetic energy of the particle at the time of the hit
+* TTree `MuonHits`: tree with information on every particle hit in the muon veto panels
+  * Contains the exact same branches as the `GeHits` tree, with the addition of `PanelNr`, to extract the information on the panel that saw the hit (`0` for top, `1` for side panel).
 * TTree `Primaries`: Tree with information on all generated particles in the run (deactivated by default, add `/writePrimaries true` to your macro to fill the branches below)
   * TBranch `EventID` 
   * TBranch `TrackID` 

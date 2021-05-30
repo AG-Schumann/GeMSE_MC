@@ -28,6 +28,7 @@ class GeMSE_RunAction : public G4UserRunAction {
   void EndOfRunAction(const G4Run* aRun);
   
   TTree* GetGeHitTree();
+  TTree* GetMuonHitTree();
   TTree* GetPrimariesTree();
 
   void AddDecay();
@@ -56,6 +57,7 @@ class GeMSE_RunAction : public G4UserRunAction {
   std::vector<double> zPos;
   std::vector<int> HParticleID;
   std::vector<int> HTrackID;
+  std::vector<int> PanelNr;
 
   G4int PEventID;
   G4int PTrackID;
@@ -74,10 +76,13 @@ class GeMSE_RunAction : public G4UserRunAction {
   TFile* ResultFile;
   TTree* tree;
   TTree* GeHitTree;
+  TTree* MuonHitTree;
   TTree* PrimariesTree;
   TTree* RunTree;
+
   TTree* ftree;
   TTree* fGeHitTree;
+  TTree* fMuonHitTree;
   TTree* fPrimariesTree;
 
   GeMSE_Analysis* fRunAnalysis;
