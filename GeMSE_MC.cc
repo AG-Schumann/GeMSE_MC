@@ -58,10 +58,12 @@ int main(int argc, char** argv)
   }
   
   // Check if output folder was specified
-  if (OutputFolder == "")
-    G4cout << "\n###### " << G4endl
-           << "###### WARNING: no folder specified, no output will be written "
-           << "\n######\n\n ";
+  if (OutputFolder == "") {
+    G4cout << "\n######"
+           << "\n###### WARNING: no folder specified, no output will be written "
+           << "\n######" << G4endl;
+    sleep(1.5);
+  }
 
   // Run manager
   G4RunManager* runManager = new G4RunManager;
