@@ -17,7 +17,7 @@ class GeMSE_PhysicsList : public G4VModularPhysicsList {
   void SetCuts();
 
  private:
-  G4VPhysicsConstructor *X1TG4OpticalPhysics;
+  G4VPhysicsConstructor *GeG4OpticalPhysics;
 
   G4double defaultCutValue;
   G4double cutForGamma;
