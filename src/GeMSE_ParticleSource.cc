@@ -1,6 +1,8 @@
 #include "GeMSE_ParticleSource.hh"
 
-#include <TH1.h>
+#include "TH1.h"
+#include "TFile.h"
+#include "TCanvas.h"
 #include <math.h>
 #include <Randomize.hh>
 #include <cmath>
@@ -24,6 +26,7 @@ using std::vector;
 #include <G4VPhysicalVolume.hh>
 
 GeMSE_ParticleSource::GeMSE_ParticleSource() {
+  m_hGenerator="generic";
   m_iNumberOfParticlesToBeGenerated = 1;
   m_pParticleDefinition = 0;
   G4ThreeVector hZero(0., 0., 0.);
@@ -46,6 +49,7 @@ GeMSE_ParticleSource::GeMSE_ParticleSource() {
   m_hAngDistType = "iso";
   m_dMinTheta = 0.;
   m_dMaxTheta = M_PI;
+  
   m_dMinPhi = 0.;
   m_dMaxPhi = 2 * M_PI;
 
@@ -62,7 +66,9 @@ GeMSE_ParticleSource::GeMSE_ParticleSource() {
                      ->GetNavigatorForTracking();
 }
 
-GeMSE_ParticleSource::~GeMSE_ParticleSource() { delete m_pMessenger; }
+GeMSE_ParticleSource::~GeMSE_ParticleSource() { 
+  delete m_pMessenger;
+}
 
 void GeMSE_ParticleSource::SetParticleDefinition(
     G4ParticleDefinition *aParticleDefinition) {
@@ -274,8 +280,8 @@ void GeMSE_ParticleSource::SetRandomSpherePos() {
   G4double theta, phi, rnd1, rnd2, pos_x, pos_y, pos_z;
   G4double r[3], dir[3], D[9];  // random  vector pointing "somewhere down",
                                 // direction vector, rot. matrix (eulrer angles)
-  G4double pi = 3.1415926;
-  G4double twopi = 2 * pi;
+  //G4double pi = 3.1415926;
+  //G4double twopi = 2 * pi;
 
   theta = pi * G4UniformRand();
   phi = twopi * G4UniformRand();
@@ -349,8 +355,8 @@ void GeMSE_ParticleSource::GenerateIsotropicFlux() {
   G4double sintheta, sinphi, costheta, cosphi;
 
   rndm = G4UniformRand();
-  costheta = std::cos(m_dMinTheta) -
-             rndm * (std::cos(m_dMinTheta) - std::cos(m_dMaxTheta));
+  costheta = std::cos(m_dMinTheta) +
+             rndm * (std::cos(m_dMaxTheta) - std::cos(m_dMinTheta));
   sintheta = std::sqrt(1. - costheta * costheta);
 
   rndm2 = G4UniformRand();
@@ -358,9 +364,9 @@ void GeMSE_ParticleSource::GenerateIsotropicFlux() {
   sinphi = std::sin(m_dPhi);
   cosphi = std::cos(m_dPhi);
 
-  px = -sintheta * cosphi;
-  py = -sintheta * sinphi;
-  pz = -costheta;
+  px = sintheta * cosphi;
+  py = sintheta * sinphi;
+  pz = costheta;
 
   G4double ResMag = std::sqrt((px * px) + (py * py) + (pz * pz));
 
@@ -387,71 +393,129 @@ void GeMSE_ParticleSource::GenerateEnergyFromSpectrum() {
 }
 
 void GeMSE_ParticleSource::GeneratePrimaryVertex(G4Event *evt) {
-  if (m_pParticleDefinition == 0) {
-    G4cout << "No particle has been defined!" << G4endl;
+  if(m_hGenerator=="muon") {
+    // Hardcoded muon generator for the spectra under macros/spectra/muons
+
+    TFile zenithFile("./macros/spectra/muons/zenith_angle.root", "read");
+    TFile energyFile("./macros/spectra/muons/energy_spectrum.root", "read");
+
+    // muon charge ratio and particle generation
+    G4String particletype;
+    double charge_ratio=1.27;
+    double rand = G4UniformRand();
+    if (rand<=charge_ratio/(1+charge_ratio))
+      particletype="mu+";
+    else
+      particletype="mu-";
+    m_pParticleDefinition
+       = G4ParticleTable::GetParticleTable()->FindParticle(particletype);
+    // We overwrite the m_* variables, so that the same code can be used
+    // for vertex definition for all generators (outside the if/else)
+    
+    // sample particle position from random point above cavern
+    G4double height = 1.6*m;
+    G4double size_x = 10.*m;
+    G4double size_y = 10.*m;
+    //G4double xPosCavern=2.925*m;
+    G4double pos_x = size_x*(G4UniformRand()-0.5);
+    G4double pos_y = size_y*(G4UniformRand()-0.5);
+    G4double pos_z = height;
+    m_hParticlePosition.setX(pos_x);
+    m_hParticlePosition.setY(pos_y);
+    m_hParticlePosition.setZ(pos_z);
+
+    // generate particle direction
+    // sample zenith angle from histogram
+    TH1D* zenith_angle =
+       (TH1D*)((TCanvas*)zenithFile.Get("c1"))->GetPrimitive("zenith angle");
+    G4double theta = zenith_angle->GetRandom();
+    G4double phi=twopi*G4UniformRand();
+    m_hParticleMomentumDirection.setX(sin(theta)*cos(phi));
+    m_hParticleMomentumDirection.setY(sin(theta)*sin(phi));
+    m_hParticleMomentumDirection.setZ(-cos(theta));
+
+    // sample energy from histogram
+    TH1D* energy_spectrum =
+       (TH1D*)((TCanvas*)energyFile.Get("c1"))->GetPrimitive("energy spectrum");
+    m_dParticleEnergy = energy_spectrum->GetRandom()*GeV;
+  }
+
+  else if(m_hGenerator=="generic") {
+    // Generate primaries according to the information provided via macro
+
+    if (m_pParticleDefinition == 0) {
+      G4cout << "No particle has been defined!" << G4endl;
+      return;
+    }
+
+    // position
+    G4bool srcconf = false;
+    G4int LoopCount = 0;
+
+    while (srcconf == false) {
+      if (m_hSourcePosType == "Point")
+        GeneratePointSource();
+      else if (m_hSourcePosType == "Volume")
+        GeneratePointsInVolume();
+      else if (m_hSourcePosType == "RandomSphere")
+        SetRandomSpherePos();
+      else {
+       G4cout << "Error: SourcePosType undefined" << G4endl;
+       G4cout << "Generating point source" << G4endl;
+       GeneratePointSource();
+      }
+
+      if (m_bConfine == true) {
+        srcconf = IsSourceConfined();
+        // if source in confined srcconf = true terminating the loop
+        // if source isnt confined srcconf = false and loop continues
+      } else if (m_bConfine == false)
+        srcconf = true;  // terminate loop
+
+      LoopCount++;
+      if (LoopCount == 1000000) {
+        G4cout << "*************************************" << G4endl;
+        G4cout << "LoopCount = 1000000" << G4endl;
+        G4cout << "Either the source distribution >> confinement" << G4endl;
+        G4cout << "or any confining volume may not overlap with" << G4endl;
+        G4cout << "the source distribution or any confining volumes" << G4endl;
+        G4cout << "may not exist" << G4endl;
+        G4cout << "If you have set confine then this will be ignored" << G4endl;
+        G4cout << "for this event." << G4endl;
+        G4cout << "*************************************" << G4endl;
+        srcconf = true;  // Avoids an infinite loop
+      }
+    }
+
+    // angular stuff
+    if (m_hAngDistType == "iso")
+      GenerateIsotropicFlux();
+    else if (m_hAngDistType == "direction")
+      SetParticleMomentumDirection(m_hParticleMomentumDirection);
+    else
+      G4cout << "Error: AngDistType has unusual value" << G4endl;
+
+    // energy stuff
+    if (m_hEnergyDisType == "Mono")
+      GenerateMonoEnergetic();
+    else if (m_hEnergyDisType == "Spectrum")
+      GenerateEnergyFromSpectrum();
+    else
+      G4cout << "Error: EnergyDisType has unusual value" << G4endl;
+  }
+  
+  else {
+    G4cout << "**** /GeMSE/gun/generator ERROR: invalid option " << m_hGenerator
+           << "\n**** Valid options are 'muon' and 'generic' (default)" << G4endl;
     return;
   }
 
-  // Position
-  G4bool srcconf = false;
-  G4int LoopCount = 0;
-
-  while (srcconf == false) {
-    if (m_hSourcePosType == "Point")
-      GeneratePointSource();
-    else if (m_hSourcePosType == "Volume")
-      GeneratePointsInVolume();
-    else if (m_hSourcePosType == "RandomSphere")
-      SetRandomSpherePos();
-    else {
-      G4cout << "Error: SourcePosType undefined" << G4endl;
-      G4cout << "Generating point source" << G4endl;
-      GeneratePointSource();
-    }
-
-    if (m_bConfine == true) {
-      srcconf = IsSourceConfined();
-      // if source in confined srcconf = true terminating the loop
-      // if source isnt confined srcconf = false and loop continues
-    } else if (m_bConfine == false)
-      srcconf = true;  // terminate loop
-
-    LoopCount++;
-    if (LoopCount == 1000000) {
-      G4cout << "*************************************" << G4endl;
-      G4cout << "LoopCount = 1000000" << G4endl;
-      G4cout << "Either the source distribution >> confinement" << G4endl;
-      G4cout << "or any confining volume may not overlap with" << G4endl;
-      G4cout << "the source distribution or any confining volumes" << G4endl;
-      G4cout << "may not exist" << G4endl;
-      G4cout << "If you have set confine then this will be ignored" << G4endl;
-      G4cout << "for this event." << G4endl;
-      G4cout << "*************************************" << G4endl;
-      srcconf = true;  // Avoids an infinite loop
-    }
-  }
-
-  // Angular stuff
-  if (m_hAngDistType == "iso")
-    GenerateIsotropicFlux();
-  else if (m_hAngDistType == "direction")
-    SetParticleMomentumDirection(m_hParticleMomentumDirection);
-  else
-    G4cout << "Error: AngDistType has unusual value" << G4endl;
-  // Energy stuff
-  if (m_hEnergyDisType == "Mono")
-    GenerateMonoEnergetic();
-  else if (m_hEnergyDisType == "Spectrum")
-    GenerateEnergyFromSpectrum();
-  else
-    G4cout << "Error: EnergyDisType has unusual value" << G4endl;
-
   // create a new vertex
   G4PrimaryVertex *vertex =
-      new G4PrimaryVertex(m_hParticlePosition, m_dParticleTime);
+     new G4PrimaryVertex(m_hParticlePosition, m_dParticleTime);
 
   if (m_iVerbosityLevel >= 2)
-    G4cout << "Creating primaries and assigning to vertex" << G4endl;
+      G4cout << "Creating primaries and assigning to vertex" << G4endl;
   // create new primaries and set them to the vertex
   G4double mass = m_pParticleDefinition->GetPDGMass();
   G4double energy = m_dParticleEnergy + mass;

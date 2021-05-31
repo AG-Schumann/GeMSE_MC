@@ -23,6 +23,9 @@ class GeMSE_ParticleSource : public G4VPrimaryGenerator {
   void GeneratePrimaryVertex(G4Event *pEvent);
   void GeneratePrimaryVertexFromTrack(G4Track *pTrack, G4Event *pEvent);
 
+  void SetGeneratorType(G4String hGenerator) {
+    m_hGenerator = hGenerator;
+  }
   void SetPosDisType(G4String hSourcePosType) {
     m_hSourcePosType = hSourcePosType;
   }
@@ -75,6 +78,7 @@ class GeMSE_ParticleSource : public G4VPrimaryGenerator {
   void SetRandomSpherePos();
 
  private:
+  G4String m_hGenerator; 
   G4String m_hSourcePosType;
   G4String m_hShape;
   G4ThreeVector m_hCenterCoords;
@@ -105,6 +109,9 @@ class GeMSE_ParticleSource : public G4VPrimaryGenerator {
 
   GeMSE_ParticleSourceMessenger *m_pMessenger;
   G4Navigator *m_pNavigator;
+
+  G4double pi = 3.1415926;
+  G4double twopi = 2 * pi;
 };
 
 #endif

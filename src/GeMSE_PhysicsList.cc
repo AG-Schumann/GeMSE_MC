@@ -20,6 +20,7 @@
 #include "G4HadronElasticPhysicsHP.hh"
 #include "G4HadronInelasticQBBC.hh"
 #include "G4HadronPhysicsFTFP_BERT_HP.hh"
+#include "G4HadronPhysicsShielding.hh"
 #include "G4HadronPhysicsINCLXX.hh"
 #include "G4HadronPhysicsQGSP_BERT.hh"
 #include "G4HadronPhysicsQGSP_BERT_HP.hh"
@@ -58,7 +59,7 @@ GeMSE_PhysicsList::GeMSE_PhysicsList() : G4VModularPhysicsList() {
 
   // Hadron Inelastic Physics
   RegisterPhysics(new G4HadronPhysicsQGSP_BERT_HP(VerboseLevel));
-  // RegisterPhysics(new G4HadronPhysicsShielding(VerboseLevel));
+  RegisterPhysics(new G4HadronPhysicsShielding(VerboseLevel));
   // RegisterPhysics(new G4HadronStoppingProcess(VerboseLevel));
 
   // Ion Elastic scattering
