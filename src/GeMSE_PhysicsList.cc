@@ -60,7 +60,7 @@ cutForPositron = defaultCutValue;
 
   // Hadron Inelastic Physics
   RegisterPhysics(new G4HadronPhysicsQGSP_BERT_HP(VerboseLevel));
-  RegisterPhysics(new G4HadronPhysicsShielding(VerboseLevel));
+  // RegisterPhysics(new G4HadronPhysicsShielding(VerboseLevel));
   // RegisterPhysics(new G4HadronStoppingProcess(VerboseLevel));
 
   // Ion Elastic scattering
