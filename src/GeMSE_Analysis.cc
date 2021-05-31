@@ -65,8 +65,9 @@ void GeMSE_Analysis::CalcEfficiencies() {
                              f_bckright * sum_bckright_err * sum_bckright_err);
     double efficiency = counts / fNEvents / BR_G4;
     if (efficiency < 0)
-      G4cout << "##### WARNING " << G4endl
-             << "Efficiency is smaller than zero! --> " << efficiency << G4endl
+      G4cout << "\n\n##### WARNING " << G4endl
+             << "Efficiency is smaller than zero for " << energy
+             << " keV! --> " << efficiency << G4endl
              << "  sum_peak = " << sum_peak << G4endl
              << "  f_bckleft*sum_bckleft = " << f_bckleft * sum_bckleft << G4endl
              << "  f_bckright*sum_bckright = " << f_bckright * sum_bckright << G4endl
