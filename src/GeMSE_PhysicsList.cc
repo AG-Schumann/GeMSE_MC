@@ -39,7 +39,8 @@ GeMSE_PhysicsList::GeMSE_PhysicsList() : G4VModularPhysicsList() {
   defaultCutValue = 1.0 * mm;
   cutForGamma = defaultCutValue;
   cutForElectron = defaultCutValue;
-  cutForPositron = defaultCutValue;
+  
+cutForPositron = defaultCutValue;
 
   VerboseLevel = 0;
   SetVerboseLevel(VerboseLevel);
@@ -51,8 +52,8 @@ GeMSE_PhysicsList::GeMSE_PhysicsList() : G4VModularPhysicsList() {
   //  and adds the following physical processes to these particles:
   //     G4OpAbsorption, G4OpRayleigh, G4OpMieHG, G4OpBoundaryProcess, G4OpWLS,
   //     G4Scintillation, G4Cerenkov
-  RegisterPhysics(X1TG4OpticalPhysics = new G4OpticalPhysics(VerboseLevel));
-  ((G4OpticalPhysics*)X1TG4OpticalPhysics)->Configure(kCerenkov, false);
+  RegisterPhysics(GeG4OpticalPhysics = new G4OpticalPhysics(VerboseLevel));
+  ((G4OpticalPhysics*)GeG4OpticalPhysics)->Configure(kCerenkov, false);
 
   // Hadron Elastic scattering
   RegisterPhysics(new G4HadronElasticPhysicsHP(VerboseLevel));
