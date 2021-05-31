@@ -2,6 +2,15 @@
 History
 =======
 
+2.0.0 (2021-05-31)
+------------------
+* Miscellaneous changes before next release (#14)
+* Muon generator in ParticleSource (#12)
+* Muon veto panels and sensitive detector (#11)
+* Banana scan and sample geometries documentation (#9)
+* Extended output file (#7)
+* CADMesh v2.0.3 (#6)
+
 1.2.0 (2021-04-29)
 ------------------
 * Delete custom binmake file and default to G4INSTALL (#5)
@@ -27,3 +36,4 @@ History
 * Addition of materials and DetectorConstruction cleanup
 * Solved visualization conflicts for G4.10.xx
 * Added geometries for the various screened samples in the past years (XENONnT material selection campaign, MonXe samples, etc.). Along with that, new structure for the screening samples, separated from the main source code in the folder 'sample_geometries'
+
