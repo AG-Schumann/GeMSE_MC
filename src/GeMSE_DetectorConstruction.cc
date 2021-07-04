@@ -880,10 +880,11 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   // substract hole from cylinder
   G4Tubs* Hole_tube =
       new G4Tubs("Hole_tube", 0. * cm, outerRadiusHole,
-                 heightHole / 2. + 0.005 * cm, startAngle, spanningAngle);
+                 heightHole / 2., startAngle, spanningAngle);
   G4SubtractionSolid* GeIn_sub = new G4SubtractionSolid(
       "GeIn_sub", GeIn_tube, Hole_tube, 0,
-      G4ThreeVector(0., 0., -(heightGe / 2. - heightHole / 2. + 0.005 * cm)));
+      G4ThreeVector(0., 0., (- heightGe + d_LiContact + heightHole) / 2.));
+  
 
   /*
   G4Tubs*			GeCenterIn_tube     = new G4Tubs
@@ -917,13 +918,11 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
                  startAngle, spanningAngle);
   G4Tubs* LiOuterContact_tube = new G4Tubs(
       "LiOuterContact_tube", outerRadiusGe - d_LiContact, outerRadiusGe,
-      (heightGe - d_LiContact) / 2. + 0.0001 * cm, startAngle, spanningAngle);
+      (heightGe - d_LiContact) / 2., startAngle, spanningAngle);
 
   G4UnionSolid* LiContact_uni = new G4UnionSolid(
       "LiContact_uni", LiWindow_tube, LiOuterContact_tube, 0,
-      G4ThreeVector(
-          0., 0.,
-          -d_LiContact / 2. - (heightGe - d_LiContact) / 2. + 0.0001 * cm));
+      G4ThreeVector(0., 0., - heightGe / 2.));
 
   /*
   G4Tubs*			GeCenter_tube 	= new G4Tubs ("GeCenter_tube",
@@ -967,7 +966,6 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
 
   G4LogicalVolume* Ge_log =
       new G4LogicalVolume(GeIn_sub, germanium_mat, "Ge_log", 0, 0, 0);
-
   G4LogicalVolume* LiContact_log = new G4LogicalVolume(
       LiContact_uni, germanium_mat, "LiContact_log", 0, 0, 0);
 
