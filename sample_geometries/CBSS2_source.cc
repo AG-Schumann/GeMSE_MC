@@ -51,6 +51,8 @@ new G4PVPlacement(0, G4ThreeVector(0., 0., zPosCBSS2),
                   CBSS2_log, "CBSS2", expHall_log, false, 0);
 
 // Visualization attributes
+G4VisAttributes* violet = new G4VisAttributes(G4Colour(0.5,0.0,1.0));
+G4VisAttributes* lightblue = new G4VisAttributes(G4Colour(0.0,0.5,1.0));
 PS_log->SetVisAttributes(lightblue);
 CBSS2_log->SetVisAttributes(violet);
 
