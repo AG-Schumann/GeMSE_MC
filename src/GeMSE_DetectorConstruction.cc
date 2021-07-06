@@ -845,10 +845,10 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   // Teflon holder
   G4Tubs* TeflonHolder_top_tube =
       new G4Tubs("TeflonHolder_top_tube", 0. * cm,
-                 outerRadiusGe + d_TefHolder_side + 0.001 * cm,
-                 d_TefHolder_top / 2. + 0.001 * cm, startAngle, spanningAngle);
+                 outerRadiusGe + d_TefHolder_side,
+                 d_TefHolder_top / 2., startAngle, spanningAngle);
   G4Tubs* TeflonHolder_side_tube = new G4Tubs(
-      "TeflonHolder_side_tube", outerRadiusGe + 0.005 * cm,
+      "TeflonHolder_side_tube", outerRadiusGe,
       outerRadiusGe + d_TefHolder_side,
       (heightTeflonHolder - d_TefHolder_top) / 2., startAngle, spanningAngle);
 
