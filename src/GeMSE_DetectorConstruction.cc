@@ -134,7 +134,7 @@ G4VPhysicalVolume* GeMSE_DetectorConstruction::Construct() {
   G4double heightHole = 4.25 * cm;
 
   // outer contact
-  G4double d_LiContact = 0.067 * cm;
+  G4double d_LiContact = 0.094 * cm;
 
   // G4double edgeInRadius	= edgeRadius-d_LiContact;
 
